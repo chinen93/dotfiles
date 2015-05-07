@@ -1,3 +1,29 @@
+# .bash_aliases
+
+#################
+# Shell commands
+#################
+
+# Auto Coloring
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+# ls alias
 alias ll="ls -Al --group-directories-first --sort=extension"
-alias gcc="gcc -ansi -pedantic -Wall -Werror -lm"
+alias lr="ls -R"
+
+# cd alias
+alias cd..='cd ..'
 alias dl="cd ~/Downloads"
+
+
+alias gcc="gcc -ansi -pedantic -Wall -Werror -lm"
+alias ping='ping -c 5'
+
+
+##################
+# Start programs
+##################
+alias firefox="firefox &!"
