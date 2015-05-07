@@ -1,2 +1,3 @@
 alias ll="ls -Al --group-directories-first --sort=extension"
 alias gcc="gcc -ansi -pedantic -Wall -Werror -lm"
+alias dl="cd ~/Downloads"
