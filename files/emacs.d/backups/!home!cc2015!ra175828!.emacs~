@@ -41,12 +41,6 @@
   (delete-other-windows))
 
 ;;====================================================================
-;;    Nyan cat
-;;====================================================================
-(require 'nyan-mode)
-(nyan-mode t)
-
-;;====================================================================
 ;;    Interactively Do Things
 ;;====================================================================
 (setq ido-enable-flex-matching t)
@@ -78,23 +72,6 @@
 (require 'saveplace)
 (setq-default save-place t)
 (setq save-place-file (expand-file-name ".places" user-emacs-directory))
-
-;; Set titles for frame and icon (%f == file name, %b == buffer name)
-(setq-default frame-title-format (list "Emacs: %f"))
-(setq-default icon-title-format "Emacs - %b")
-
-;; Place Emacs in the location (0, 80) on screen 
-(setq initial-frame-alist
-  '((top  .  0)
-    (left . 80)))
-
-;; Show matching parenthesis.
-(show-paren-mode t)
-
-;; Current line & column of cursor in the mode line (bar at the bottom)
-(line-number-mode 1)
-(setq column-number-mode t)
-
 ;;====================================================================
 ;;    Custom 
 ;;====================================================================
