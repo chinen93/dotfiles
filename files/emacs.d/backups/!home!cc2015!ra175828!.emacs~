@@ -1,51 +1,4 @@
 ;;====================================================================
-;;    Basics 
-;;====================================================================
-
-;; Turn off mouse interface early in startup to avoid momentary display
-(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-
-;; No splash screen please ... jeez
-(setq inhibit-startup-message t)
-
-;; Write backup files to own directory
-(setq backup-directory-alist
-      `(("." . ,(expand-file-name
-                 (concat user-emacs-directory "backups")))))
-
-;; Make backups of files, even when they're in version control
-(setq vc-make-backup-files t)
-
-;; Interactively Do Things
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(setq ido-create-new-buffer 'always)
-(setq ido-file-extensions-order '(".org" ".txt" ".py" ".emacs" ".xml" ".el" ".ini" ".cfg" ".cnf"))
-(ido-mode 1)
-
-;; Key Binding
-(global-set-key "\C-s" 'isearch-forward-regexp) 
-(global-set-key "\C-r" 'isearch-backward-regexp)
-
-;; Show matching parenthesis. 
-(show-paren-mode t)
-
-;; Set titles for frame and icon (%f == file name, %b == buffer name)
-(setq-default frame-title-format (list "Emacs: %f"))
-(setq-default icon-title-format "Emacs - %b")
-
-;; Place Emacs in the location (0, 80) on screen 
-(setq initial-frame-alist
-  '((top  .  0)
-    (left . 80)))
-
-;; Current line & column of cursor in the mode line (bar at the bottom)
-(line-number-mode 1)
-(setq column-number-mode t)
-
-;;====================================================================
 ;;    Melpa  
 ;;====================================================================
 (require 'package) ;; You might already have this line
@@ -88,11 +41,37 @@
   (delete-other-windows))
 
 ;;====================================================================
-;;    Nyan cat
+;;    Interactively Do Things
 ;;====================================================================
-(require 'nyan-mode)
-(nyan-mode t)
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(setq ido-create-new-buffer 'always)
+(setq ido-file-extensions-order '(".org" ".txt" ".py" ".emacs" ".xml" ".el" ".ini" ".cfg" ".cnf"))
+(ido-mode 1)
 
+;;====================================================================
+;;    Basics
+;;====================================================================
+;; Turn off mouse interface early in startup to avoid momentary display
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+;; No splash screen please ... jeez
+(setq inhibit-startup-message t)
+
+;; Write backup files to own directory
+(setq backup-directory-alist
+      `(("." . ,(expand-file-name
+                 (concat user-emacs-directory "backups")))))
+
+;; Make backups of files, even when they're in version control
+(setq vc-make-backup-files t)
+
+;; Save point position between sessions
+(require 'saveplace)
+(setq-default save-place t)
+(setq save-place-file (expand-file-name ".places" user-emacs-directory))
 ;;====================================================================
 ;;    Custom 
 ;;====================================================================
@@ -102,7 +81,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(c-basic-offset 4)
- '(custom-enabled-themes (quote (deeper-blue)))
  '(indent-tabs-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
