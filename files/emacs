@@ -45,6 +45,9 @@
 (line-number-mode 1)
 (setq column-number-mode t)
 
+;; Opens a TODO file every time the emacs starts
+(find-file-other-window "~/todo_list")
+
 ;;====================================================================
 ;;    Melpa  
 ;;====================================================================
