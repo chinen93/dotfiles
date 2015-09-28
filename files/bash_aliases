@@ -19,7 +19,7 @@ alias cd..='cd ..'
 alias dl="cd ~/Downloads"
 
 
-alias gcc="gcc -ansi -pedantic -Wall -Werror -lm"
+alias gcc="gcc -ansi -pedantic -lm"
 alias ping='ping -c 5'
 
 
@@ -27,3 +27,4 @@ alias ping='ping -c 5'
 # Start programs
 ##################
 alias firefox="firefox &!"
+

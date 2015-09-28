@@ -1,7 +1,43 @@
+;;===================================================================
+;;    Install Packages
 ;;====================================================================
-;;    Basics 
-;;====================================================================
+(setq my-package-list '(nyan-mode
+			magit
+			expand-region
+			helm
+			helm-swoop
+			multiple-cursors
+			guide-key))
+(require 'package)
+(setq package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
+			 ("org" . "http://orgmode.org/elpa/")
+			 ("gnu" . "http://elpa.gnu.org/packages/")
+			 ("marmalade" . "http://marmalade-repo.org/packages/")))
+(package-initialize)
+;; fetch the list of packages available
+(unless package-archive-contents
+  (package-refresh-contents))
+;; install
+(dolist(i-package my-package-list)
+  (unless (package-installed-p i-package)
+    (package-install i-package)))
 
+;;====================================================================
+;;    Windows Managemet
+;;====================================================================
+;; TODO_NOW
+
+
+;;====================================================================
+;;    Key Binding
+;;====================================================================
+;; Key Binding
+(global-set-key (kbd "C-s") 'isearch-forward-regexp) 
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
+
+;;====================================================================
+;;    Layout
+;;====================================================================
 ;; Turn off mouse interface early in startup to avoid momentary display
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -9,6 +45,73 @@
 
 ;; No splash screen please ... jeez
 (setq inhibit-startup-message t)
+
+;; Place Emacs in the location (0, 80) on screen 
+(setq initial-frame-alist
+  '((top  .  0)
+    (left . 80)))
+
+;; Change the font
+;; TODO_NOW
+;;(set-default-font  nil t)
+
+(require 'whitespace)
+;; TODO_NOW
+;;(setq whitespace-line-column 80)
+;;(setq whitespace-style '(face lines-tail))
+;;(add-hook 'prog-mode-hook 'whitespace-mode)
+
+;;====================================================================
+;;    Git
+;;====================================================================
+;; TODO_NOW
+
+;;====================================================================
+;;    Custom mode
+;;====================================================================
+(setq c-default-style "linux"
+      c-basic-offset 4)
+;;====================================================================
+;;    Helm
+;;====================================================================
+(require 'helm)
+(require 'helm-config)
+
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+(global-set-key (kbd "M-1") 'helm-mini)
+(setq helm-M-x-fuzzy-match t)
+(setq helm-buffers-fuzzy-matching t)
+(setq helm-recentf-fuzzy-match t)
+(setq helm-imenu-fuzzy-match t)
+(helm-autoresize-mode t)
+(helm-mode 1)
+
+;;====================================================================
+;;    General
+;;====================================================================
+;; Guide Key
+(require 'guide-key)
+(setq guide-key/guide-key-sequence nil)
+(guide-key-mode 1)
+(defun enable-guide-key ()
+  (interactive)
+  (setq guide-key/guide-key-sequence t)
+  (message "Guide Key enabled"))
+(defun disable-guide-key ()
+  (interactive)
+  (setq guide-key/guide-key-sequence nil)
+  (message "Guide Key disabled"))
+(global-set-key (kbd "C-c =") 'enable-guide-key)
+(global-set-key (kbd "C-c -") 'disable-guide-key)
+
+;; Show an notication for invalid operations
+(setq visible-bell t)
+
+;; Nyan Mode
+(require 'nyan-mode)
+(nyan-mode 1)
 
 ;; Write backup files to own directory
 (setq backup-directory-alist
@@ -18,98 +121,88 @@
 ;; Make backups of files, even when they're in version control
 (setq vc-make-backup-files t)
 
-;; Interactively Do Things
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(setq ido-create-new-buffer 'always)
-(setq ido-file-extensions-order '(".org" ".txt" ".py" ".emacs" ".xml" ".el" ".ini" ".cfg" ".cnf"))
-(ido-mode 1)
-
-;; Key Binding
-(global-set-key "\C-s" 'isearch-forward-regexp) 
-(global-set-key "\C-r" 'isearch-backward-regexp)
-
 ;; Show matching parenthesis. 
 (show-paren-mode t)
-
-;; Set titles for frame and icon (%f == file name, %b == buffer name)
-(setq-default frame-title-format (list "Emacs: %f"))
-(setq-default icon-title-format "Emacs - %b")
-
-;; Place Emacs in the location (0, 80) on screen 
-(setq initial-frame-alist
-  '((top  .  0)
-    (left . 80)))
 
 ;; Current line & column of cursor in the mode line (bar at the bottom)
 (line-number-mode 1)
 (setq column-number-mode t)
 
-;; Opens a TODO file every time the emacs starts
-(find-file-other-window "~/todo_list")
+;; Opens a TODO_NOW file every time the emacs starts
+(find-file-other-window "~/.todo_list.org")
+
+;; Load theme
+(load-theme 'deeper-blue)
+
+;; Expand Region
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
+
+;; Set titles for frame and icon (%f == file name, %b == buffer name)
+;;(setq-default frame-title-format (list "Emacs: %f"))
+;;(setq-default icon-title-format "Emacs - %b")
+
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-<right>") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-S-<left>") 'mc/mark-previous-like-this)
+(require 'helm-swoop)
+(global-set-key (kbd "<C-f1>") 'helm-swoop)
+(setq helm-swoop-split-direction 'split-window-vertically)
+(setq helm-swoop-speed-or-color nil)
+;;====================================================================
+;;    Python
+;;====================================================================
+;; use the python 3.1
+(setq py-python-command "/usr/bin/python3.1")
 
 ;;====================================================================
-;;    Melpa  
+;;    Utilities
 ;;====================================================================
-(require 'package) ;; You might already have this line
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
-(when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-(package-initialize) ;; You might already have this line
+;; Change "yes or no" to "y or n"
+(fset 'yes-or-no-p 'y-or-n-p)
 
-;;====================================================================
-;;    Emacs Code Browser 
-;;====================================================================
-(require 'ecb)
-;;(require 'ecb-autoloads)
-(setq ecb-layout-name "layout-name")
-(setq ecb-show-sources-in-directories-buffer 'always)
-(setq ecb-compile-window-height 12)
-;;; replacement for built-in ecb-deactive, ecb-hide-ecb-windows and
-;;; ecb-show-ecb-windows functions
-;;; since they hide/deactive ecb but not restore the old windows for me
-(defun tmtxt/ecb-deactivate ()
-  "deactive ecb and then split emacs into 2 windows that contain 2 most recent buffers"
+(setq initial-scratch-message "
+;; ***********************************************
+;; ******************* SCRATCH *******************
+;; ***********************************************
+;;
+;; - Useful key binding:
+;;     C-s         : isearch-foward-regexp
+;;     C-r         : isearch-backward-regexp
+;;     C-=         : er/expand-region
+;;     C-c =       : enable-guide-key
+;;     C-c -       : disable-guide-key
+;;     C-S-<right> : mc/mark-next-like-this 
+;;     C-S-<left>  : mc/mark-previous-like-this
+;;     <C-f1>      : helm-swoop
+")
+
+(defun pc/reload-dot-emacs ()
+  "Save the .emacs buffer if needed, then reaload .emacs."
   (interactive)
-  (ecb-deactivate)
-  (split-window-right)
-  (switch-to-next-buffer)
-  (other-window 1))
-(defun tmtxt/ecb-hide-ecb-windows ()
-  "hide ecb and then split emacs into 2 windows that contain 2 most recent buffers"
+  (let ((dot-emacs "~/.emacs"))
+    (and (get-file-buffer dot-emacs)
+	 (save-buffer (get-file-buffer dot-emacs)))
+    (load-file dot-emacs))
+  (message "Re-initialized!"))
+
+(defun c-comment-line ()
   (interactive)
-  (ecb-hide-ecb-windows)
-  (split-window-right)
-  (switch-to-next-buffer)
-  (other-window 1))
-(defun tmtxt/ecb-show-ecb-windows ()
-  "show ecb windows and then delete all other windows except the current one"
+  (beginning-of-line)
+  (insert "/*")
+  (end-of-line)
+  (insert " */"))
+
+(defun c-uncomment-line ()
   (interactive)
-  (ecb-show-ecb-windows)
-  (delete-other-windows))
+  (beginning-of-line)
+  (delete-char 2)
+  (end-of-line)
+  (backward-char 3)
+  (delete-char 3))
 
 ;;====================================================================
-;;    Nyan cat
+;;    Files modes
 ;;====================================================================
-(require 'nyan-mode)
-(nyan-mode t)
+;; TODO_NOW
 
-;;====================================================================
-;;    Custom 
-;;====================================================================
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(c-basic-offset 4)
- '(custom-enabled-themes (quote (deeper-blue)))
- '(indent-tabs-mode nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
