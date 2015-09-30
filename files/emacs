@@ -8,30 +8,33 @@
 			helm-swoop
 			multiple-cursors
 			guide-key))
+
 (require 'package)
-(setq package-archives
-      '(("melpa" . "http://melpa.milkbox.net/packages/")
-	("org" . "http://orgmode.org/elpa/")
-	("gnu" . "http://elpa.gnu.org/packages/")
-	("marmalade" . "http://marmalade-repo.org/packages/")))
-
 (package-initialize)
-;; fetch the list of packages available
-(unless package-archive-contents
-  (package-refresh-contents))
-;; install
-;; ==automatic==
-(dolist(i-package my-package-list)
-  (unless (package-installed-p i-package)
-    (package-install i-package)))
-;; ==manual==
-;;(dolist(i-package my-package-list)
-;;  (if (package-installed-p i-package)
-;;      nil
-;;    (if (y-or-n-p (format "Package %s is missing. Install it? " i-package))
-;;	(package-install i-package)
-;;      i-package)))
 
+(defun pc/install-packages ()
+  (setq package-archives
+	'(("melpa" . "http://melpa.milkbox.net/packages/")
+	  ("org" . "http://orgmode.org/elpa/")
+	  ("gnu" . "http://elpa.gnu.org/packages/")
+	  ("marmalade" . "http://marmalade-repo.org/packages/")))
+  (unless package-archive-contents
+  (package-refresh-contents))
+  (package-initialize)
+  ;; install
+  ;; ==automatic==
+  (dolist(i-package my-package-list)
+    (unless (package-installed-p i-package)
+      (package-install i-package)))
+  ;; ==manual==
+  ;;(dolist(i-package my-package-list)
+  ;;  (if (package-installed-p i-package)
+  ;;      nil
+  ;;    (if (y-or-n-p (format "Package %s is missing. Install it? " i-package))
+  ;;	(package-install i-package)
+  ;;      i-package)))
+  )
+  
 ;;====================================================================
 ;;    Windows Managemet
 ;;====================================================================
@@ -65,7 +68,11 @@
 ;; TODO_NOW
 ;;(set-default-font  nil t)
 
-(require 'whitespace)
+(if (not (require 'whitespace nil t))
+    (message "ERROR: whitespace not found")
+    (progn (message "Whitespace")
+	   (message "Loaded")
+	   ))
 ;; TODO_NOW
 ;;(setq whitespace-line-column 80)
 ;;(setq whitespace-style '(face lines-tail))
@@ -84,44 +91,55 @@
 ;;====================================================================
 ;;    Helm
 ;;====================================================================
-(require 'helm)
-(require 'helm-config)
-
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
-(global-set-key (kbd "M-1") 'helm-mini)
-;;(setq helm-M-x-fuzzy-match t)
-;;(setq helm-buffers-fuzzy-matching t)
-;;(setq helm-recentf-fuzzy-match t)
-;;(setq helm-imenu-fuzzy-match t)
-(helm-autoresize-mode t)
-(helm-mode 1)
+(if (not (require 'helm nil t))
+    (message "ERROR: helm not found")
+    (progn (message "helm")
+	   (message "Loaded")
+	   (global-set-key (kbd "M-x") 'helm-M-x)
+	   (global-set-key (kbd "C-x C-f") 'helm-find-files)
+	   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+	   (global-set-key (kbd "M-1") 'helm-mini)
+	   ;;(setq helm-M-x-fuzzy-match t)
+	   ;;(setq helm-buffers-fuzzy-matching t)
+	   ;;(setq helm-recentf-fuzzy-match t)
+	   ;;(setq helm-imenu-fuzzy-match t)
+;	   (helm-autoresize-mode t)
+;	   (helm-mode 1)
+	   ))
 
 ;;====================================================================
 ;;    General
 ;;====================================================================
 ;; Guide Key
-(require 'guide-key)
-(setq guide-key/guide-key-sequence nil)
-(guide-key-mode 1)
-(defun enable-guide-key ()
-  (interactive)
-  (setq guide-key/guide-key-sequence t)
-  (message "Guide Key enabled"))
-(defun disable-guide-key ()
-  (interactive)
-  (setq guide-key/guide-key-sequence nil)
-  (message "Guide Key disabled"))
-(global-set-key (kbd "C-c =") 'enable-guide-key)
-(global-set-key (kbd "C-c -") 'disable-guide-key)
-
+(if (not (require 'guide-key nil t))
+    (message "ERROR: guide-key not found")
+    (progn (message "Guide Key")
+	   (message "Loaded")
+	   (setq guide-key/guide-key-sequence nil)
+	   (guide-key-mode 1)
+	   (defun enable-guide-key ()
+	     (interactive)
+	     (setq guide-key/guide-key-sequence t)
+	     (message "Guide Key enabled"))
+	   (defun disable-guide-key ()
+	     (interactive)
+	     (setq guide-key/guide-key-sequence nil)
+	     (message "Guide Key disabled"))
+	   (global-set-key (kbd "C-c =") 'enable-guide-key)
+	   (global-set-key (kbd "C-c -") 'disable-guide-key)
+	   ))
+	   
 ;; Show an notication for invalid operations
 (setq visible-bell t)
 
 ;; Nyan Mode
-(require 'nyan-mode)
-(nyan-mode 1)
+(if (not (require 'nyan-mode nil t))
+    (message "ERROR: nyan-mode not found")
+    (progn (message "Nyan Mode")
+	   (message "Loaded")
+	   (require 'nyan-mode)
+	   (nyan-mode 1)
+	   ))
 
 ;; Write backup files to own directory
 (setq backup-directory-alist
@@ -145,20 +163,32 @@
 (load-theme 'deeper-blue)
 
 ;; Expand Region
-(require 'expand-region)
-(global-set-key (kbd "C-=") 'er/expand-region)
+(if (not (require 'expand-region nil t))
+    (message "ERROR: expand-region not found")
+    (progn (message "Expand Region")
+	   (message "Loaded")
+	   (global-set-key (kbd "C-=") 'er/expand-region)
+	   ))
 
 ;; Set titles for frame and icon (%f == file name, %b == buffer name)
 ;;(setq-default frame-title-format (list "Emacs: %f"))
 ;;(setq-default icon-title-format "Emacs - %b")
 
-(require 'multiple-cursors)
-(global-set-key (kbd "C-S-<right>") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-S-<left>") 'mc/mark-previous-like-this)
-(require 'helm-swoop)
-(global-set-key (kbd "<C-f1>") 'helm-swoop)
-(setq helm-swoop-split-direction 'split-window-vertically)
-(setq helm-swoop-speed-or-color nil)
+(if (not (require 'multiple-cursors nil t))
+    (message "ERROR: multiple-cursors not found")
+    (progn (message "Multiple Cursors")
+	   (message "Loaded")
+	   (global-set-key (kbd "C-S-<right>") 'mc/mark-next-like-this)
+	   (global-set-key (kbd "C-S-<left>") 'mc/mark-previous-like-this)
+	   ))
+(if (not (require 'helm-swoop nil t))
+    (message "ERROR: helm-swoop not found")
+    (progn (message "Helm Swoop")
+	   (message "Loaded")
+	   (global-set-key (kbd "<C-f1>") 'helm-swoop)
+	   (setq helm-swoop-split-direction 'split-window-vertically)
+	   (setq helm-swoop-speed-or-color nil)
+	   ))
 ;;====================================================================
 ;;    Python
 ;;====================================================================
@@ -215,4 +245,3 @@
 ;;    Files modes
 ;;====================================================================
 ;; TODO_NOW
-
