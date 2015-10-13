@@ -1,7 +1,8 @@
 ;;===================================================================
 ;;    Install Packages
 ;;====================================================================
-(setq my-package-list '(nyan-mode
+(setq my-package-list '(use-package
+			nyan-mode
 			magit
 			expand-region
 			helm
@@ -13,7 +14,7 @@
 (require 'package)
 (package-initialize)
 
-(defun pc/install-packages ()
+(defun my/install-packages ()
   (interactive)
   (setq package-archives
 	'(("melpa" . "http://melpa.milkbox.net/packages/")
@@ -24,23 +25,25 @@
   (package-refresh-contents))
   (package-initialize)
   ;; install
-  ;; ==automatic==
   (dolist(i-package my-package-list)
     (unless (package-installed-p i-package)
-      (package-install i-package)))
-  ;; ==manual==
-  ;;(dolist(i-package my-package-list)
-  ;;  (if (package-installed-p i-package)
-  ;;      nil
-  ;;    (if (y-or-n-p (format "Package %s is missing. Install it? " i-package))
-  ;;	(package-install i-package)
-  ;;      i-package)))
-  )
-  
+      (package-install i-package))))
+
+
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+(setq use-package-verbose t)
+(require 'use-package)
+
 ;;====================================================================
 ;;    Windows Managemet
 ;;====================================================================
-;; TODO_NOW
+(use-package windmove
+  :ensure t
+  :bind (("C-c <right>" . windmove-right)
+	 ("C-c <left>" . windmove-left)
+	 ("C-c <up>" . windmove-up)
+	 ("C-c <down>" . windmove-down)))
 
 
 ;;====================================================================
@@ -70,11 +73,6 @@
 ;; TODO_NOW
 ;;(set-default-font  nil t)
 
-(if (not (require 'whitespace nil t))
-    (message "ERROR: whitespace not found")
-    (progn (message "Whitespace")
-	   (message "Loaded")
-	   ))
 ;; TODO_NOW
 ;;(setq whitespace-line-column 80)
 ;;(setq whitespace-style '(face lines-tail))
@@ -86,6 +84,11 @@
 ;; TODO_NOW
 
 ;;====================================================================
+;;    Org
+;;====================================================================
+(setq org-return-follows-link t)
+
+;;====================================================================
 ;;    Custom mode
 ;;====================================================================
 (setq c-default-style "linux"
@@ -93,56 +96,51 @@
 ;;====================================================================
 ;;    Helm
 ;;====================================================================
-(if (not (require 'helm nil t))
-    (message "ERROR: helm not found")
-    (progn (message "helm")
-	   (message "Loaded")
-	   (global-set-key (kbd "M-x") 'helm-M-x)
-	   (global-set-key (kbd "C-x C-f") 'helm-find-files)
-	   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
-	   (global-set-key (kbd "M-1") 'helm-mini)
-	   ;;(setq helm-M-x-fuzzy-match t)
-	   (setq helm-buffers-fuzzy-matching t)
-	   (setq helm-recentf-fuzzy-match t)
-	   (setq helm-imenu-fuzzy-match t)
-	   (helm-autoresize-mode t)
-	   (helm-mode 1)
-	   ))
+(use-package helm
+  :ensure t
+  :config
+  (progn
+    (require 'helm-config)
+    (helm-autoresize-mode 1)
+    (helm-mode))
+  :bind (("C-c h" . helm-mini)
+	 ("M-x" . helm-M-x)
+	 ("M-y" . helm-show-kill-ring)))
 
 ;;====================================================================
 ;;    General
 ;;====================================================================
-;; Guide Key
-(if (not (require 'guide-key nil t))
-    (message "ERROR: guide-key not found")
-    (progn (message "Guide Key")
-	   (message "Loaded")
+(use-package guide-key
+  :ensure t
+  :config		     
+  (progn (message "Guide Key")
+	 (message "Loaded")
+	 (setq guide-key/guide-key-sequence nil)
+	 (defun enable-guide-key ()
+	   (interactive)
+	   (guide-key-mode 1)
+	   (setq guide-key/guide-key-sequence t)
+	   (message "Guide Key enabled"))
+	 (defun disable-guide-key ()
+	   (interactive)
+	   (guide-key-mode -1)
 	   (setq guide-key/guide-key-sequence nil)
-	   (defun enable-guide-key ()
-	     (interactive)
-	     (guide-key-mode 1)
-	     (setq guide-key/guide-key-sequence t)
-	     (message "Guide Key enabled"))
-	   (defun disable-guide-key ()
-	     (interactive)
-	     (guide-key-mode nil)
-	     (setq guide-key/guide-key-sequence nil)
-	     (message "Guide Key disabled"))
-	   (global-set-key (kbd "C-c =") 'enable-guide-key)
-	   (global-set-key (kbd "C-c -") 'disable-guide-key)
-	   ))
-	   
+	   (message "Guide Key disabled"))
+	 (global-set-key (kbd "C-c =") 'enable-guide-key)
+	 (global-set-key (kbd "C-c -") 'disable-guide-key)))
+
+
+    
 ;; Show an notication for invalid operations
 (setq visible-bell t)
 
 ;; Nyan Mode
-(if (not (require 'nyan-mode nil t))
-    (message "ERROR: nyan-mode not found")
-    (progn (message "Nyan Mode")
-	   (message "Loaded")
-	   (require 'nyan-mode)
-	   (nyan-mode 1)
-	   ))
+(use-package nyan-mode
+  :ensure t
+  :config
+  (progn (message "Nyan Mode")
+	 (message "Loaded")
+	 (nyan-mode 1)))
 
 ;; Write backup files to own directory
 (setq backup-directory-alist
@@ -159,25 +157,26 @@
 (line-number-mode 1)
 (setq column-number-mode t)
 
-;; TODO_NOW Open something when emacs starts
+;; Open something when emacs starts
+(if (file-exists-p "/home/pchinen/git/org/help.org")
+    (progn(find-file "/home/pchinen/git/org/help.org")))
 
 ;; Load theme
-(if (not (require 'monokai-theme nil t))
-    (progn (message "ERROR: monokai-theme not found"
-		    (load-theme 'deeper-blue)))
+(use-package monokai-theme
+  :ensure t
+  :config
   (progn (message "Monokai Theme")
 	 (message "Loaded")
-	 (load-theme 'monokai)
-	 (set-background-color "#121212")
-	 ))
+	 (load-theme 'monokai t)
+	 (set-background-color "#121212")))
 
 ;; Expand Region
-(if (not (require 'expand-region nil t))
-    (message "ERROR: expand-region not found")
-    (progn (message "Expand Region")
-	   (message "Loaded")
-	   (global-set-key (kbd "C-=") 'er/expand-region)
-	   ))
+(use-package expand-region
+  :ensure t
+  :bind ("C-=" . er/expand-region)
+  :config
+  (progn (message "Expand Region")
+	 (message "Loaded")))
 
 ;; Set titles for frame and icon (%f == file name, %b == buffer name)
 ;;(setq-default frame-title-format (list "Emacs: %f"))
@@ -217,7 +216,7 @@
 ;;
 ")
 
-(defun pc/reload-dot-emacs ()
+(defun my/reload-dot-emacs ()
   "Save the .emacs buffer if needed, then reaload .emacs."
   (interactive)
   (let ((dot-emacs "~/.emacs"))
@@ -244,18 +243,7 @@
 ;;====================================================================
 ;;    Files modes
 ;;====================================================================
-;; TODO_NOW
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("05c3bc4eb1219953a4f182e10de1f7466d28987f48d647c01f1f0037ff35ab9a" default))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+(add-to-list 'auto-mode-alist '(".emacs" . lisp-mode))
+
+
