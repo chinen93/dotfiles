@@ -35,6 +35,8 @@
 (setq use-package-verbose t)
 (require 'use-package)
 
+(org-babel-load-file "~/git/dotfiles/files/pchinen.org")
+
 ;;====================================================================
 ;;    Windows Managemet
 ;;====================================================================
@@ -158,8 +160,8 @@
 (setq column-number-mode t)
 
 ;; Open something when emacs starts
-(if (file-exists-p "/home/pchinen/git/org/help.org")
-    (progn(find-file "/home/pchinen/git/org/help.org")))
+(if (file-exists-p "~/git/org/help.org")
+    (progn(find-file "~/git/org/help.org")))
 
 ;; Load theme
 (use-package monokai-theme
