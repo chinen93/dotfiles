@@ -1,6 +1,12 @@
 
 (message " ===============================================  algo pelo orgmode  ================================================")
 
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+(setq delete-old-versions -1)
+(setq version-control t)
+(setq vc-make-backup-files t)
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+
 ;;====================================================================
 ;;    Layout
 ;;====================================================================
@@ -14,11 +20,6 @@
 
 ;; Show an notication for invalid operations
 (setq visible-bell t)
-
-;; Write backup files to own directory
-(setq backup-directory-alist
-      `(("." . ,(expand-file-name
-                 (concat user-emacs-directory "backups")))))
 
 ;; Make backups of files, even when they're in version control
 (setq vc-make-backup-files t)
@@ -58,6 +59,26 @@
 
 ;; use the python 3.1
 (setq py-python-command "/usr/bin/python3.1")
+
+(setq org-return-follows-link t)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+   (sh . t)
+   (python . t)
+   (R . t)
+   (ruby . t)
+   (ditaa . t)
+   (dot . t)
+   (octave . t)
+   (sqlite . t)
+   (perl . t)
+   ))
+
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-ca" 'org-agenda)
 
 (use-package helm
   :ensure t
