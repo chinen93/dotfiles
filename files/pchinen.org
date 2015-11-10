@@ -76,6 +76,9 @@
 #+end_src
 * Pacotes
 ** Org mode
+#+begin_src emacs-lisp
+  (setq org-return-follows-link t)
+#+end_src
 ** TODO Helm 
 Add: helm swoop
 #+begin_src emacs-lisp
