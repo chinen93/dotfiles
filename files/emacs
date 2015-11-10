@@ -9,7 +9,8 @@
 			helm-swoop
 			multiple-cursors
 			guide-key
-			monokai-theme))
+			monokai-theme
+			org-install))
 
 (require 'package)
 (package-initialize)
@@ -66,10 +67,6 @@
 ;; No splash screen please ... jeez
 (setq inhibit-startup-message t)
 
-;; Place Emacs in the location (0, 80) on screen 
-(setq initial-frame-alist
-  '((top  .  0)
-    (left . 80)))
 
 ;; Change the font
 ;; TODO_NOW
@@ -89,6 +86,25 @@
 ;;    Org
 ;;====================================================================
 (setq org-return-follows-link t)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+   (sh . t)
+   (python . t)
+   (R . t)
+   (ruby . t)
+   (ditaa . t)
+   (dot . t)
+   (octave . t)
+   (sqlite . t)
+   (perl . t)
+   ))
+
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-ca" 'org-agenda)
+  
 
 ;;====================================================================
 ;;    Custom mode
@@ -261,7 +277,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/git/org/teste.org")))
+ '(org-agenda-files (quote ("~/git/org/agenda/routine.org")))
  '(safe-local-variable-values (quote ((eval my/japanese-config)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
