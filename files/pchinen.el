@@ -7,6 +7,16 @@
 (setq vc-make-backup-files t)
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 
+(setq savehist-file "~/.emacs.d/savehist")
+(savehist-mode 1)
+(setq history-length t)
+(setq history-delete-duplicates t)
+(setq savehist-save-minibuffer-history 1)
+(setq savehist-additional-variables
+      '(kill-ring
+        search-ring
+        regexp-search-ring))
+
 ;;====================================================================
 ;;    Layout
 ;;====================================================================
@@ -17,12 +27,6 @@
 
 ;; No splash screen please ... jeez
 (setq inhibit-startup-message t)
-
-;; Show an notication for invalid operations
-(setq visible-bell t)
-
-;; Make backups of files, even when they're in version control
-(setq vc-make-backup-files t)
 
 ;; Show matching parenthesis. 
 (show-paren-mode t)
@@ -40,7 +44,7 @@
 ;; ***********************************************
 ;;
 ")
- 
+
 ;; Open something when emacs starts
 (if (file-exists-p "~/git/org/help.org")
     (progn(find-file "~/git/org/help.org")))
@@ -49,10 +53,11 @@
 (use-package monokai-theme
   :ensure t
   :config
-  (progn (message "Monokai Theme")
-         (message "Loaded")
-         (load-theme 'monokai t)
-         (set-background-color "#121212")))
+  (progn
+    (message "Monokai Theme")
+    (message "Loaded")
+    (load-theme 'monokai t)
+    (set-background-color "#121212")))
 
 (setq c-default-style "linux"
       c-basic-offset 4)
@@ -60,36 +65,63 @@
 ;; use the python 3.1
 (setq py-python-command "/usr/bin/python3.1")
 
-(setq org-return-follows-link t)
+(use-package org
+  :ensure t
+  :init
+  (progn
+    (setq org-return-follows-link t)
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '(
+       (sh . t)
+       (python . t)
+       (R . t)
+       (ruby . t)
+       (ditaa . t)
+       (dot . t)
+       (octave . t)
+       (sqlite . t)
+       (perl . t)
+       )))
+  :bind
+  (("C-c l" . org-store-link)
+   ("C-c a" . org-agenda)
+   ("C-c r" . org-capture)))
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '(
-   (sh . t)
-   (python . t)
-   (R . t)
-   (ruby . t)
-   (ditaa . t)
-   (dot . t)
-   (octave . t)
-   (sqlite . t)
-   (perl . t)
-   ))
-
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-ca" 'org-agenda)
+(setq org-directory "~/git/org")
+(setq org-default-notes-file "~/git/org/organizer.org")
 
 (use-package helm
   :ensure t
-  :config
+  :diminish helm-mode
+  :init
   (progn
     (require 'helm-config)
-    (helm-autoresize-mode 1)
+    (message "Helm")
+    (message "Loaded")
+    (setq helm-candidate-number-limit 100)
+    ;; From https://gist.github.com/antifuchs/9238468
+    (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
+          helm-input-idle-delay 0.01  ; this actually updates things
+                                        ; reeeelatively quickly.
+          helm-yas-display-key-on-candidate t
+          helm-quick-update t
+          helm-M-x-requires-pattern nil
+          helm-ff-skip-boring-files t)
     (helm-mode))
   :bind (("C-c h" . helm-mini)
+         ("C-h a" . helm-apropos)
+         ("C-x C-b" . helm-buffers-list)
+         ("C-x b" . helm-buffers-list)
+         ("M-y" . helm-show-kill-ring)
          ("M-x" . helm-M-x)
-         ("M-y" . helm-show-kill-ring)))
+         ("C-x c o" . helm-occur)
+         ("C-x c s" . helm-swoop)
+         ("C-x c y" . helm-yas-complete)
+         ("C-x c Y" . helm-yas-create-snippet-on-region)
+         ("C-x c b" . my/helm-do-grep-book-notes)
+         ("C-x c SPC" . helm-all-mark-rings)))
+(ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
 
 (use-package guide-key
   :ensure t
@@ -114,17 +146,20 @@
 (use-package nyan-mode
   :ensure t
   :config
-  (progn (message "Nyan Mode")
-         (message "Loaded")
-         (nyan-mode 1)))
+  (progn
+    (message "Nyan Mode")
+    (message "Loaded")
+    (nyan-mode 1)))
 
 ;; Expand Region
 (use-package expand-region
   :ensure t
-  :bind ("C-=" . er/expand-region)
+  :bind
+  ("C-=" . er/expand-region)
   :config
-  (progn (message "Expand Region")
-         (message "Loaded")))
+  (progn
+    (message "Expand Region")
+    (message "Loaded")))
 
 (defun my/reload-dot-emacs ()
   "Save the .emacs buffer if needed, then reaload .emacs."

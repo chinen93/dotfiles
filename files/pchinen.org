@@ -1,5 +1,6 @@
 
 [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua - .Emacs in org]]
+
 #+begin_src emacs-lisp
   (message " ===============================================  algo pelo orgmode  ================================================")
 #+end_src
@@ -13,7 +14,19 @@
   (setq vc-make-backup-files t)
   (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 #+end_src
-*** Outras Coisas
+*** Histórico
+#+begin_src emacs-lisp
+  (setq savehist-file "~/.emacs.d/savehist")
+  (savehist-mode 1)
+  (setq history-length t)
+  (setq history-delete-duplicates t)
+  (setq savehist-save-minibuffer-history 1)
+  (setq savehist-additional-variables
+        '(kill-ring
+          search-ring
+          regexp-search-ring))
+#+end_src
+*** Deixar a tela do emacs minimalista
 #+begin_src emacs-lisp
   ;;====================================================================
   ;;    Layout
@@ -25,13 +38,9 @@
 
   ;; No splash screen please ... jeez
   (setq inhibit-startup-message t)
-
-  ;; Show an notication for invalid operations
-  (setq visible-bell t)
-
-  ;; Make backups of files, even when they're in version control
-  (setq vc-make-backup-files t)
-
+#+end_src
+*** Detalhes para deixar a experiencia com o EMACS mais agradavel
+#+begin_src emacs-lisp
   ;; Show matching parenthesis. 
   (show-paren-mode t)
 
@@ -48,7 +57,10 @@
   ;; ***********************************************
   ;;
   ")
- 
+
+#+end_src
+*** Abrir arquivo na inicializao
+#+begin_src emacs-lisp
   ;; Open something when emacs starts
   (if (file-exists-p "~/git/org/help.org")
       (progn(find-file "~/git/org/help.org")))
@@ -61,10 +73,11 @@
   (use-package monokai-theme
     :ensure t
     :config
-    (progn (message "Monokai Theme")
-           (message "Loaded")
-           (load-theme 'monokai t)
-           (set-background-color "#121212")))
+    (progn
+      (message "Monokai Theme")
+      (message "Loaded")
+      (load-theme 'monokai t)
+      (set-background-color "#121212")))
 #+end_src
 ** Gerenciamento dos Buffers/Frames
 * Configurações Linguagens
@@ -72,6 +85,7 @@
 #+begin_src emacs-lisp
   (setq c-default-style "linux"
         c-basic-offset 4)
+
 #+end_src
 **  Python
 #+begin_src emacs-lisp
@@ -81,39 +95,73 @@
 * Pacotes
 ** Org mode
 #+begin_src emacs-lisp
-  (setq org-return-follows-link t)
-
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '(
-     (sh . t)
-     (python . t)
-     (R . t)
-     (ruby . t)
-     (ditaa . t)
-     (dot . t)
-     (octave . t)
-     (sqlite . t)
-     (perl . t)
-     ))
-
-  (global-set-key "\C-cl" 'org-store-link)
-  (global-set-key "\C-cc" 'org-capture)
-  (global-set-key "\C-ca" 'org-agenda)
+      (use-package org
+        :ensure t
+        :init
+        (progn
+          (setq org-return-follows-link t)
+          (org-babel-do-load-languages
+           'org-babel-load-languages
+           '(
+             (sh . t)
+             (python . t)
+             (R . t)
+             (ruby . t)
+             (ditaa . t)
+             (dot . t)
+             (octave . t)
+             (sqlite . t)
+             (perl . t)
+             )))
+        :bind
+        (("C-c l" . org-store-link)
+         ("C-c a" . org-agenda)
+         ("C-c r" . org-capture)))      
 #+end_src
+*** Templates
+**** BEGIN-END
+#+begin_src emacs-lisp
+  (setq org-structure-template-alist
+        '(("l" "#+begin_src emacs-lisp\n?\n#+end_src" "<src lang=\"emacs-lisp\">\n?\n</src>")))
+#+end_src
+*** Capture Directory
+#+begin_src emacs-lisp
+  (setq org-directory "~/git/org")
+  (setq org-default-notes-file "~/git/org/organizer.org")
+#+end_src    
 ** TODO Helm 
-Add: helm swoop
 #+begin_src emacs-lisp
   (use-package helm
     :ensure t
-    :config
+    :diminish helm-mode
+    :init
     (progn
       (require 'helm-config)
-      (helm-autoresize-mode 1)
+      (message "Helm")
+      (message "Loaded")
+      (setq helm-candidate-number-limit 100)
+      ;; From https://gist.github.com/antifuchs/9238468
+      (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
+            helm-input-idle-delay 0.01  ; this actually updates things
+                                          ; reeeelatively quickly.
+            helm-yas-display-key-on-candidate t
+            helm-quick-update t
+            helm-M-x-requires-pattern nil
+            helm-ff-skip-boring-files t)
       (helm-mode))
     :bind (("C-c h" . helm-mini)
+           ("C-h a" . helm-apropos)
+           ("C-x C-b" . helm-buffers-list)
+           ("C-x b" . helm-buffers-list)
+           ("M-y" . helm-show-kill-ring)
            ("M-x" . helm-M-x)
-           ("M-y" . helm-show-kill-ring)))
+           ("C-x c o" . helm-occur)
+           ("C-x c s" . helm-swoop)
+           ("C-x c y" . helm-yas-complete)
+           ("C-x c Y" . helm-yas-create-snippet-on-region)
+           ("C-x c b" . my/helm-do-grep-book-notes)
+           ("C-x c SPC" . helm-all-mark-rings)))
+  (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
 #+end_src
 ** Magit
 ** Guide Key
@@ -144,22 +192,26 @@ Add: helm swoop
   (use-package nyan-mode
     :ensure t
     :config
-    (progn (message "Nyan Mode")
-           (message "Loaded")
-           (nyan-mode 1)))
+    (progn
+      (message "Nyan Mode")
+      (message "Loaded")
+      (nyan-mode 1)))
 #+end_src
 ** Expand Region
 #+begin_src emacs-lisp
   ;; Expand Region
   (use-package expand-region
     :ensure t
-    :bind ("C-=" . er/expand-region)
+    :bind
+    ("C-=" . er/expand-region)
     :config
-    (progn (message "Expand Region")
-           (message "Loaded")))
+    (progn
+      (message "Expand Region")
+      (message "Loaded")))
 #+end_src
 ** Multiple Cursor
 * Funções
+** Emacs
 #+begin_src emacs-lisp
   (defun my/reload-dot-emacs ()
     "Save the .emacs buffer if needed, then reaload .emacs."
@@ -169,7 +221,10 @@ Add: helm swoop
            (save-buffer (get-file-buffer dot-emacs)))
       (load-file dot-emacs))
     (message "Re-initialized!"))
-
+#+end_src
+** Programação
+*** C
+#+begin_src emacs-lisp
   (defun c-comment-line ()
     (interactive)
     (beginning-of-line)
@@ -186,10 +241,110 @@ Add: helm swoop
     (delete-char 3))
 #+end_src
 * Atalhos
+** Destruidos
+<f1> C-a	about-emacs
+<f1> C-c	describe-copying
+<f1> C-d	view-emacs-debugging
+<f1> C-e	view-external-packages
+<f1> C-f	view-emacs-FAQ
+<f1> C-h	help-for-help
+<f1> RET	view-order-manuals
+<f1> C-n	view-emacs-news
+<f1> C-o	describe-distribution
+<f1> C-p	view-emacs-problems
+<f1> C-t	view-emacs-todo
+<f1> C-w	describe-no-warranty
+<f1> C-\	describe-input-method
+<f1> .		display-local-help
+<f1> 4		Prefix Command
+<f1> ?		help-for-help
+<f1> C		describe-coding-system
+<f1> F		Info-goto-emacs-command-node
+<f1> I		describe-input-method
+<f1> K		Info-goto-emacs-key-command-node
+<f1> L		describe-language-environment
+<f1> P		describe-package
+<f1> S		info-lookup-symbol
+<f1> a		helm-apropos
+<f1> b		describe-bindings
+<f1> c		describe-key-briefly
+<f1> d		apropos-documentation
+<f1> e		view-echo-area-messages
+<f1> f		describe-function
+<f1> g		describe-gnu-project
+<f1> h		view-hello-file
+<f1> i		info
+<f1> k		describe-key
+<f1> l		view-lossage
+<f1> m		describe-mode
+<f1> n		view-emacs-news
+<f1> p		finder-by-keyword
+<f1> q		help-quit
+<f1> r		info-emacs-manual
+<f1> s		describe-syntax
+<f1> t		help-with-tutorial
+<f1> v		describe-variable
+<f1> w		where-is
+<f1> <f1>	help-for-help
+<f1> <help>	help-for-help
+<f1> 4 i	info-other-window
+<f1>		help-command
+
+#+begin_src emacs-lisp
+  (global-unset-key [(f1) C-a])
+  (global-unset-key [(f1) C-c])
+  (global-unset-key [(f1) C-d])
+  (global-unset-key [(f1) C-e])
+  (global-unset-key [(f1) C-f])
+  (global-unset-key [(f1) C-h])
+  (global-unset-key [(f1) \-r])
+  (global-unset-key [(f1) C-n])
+  (global-unset-key [(f1) C-o])
+  (global-unset-key [(f1) C-p])
+  (global-unset-key [(f1) C-t])
+  (global-unset-key [(f1) C-w])
+  (global-unset-key [(f1) 4])
+  (global-unset-key [(f1) \-?])
+  (global-unset-key [(f1) C])
+  (global-unset-key [(f1) F])
+  (global-unset-key [(f1) I])
+  (global-unset-key [(f1) K])
+  (global-unset-key [(f1) L])
+  (global-unset-key [(f1) P])
+  (global-unset-key [(f1) S])
+  (global-unset-key [(f1) a])
+  (global-unset-key [(f1) b])
+  (global-unset-key [(f1) c])
+  (global-unset-key [(f1) d])
+  (global-unset-key [(f1) e])
+  (global-unset-key [(f1) f])
+  (global-unset-key [(f1) g])
+  (global-unset-key [(f1) h])
+  (global-unset-key [(f1) i])
+  (global-unset-key [(f1) k])
+  (global-unset-key [(f1) l])
+  (global-unset-key [(f1) m])
+  (global-unset-key [(f1) n])
+  (global-unset-key [(f1) p])
+  (global-unset-key [(f1) q])
+  (global-unset-key [(f1) r])
+  (global-unset-key [(f1) s])
+  (global-unset-key [(f1) t])
+  (global-unset-key [(f1) v])
+  (global-unset-key [(f1) w])
+  (global-unset-key [(f1) (f1)])
+  (global-unset-key [(f1) (help)])
+  (global-unset-key [(f1) 4 i])
+  (global-unset-key [(f1)])
+#+end_src
+
+** Criados
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-s") 'isearch-forward-regexp) 
   (global-set-key (kbd "C-r") 'isearch-backward-regexp)
+  (global-set-key [(f1)] 'other-window)
 #+end_src
+
 * File Modes
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '(".emacs" . lisp-mode))
