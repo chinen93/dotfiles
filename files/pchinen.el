@@ -17,17 +17,6 @@
         search-ring
         regexp-search-ring))
 
-;;====================================================================
-;;    Layout
-;;====================================================================
-;; Turn off mouse interface early in startup to avoid momentary display
-(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-
-;; No splash screen please ... jeez
-(setq inhibit-startup-message t)
-
 ;; Show matching parenthesis. 
 (show-paren-mode t)
 
@@ -49,13 +38,23 @@
 (if (file-exists-p "~/git/org/help.org")
     (progn(find-file "~/git/org/help.org")))
 
+;;====================================================================
+;;    Layout
+;;====================================================================
+;; Turn off mouse interface early in startup to avoid momentary display
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+;; No splash screen please ... jeez
+(setq inhibit-startup-message t)
+
 ;; Load theme
 (use-package monokai-theme
   :ensure t
   :config
   (progn
-    (message "Monokai Theme")
-    (message "Loaded")
+    (message "Monokai Theme - Loaded")
     (load-theme 'monokai t)
     (set-background-color "#121212")))
 
@@ -88,6 +87,9 @@
    ("C-c a" . org-agenda)
    ("C-c r" . org-capture)))
 
+(setq org-structure-template-alist
+      '(("l" "#+begin_src emacs-lisp\n?\n#+end_src" "<src lang=\"emacs-lisp\">\n?\n</src>")))
+
 (setq org-directory "~/git/org")
 (setq org-default-notes-file "~/git/org/organizer.org")
 
@@ -97,8 +99,7 @@
   :init
   (progn
     (require 'helm-config)
-    (message "Helm")
-    (message "Loaded")
+    (message "Helm - Loaded")
     (setq helm-candidate-number-limit 100)
     ;; From https://gist.github.com/antifuchs/9238468
     (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
@@ -116,39 +117,45 @@
          ("M-y" . helm-show-kill-ring)
          ("M-x" . helm-M-x)
          ("C-x c o" . helm-occur)
-         ("C-x c s" . helm-swoop)
+         ("C-1" . helm-swoop)
          ("C-x c y" . helm-yas-complete)
          ("C-x c Y" . helm-yas-create-snippet-on-region)
          ("C-x c b" . my/helm-do-grep-book-notes)
          ("C-x c SPC" . helm-all-mark-rings)))
 (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
 
+(use-package helm-swoop
+  :ensure t
+  :init
+  (progn
+    (message "Helm Swoop - Loaded"))
+  :bind ("C-1" . helm-swoop))
+
 (use-package guide-key
   :ensure t
   :config                    
-  (progn (message "Guide Key")
-         (message "Loaded")
-         (setq guide-key/guide-key-sequence nil)
-         (defun enable-guide-key ()
-           (interactive)
-           (guide-key-mode 1)
-           (setq guide-key/guide-key-sequence t)
-           (message "Guide Key enabled"))
-         (defun disable-guide-key ()
-           (interactive)
-           (guide-key-mode -1)
-           (setq guide-key/guide-key-sequence nil)
-           (message "Guide Key disabled"))
-         (global-set-key (kbd "C-c =") 'enable-guide-key)
-         (global-set-key (kbd "C-c -") 'disable-guide-key)))
+  (progn
+    (message "Guide Key - Loaded")
+    (setq guide-key/guide-key-sequence nil)
+    (defun enable-guide-key ()
+      (interactive)
+      (guide-key-mode 1)
+      (setq guide-key/guide-key-sequence t)
+      (message "Guide Key enabled"))
+    (defun disable-guide-key ()
+      (interactive)
+      (guide-key-mode -1)
+      (setq guide-key/guide-key-sequence nil)
+      (message "Guide Key disabled"))
+    (global-set-key (kbd "C-c =") 'enable-guide-key)
+    (global-set-key (kbd "C-c -") 'disable-guide-key)))
 
 ;; Nyan Mode
 (use-package nyan-mode
   :ensure t
   :config
   (progn
-    (message "Nyan Mode")
-    (message "Loaded")
+    (message "Nyan Mode - Loaded")
     (nyan-mode 1)))
 
 ;; Expand Region
@@ -158,17 +165,9 @@
   ("C-=" . er/expand-region)
   :config
   (progn
-    (message "Expand Region")
-    (message "Loaded")))
+    (message "Expand Region - Loaded")))
 
-(defun my/reload-dot-emacs ()
-  "Save the .emacs buffer if needed, then reaload .emacs."
-  (interactive)
-  (let ((dot-emacs "~/.emacs"))
-    (and (get-file-buffer dot-emacs)
-         (save-buffer (get-file-buffer dot-emacs)))
-    (load-file dot-emacs))
-  (message "Re-initialized!"))
+
 
 (defun c-comment-line ()
   (interactive)
@@ -185,7 +184,10 @@
   (backward-char 3)
   (delete-char 3))
 
+
+
 (global-set-key (kbd "C-s") 'isearch-forward-regexp) 
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
+(global-set-key [(f1)] 'other-window)
 
-(add-to-list 'auto-mode-alist '(".emacs" . lisp-mode))
+

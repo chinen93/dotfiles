@@ -2,41 +2,50 @@
 ;;    Install Packages
 ;;====================================================================
 (setq my-package-list '(use-package
-			nyan-mode
-			magit
-			expand-region
-			helm
-			helm-swoop
-			multiple-cursors
-			guide-key
-			monokai-theme
-			org-install))
+			org))
 
 (require 'package)
 (package-initialize)
 
-(defun my/install-packages ()
-  (interactive)
-  (setq package-archives
+(setq package-archives
 	'(("melpa" . "http://melpa.milkbox.net/packages/")
 	  ("org" . "http://orgmode.org/elpa/")
 	  ("gnu" . "http://elpa.gnu.org/packages/")
 	  ("marmalade" . "http://marmalade-repo.org/packages/")))
+	  
+(defun my/install-packages ()
+  (interactive)
   (unless package-archive-contents
-  (package-refresh-contents))
+    (package-refresh-contents))
   (package-initialize)
   ;; install
   (dolist(i-package my-package-list)
     (unless (package-installed-p i-package)
       (package-install i-package))))
 
+(package-initialize nil)
+(setq package-enable-at-startup nil)
 
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
-(setq use-package-verbose t)
 (require 'use-package)
+(setq use-package-verbose t)
+(setq load-prefer-newer t)
+
+(defun my/reload-dot-emacs ()
+    "Save the .emacs buffer if needed, then reaload .emacs."
+    (interactive)
+    (let ((dot-emacs "~/.emacs"))
+      (and (get-file-buffer dot-emacs)
+           (save-buffer (get-file-buffer dot-emacs)))
+      (load-file dot-emacs))
+    (message "Re-initialized!"))
+
+(add-to-list 'auto-mode-alist '(".emacs" . lisp-mode))
 
 (org-babel-load-file "~/git/dotfiles/files/pchinen.org")
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

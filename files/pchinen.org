@@ -1,9 +1,40 @@
-
-[[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua - .Emacs in org]]
+* Referencias
+  [[file:emacs][.emacs]]
+  [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua - .Emacs in org]]
 
 #+begin_src emacs-lisp
   (message " ===============================================  algo pelo orgmode  ================================================")
 #+end_src
+
+** Packages Installed
+#+begin_src sh 
+  cat ~/git/dotfiles/files/pchinen.org | grep -B 1 "ensure t" | grep -v "pchinen"
+#+end_src
+
+#+RESULTS:
+| #+begin_src  | sh            |
+| --           |               |
+| (use-package | monokai-theme |
+| :ensure      | t             |
+| --           |               |
+| (use-package | org           |
+| :ensure      | t             |
+| --           |               |
+| (use-package | helm          |
+| :ensure      | t             |
+| --           |               |
+| (use-package | helm-swoop    |
+| :ensure      | t             |
+| --           |               |
+| (use-package | guide-key     |
+| :ensure      | t             |
+| --           |               |
+| (use-package | nyan-mode     |
+| :ensure      | t             |
+| --           |               |
+| (use-package | expand-region |
+| :ensure      | t             |
+
 * Configurações Básicas
 ** Informações Pessoais
 *** Backup
@@ -25,19 +56,6 @@
         '(kill-ring
           search-ring
           regexp-search-ring))
-#+end_src
-*** Deixar a tela do emacs minimalista
-#+begin_src emacs-lisp
-  ;;====================================================================
-  ;;    Layout
-  ;;====================================================================
-  ;; Turn off mouse interface early in startup to avoid momentary display
-  (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-  (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-  (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-
-  ;; No splash screen please ... jeez
-  (setq inhibit-startup-message t)
 #+end_src
 *** Detalhes para deixar a experiencia com o EMACS mais agradavel
 #+begin_src emacs-lisp
@@ -66,6 +84,19 @@
       (progn(find-file "~/git/org/help.org")))
 #+end_src
 ** Layout
+*** Deixar a tela do emacs minimalista
+#+begin_src emacs-lisp
+  ;;====================================================================
+  ;;    Layout
+  ;;====================================================================
+  ;; Turn off mouse interface early in startup to avoid momentary display
+  (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+  (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+  (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+  ;; No splash screen please ... jeez
+  (setq inhibit-startup-message t)
+#+end_src
 *** TODO Fonte
 *** TODO Tema
 #+begin_src emacs-lisp
@@ -74,8 +105,7 @@
     :ensure t
     :config
     (progn
-      (message "Monokai Theme")
-      (message "Loaded")
+      (message "Monokai Theme - Loaded")
       (load-theme 'monokai t)
       (set-background-color "#121212")))
 #+end_src
@@ -93,30 +123,31 @@
   (setq py-python-command "/usr/bin/python3.1")
 #+end_src
 * Pacotes
+** Use Package
 ** Org mode
 #+begin_src emacs-lisp
-      (use-package org
-        :ensure t
-        :init
-        (progn
-          (setq org-return-follows-link t)
-          (org-babel-do-load-languages
-           'org-babel-load-languages
-           '(
-             (sh . t)
-             (python . t)
-             (R . t)
-             (ruby . t)
-             (ditaa . t)
-             (dot . t)
-             (octave . t)
-             (sqlite . t)
-             (perl . t)
-             )))
-        :bind
-        (("C-c l" . org-store-link)
-         ("C-c a" . org-agenda)
-         ("C-c r" . org-capture)))      
+  (use-package org
+    :ensure t
+    :init
+    (progn
+      (setq org-return-follows-link t)
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '(
+         (sh . t)
+         (python . t)
+         (R . t)
+         (ruby . t)
+         (ditaa . t)
+         (dot . t)
+         (octave . t)
+         (sqlite . t)
+         (perl . t)
+         )))
+    :bind
+    (("C-c l" . org-store-link)
+     ("C-c a" . org-agenda)
+     ("C-c r" . org-capture)))      
 #+end_src
 *** Templates
 **** BEGIN-END
@@ -137,8 +168,7 @@
     :init
     (progn
       (require 'helm-config)
-      (message "Helm")
-      (message "Loaded")
+      (message "Helm - Loaded")
       (setq helm-candidate-number-limit 100)
       ;; From https://gist.github.com/antifuchs/9238468
       (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
@@ -156,12 +186,21 @@
            ("M-y" . helm-show-kill-ring)
            ("M-x" . helm-M-x)
            ("C-x c o" . helm-occur)
-           ("C-x c s" . helm-swoop)
+           ("C-1" . helm-swoop)
            ("C-x c y" . helm-yas-complete)
            ("C-x c Y" . helm-yas-create-snippet-on-region)
            ("C-x c b" . my/helm-do-grep-book-notes)
            ("C-x c SPC" . helm-all-mark-rings)))
   (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
+#+end_src
+*** Helm-Swoop
+#+begin_src emacs-lisp
+  (use-package helm-swoop
+    :ensure t
+    :init
+    (progn
+      (message "Helm Swoop - Loaded"))
+    :bind ("C-1" . helm-swoop))
 #+end_src
 ** Magit
 ** Guide Key
@@ -169,21 +208,21 @@
   (use-package guide-key
     :ensure t
     :config                    
-    (progn (message "Guide Key")
-           (message "Loaded")
-           (setq guide-key/guide-key-sequence nil)
-           (defun enable-guide-key ()
-             (interactive)
-             (guide-key-mode 1)
-             (setq guide-key/guide-key-sequence t)
-             (message "Guide Key enabled"))
-           (defun disable-guide-key ()
-             (interactive)
-             (guide-key-mode -1)
-             (setq guide-key/guide-key-sequence nil)
-             (message "Guide Key disabled"))
-           (global-set-key (kbd "C-c =") 'enable-guide-key)
-           (global-set-key (kbd "C-c -") 'disable-guide-key)))
+    (progn
+      (message "Guide Key - Loaded")
+      (setq guide-key/guide-key-sequence nil)
+      (defun enable-guide-key ()
+        (interactive)
+        (guide-key-mode 1)
+        (setq guide-key/guide-key-sequence t)
+        (message "Guide Key enabled"))
+      (defun disable-guide-key ()
+        (interactive)
+        (guide-key-mode -1)
+        (setq guide-key/guide-key-sequence nil)
+        (message "Guide Key disabled"))
+      (global-set-key (kbd "C-c =") 'enable-guide-key)
+      (global-set-key (kbd "C-c -") 'disable-guide-key)))
 #+end_src
 
 ** Nyan Cat
@@ -193,8 +232,7 @@
     :ensure t
     :config
     (progn
-      (message "Nyan Mode")
-      (message "Loaded")
+      (message "Nyan Mode - Loaded")
       (nyan-mode 1)))
 #+end_src
 ** Expand Region
@@ -206,21 +244,14 @@
     ("C-=" . er/expand-region)
     :config
     (progn
-      (message "Expand Region")
-      (message "Loaded")))
+      (message "Expand Region - Loaded")))
 #+end_src
 ** Multiple Cursor
+** Company
 * Funções
 ** Emacs
 #+begin_src emacs-lisp
-  (defun my/reload-dot-emacs ()
-    "Save the .emacs buffer if needed, then reaload .emacs."
-    (interactive)
-    (let ((dot-emacs "~/.emacs"))
-      (and (get-file-buffer dot-emacs)
-           (save-buffer (get-file-buffer dot-emacs)))
-      (load-file dot-emacs))
-    (message "Re-initialized!"))
+  
 #+end_src
 ** Programação
 *** C
@@ -242,100 +273,55 @@
 #+end_src
 * Atalhos
 ** Destruidos
-<f1> C-a	about-emacs
-<f1> C-c	describe-copying
-<f1> C-d	view-emacs-debugging
-<f1> C-e	view-external-packages
-<f1> C-f	view-emacs-FAQ
-<f1> C-h	help-for-help
-<f1> RET	view-order-manuals
-<f1> C-n	view-emacs-news
-<f1> C-o	describe-distribution
-<f1> C-p	view-emacs-problems
-<f1> C-t	view-emacs-todo
-<f1> C-w	describe-no-warranty
-<f1> C-\	describe-input-method
-<f1> .		display-local-help
-<f1> 4		Prefix Command
-<f1> ?		help-for-help
-<f1> C		describe-coding-system
-<f1> F		Info-goto-emacs-command-node
-<f1> I		describe-input-method
-<f1> K		Info-goto-emacs-key-command-node
-<f1> L		describe-language-environment
-<f1> P		describe-package
-<f1> S		info-lookup-symbol
-<f1> a		helm-apropos
-<f1> b		describe-bindings
-<f1> c		describe-key-briefly
-<f1> d		apropos-documentation
-<f1> e		view-echo-area-messages
-<f1> f		describe-function
-<f1> g		describe-gnu-project
-<f1> h		view-hello-file
-<f1> i		info
-<f1> k		describe-key
-<f1> l		view-lossage
-<f1> m		describe-mode
-<f1> n		view-emacs-news
-<f1> p		finder-by-keyword
-<f1> q		help-quit
-<f1> r		info-emacs-manual
-<f1> s		describe-syntax
-<f1> t		help-with-tutorial
-<f1> v		describe-variable
-<f1> w		where-is
-<f1> <f1>	help-for-help
-<f1> <help>	help-for-help
-<f1> 4 i	info-other-window
-<f1>		help-command
+f1 C-a	about-emacs
+f1 C-c	describe-copying
+f1 C-d	view-emacs-debugging
+f1 C-e	view-external-packages
+f1 C-f	view-emacs-FAQ
+f1 C-h	help-for-help
+f1 RET	view-order-manuals
+f1 C-n	view-emacs-news
+f1 C-o	describe-distribution
+f1 C-p	view-emacs-problems
+f1 C-t	view-emacs-todo
+f1 C-w	describe-no-warranty
+f1 C-\	describe-input-method
+f1 .		display-local-help
+f1 4		Prefix Command
+f1 ?		help-for-help
+f1 C		describe-coding-system
+f1 F		Info-goto-emacs-command-node
+f1 I		describe-input-method
+f1 K		Info-goto-emacs-key-command-node
+f1 L		describe-language-environment
+f1 P		describe-package
+f1 S		info-lookup-symbol
+f1 a		helm-apropos
+f1 b		describe-bindings
+f1 c		describe-key-briefly
+f1 d		apropos-documentation
+f1 e		view-echo-area-messages
+f1 f		describe-function
+f1 g		describe-gnu-project
+f1 h		view-hello-file
+f1 i		info
+f1 k		describe-key
+f1 l		view-lossage
+f1 m		describe-mode
+f1 n		view-emacs-news
+f1 p		finder-by-keyword
+f1 q		help-quit
+f1 r		info-emacs-manual
+f1 s		describe-syntax
+f1 t		help-with-tutorial
+f1 v		describe-variable
+f1 w		where-is
+f1 f1	help-for-help
+f1  help	help-for-help
+f1 4 i	info-other-window
+f1		help-command
 
 #+begin_src emacs-lisp
-  (global-unset-key [(f1) C-a])
-  (global-unset-key [(f1) C-c])
-  (global-unset-key [(f1) C-d])
-  (global-unset-key [(f1) C-e])
-  (global-unset-key [(f1) C-f])
-  (global-unset-key [(f1) C-h])
-  (global-unset-key [(f1) \-r])
-  (global-unset-key [(f1) C-n])
-  (global-unset-key [(f1) C-o])
-  (global-unset-key [(f1) C-p])
-  (global-unset-key [(f1) C-t])
-  (global-unset-key [(f1) C-w])
-  (global-unset-key [(f1) 4])
-  (global-unset-key [(f1) \-?])
-  (global-unset-key [(f1) C])
-  (global-unset-key [(f1) F])
-  (global-unset-key [(f1) I])
-  (global-unset-key [(f1) K])
-  (global-unset-key [(f1) L])
-  (global-unset-key [(f1) P])
-  (global-unset-key [(f1) S])
-  (global-unset-key [(f1) a])
-  (global-unset-key [(f1) b])
-  (global-unset-key [(f1) c])
-  (global-unset-key [(f1) d])
-  (global-unset-key [(f1) e])
-  (global-unset-key [(f1) f])
-  (global-unset-key [(f1) g])
-  (global-unset-key [(f1) h])
-  (global-unset-key [(f1) i])
-  (global-unset-key [(f1) k])
-  (global-unset-key [(f1) l])
-  (global-unset-key [(f1) m])
-  (global-unset-key [(f1) n])
-  (global-unset-key [(f1) p])
-  (global-unset-key [(f1) q])
-  (global-unset-key [(f1) r])
-  (global-unset-key [(f1) s])
-  (global-unset-key [(f1) t])
-  (global-unset-key [(f1) v])
-  (global-unset-key [(f1) w])
-  (global-unset-key [(f1) (f1)])
-  (global-unset-key [(f1) (help)])
-  (global-unset-key [(f1) 4 i])
-  (global-unset-key [(f1)])
 #+end_src
 
 ** Criados
@@ -347,5 +333,5 @@
 
 * File Modes
 #+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '(".emacs" . lisp-mode))
+
 #+end_src
