@@ -1,11 +1,7 @@
 
 (message " ===============================================  algo pelo orgmode  ================================================")
 
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-(setq delete-old-versions -1)
-(setq version-control t)
-(setq vc-make-backup-files t)
-(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+
 
 (setq savehist-file "~/.emacs.d/savehist")
 (savehist-mode 1)
@@ -42,7 +38,7 @@
 ;;    Layout
 ;;====================================================================
 ;; Turn off mouse interface early in startup to avoid momentary display
-(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+;;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
@@ -63,6 +59,8 @@
 
 ;; use the python 3.1
 (setq py-python-command "/usr/bin/python3.1")
+
+
 
 (use-package org
   :ensure t
@@ -131,6 +129,12 @@
     (message "Helm Swoop - Loaded"))
   :bind ("C-1" . helm-swoop))
 
+(use-package magit
+  :ensure t
+  :init
+  (progn
+    (message "Magit - Loaded")))
+
 (use-package guide-key
   :ensure t
   :config                    
@@ -167,7 +171,19 @@
   (progn
     (message "Expand Region - Loaded")))
 
+(use-package ace-jump-mode
+  :ensure t)
 
+(use-package yasnippet
+ :ensure t
+ :config
+ (progn
+   (yas-global-mode)
+   (message "Yasnippet - Loaded")))
+
+(defun my/bcompile-pchinen.el ()
+  (interactive)
+  (byte-compile-file "/home/pchinen/git/dotfiles/files/pchinen.el"))
 
 (defun c-comment-line ()
   (interactive)
@@ -191,3 +207,6 @@
 (global-set-key [(f1)] 'other-window)
 
 
+
+(use-package projectile  
+  :ensure t)
