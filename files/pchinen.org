@@ -1,3 +1,7 @@
+#+begin_src emacs-lisp
+  (message " ===============================================  Inicialização das Configurações  ================================================")
+#+end_src
+
 * Referencias
   [[file:emacs][.emacs]]
   [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua - .Emacs in org]]
@@ -85,9 +89,6 @@
   [[https://en.wikipedia.org/wiki/Common_Lisp_Object_System][Common Lisp Object System]]
 * Configurações Básicas
 ** Informações Pessoais
-#+begin_src emacs-lisp
-  (message " ===============================================  algo pelo orgmode  ================================================")
-#+end_src
 *** Backup
 #+begin_src emacs-lisp
 
@@ -157,18 +158,6 @@
       (set-background-color "#121212")))
 #+end_src
 ** Gerenciamento dos Buffers/Frames
-* Configurações Linguagens
-** C
-#+begin_src emacs-lisp
-  (setq c-default-style "linux"
-        c-basic-offset 4)
-
-#+end_src
-** Python
-#+begin_src emacs-lisp
-  ;; use the python 3.1
-  (setq py-python-command "/usr/bin/python3.1")
-#+end_src
 * Pacotes
 ** Use Package
 ** Dired
@@ -275,6 +264,7 @@
          (octave . t)
          (sqlite . t)
          (perl . t)
+         (latex . t)
          )))
     :bind
     (("C-c l" . org-store-link)
@@ -317,13 +307,11 @@
            ("C-h a" . helm-apropos)
            ("C-x C-b" . helm-buffers-list)
            ("C-x b" . helm-buffers-list)
+           ("C-x C-f" . helm-find-files)
            ("M-y" . helm-show-kill-ring)
            ("M-x" . helm-M-x)
            ("C-x c o" . helm-occur)
            ("C-1" . helm-swoop)
-           ("C-x c y" . helm-yas-complete)
-           ("C-x c Y" . helm-yas-create-snippet-on-region)
-           ("C-x c b" . my/helm-do-grep-book-notes)
            ("C-x c SPC" . helm-all-mark-rings)))
   (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
 #+end_src
@@ -370,15 +358,15 @@
 #+end_src
 
 ** Nyan Cat
-#+begin_src emacs-lisp
-  ;; Nyan Mode
-  (use-package nyan-mode
-    :ensure t
-    :config
-    (progn
-      (message "Nyan Mode - Loaded")
-      (nyan-mode 1)))
-#+end_src
+   #+begin_src emacs-lisp
+     ;; Nyan Mode
+     (use-package nyan-mode
+       :ensure t
+       :config
+       (progn
+         (message "Nyan Mode - Loaded")
+         (nyan-mode 1)))
+   #+end_src
 ** Expand Region
 #+begin_src emacs-lisp
   ;; Expand Region
@@ -393,6 +381,14 @@
 ** TODO Multiple Cursor
 ** TODO Company
    [[%20%20%20http://company-mode.github.io/][company-mode]]
+#+begin_src emacs-lisp
+  (use-package company
+    :ensure t
+    :config
+    (progn
+      (message "Company - Loaded")
+      (add-hook 'after-init-hook 'global-company-mode)))
+#+end_src
 ** TODO Ace Jump
    [[https://github.com/winterTTr/ace-jump-mode][ace-jump-mode]]
 
@@ -534,10 +530,28 @@ f1		help-command
 
 #+end_src
 
+* Configurações Linguagens
+** C
+#+begin_src emacs-lisp
+  (setq c-default-style "linux"
+        c-basic-offset 4)
+
+#+end_src
+** Python
+#+begin_src emacs-lisp
+  ;; use the python 3.1
+  (setq py-python-command "/usr/bin/python3.1")
+#+end_src
+   
 * TODO Testes
   (use-package 
     :ensure t)
 #+begin_src emacs-lisp
   (use-package projectile  
     :ensure t)
+#+end_src
+* Footnotes
+
+#+begin_src emacs-lisp
+  (message " ===============================================  Fim das Configurações  ================================================")
 #+end_src

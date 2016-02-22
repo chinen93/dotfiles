@@ -55,3 +55,6 @@ DIR="$FGRN\w$RS"
 
 PS1="[$USER $FLAG $DIR]\$\n"
 export PS1
+
+export NVM_DIR="/home/pchinen/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

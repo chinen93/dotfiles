@@ -1,5 +1,5 @@
 
-(message " ===============================================  algo pelo orgmode  ================================================")
+(message " ===============================================  Inicialização das Configurações  ================================================")
 
 
 
@@ -54,12 +54,6 @@
     (load-theme 'monokai t)
     (set-background-color "#121212")))
 
-(setq c-default-style "linux"
-      c-basic-offset 4)
-
-;; use the python 3.1
-(setq py-python-command "/usr/bin/python3.1")
-
 
 
 (use-package org
@@ -79,6 +73,7 @@
        (octave . t)
        (sqlite . t)
        (perl . t)
+       (latex . t)
        )))
   :bind
   (("C-c l" . org-store-link)
@@ -112,13 +107,11 @@
          ("C-h a" . helm-apropos)
          ("C-x C-b" . helm-buffers-list)
          ("C-x b" . helm-buffers-list)
+         ("C-x C-f" . helm-find-files)
          ("M-y" . helm-show-kill-ring)
          ("M-x" . helm-M-x)
          ("C-x c o" . helm-occur)
          ("C-1" . helm-swoop)
-         ("C-x c y" . helm-yas-complete)
-         ("C-x c Y" . helm-yas-create-snippet-on-region)
-         ("C-x c b" . my/helm-do-grep-book-notes)
          ("C-x c SPC" . helm-all-mark-rings)))
 (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
 
@@ -171,6 +164,13 @@
   (progn
     (message "Expand Region - Loaded")))
 
+(use-package company
+  :ensure t
+  :config
+  (progn
+    (message "Company - Loaded")
+    (add-hook 'after-init-hook 'global-company-mode)))
+
 (use-package ace-jump-mode
   :ensure t)
 
@@ -208,5 +208,13 @@
 
 
 
+(setq c-default-style "linux"
+      c-basic-offset 4)
+
+;; use the python 3.1
+(setq py-python-command "/usr/bin/python3.1")
+
 (use-package projectile  
   :ensure t)
+
+(message " ===============================================  Fim das Configurações  ================================================")
