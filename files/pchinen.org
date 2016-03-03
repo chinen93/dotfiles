@@ -158,6 +158,10 @@
       (set-background-color "#121212")))
 #+end_src
 ** Gerenciamento dos Buffers/Frames
+** Emacs server
+   #+begin_src emacs-lisp
+     (server-start)
+   #+end_src
 * Pacotes
 ** Use Package
 ** Dired

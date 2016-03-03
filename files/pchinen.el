@@ -54,6 +54,8 @@
     (load-theme 'monokai t)
     (set-background-color "#121212")))
 
+(server-start)
+
 
 
 (use-package org

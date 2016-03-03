@@ -1,30 +1,84 @@
-# .bash_aliases
+########################################
+# ~/.dotfiles/aliases
+#
+# Sections:
+#   -> General Shell
+#   -> Editors
+#   -> Git
+#   -> Misc Programs
+#   -> Functions
+########################################
 
-#################
-# Shell commands
-#################
 
-# Auto Coloring
+########################################
+# General shell
+########################################
 alias ls='ls --color=auto'
+alias ll='ls -Alh --group-directories-first --sort=extension'
+alias lr='ll -R'
+
+alias df='df -h'
+
+alias mkdir='mkdir -v'
+alias mv='mv -v'
+alias rm='rm -v'
+
+alias cd..='cd ..'
+
+alias gcc='gcc -ansi -pedantic -lm'
+alias ping='ping -c 5'
+
+alias resource='source ~/.bashrc'
+
+########################################
+# Editors
+########################################
+alias em='emacsclient -c --no-wait'
+alias realias='em ~/.bash_aliases'
+
+########################################
+# Git
+########################################
+alias ga='git add'
+alias gd='git diff'
+alias gc='git commit -m'
+alias gpsh='git push'
+alias gpll='git pull'
+alias gst='git status'
+alias gco='git checkout'
+alias glog='git log --oneline --decorate --color --graph'
+
+########################################
+# Misc Programs
+########################################
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
-# ls alias
-alias ll="ls -Al --group-directories-first --sort=extension"
-alias lr="ls -R"
+alias ff='firefox 2>/dev/null &'
 
-# cd alias
-alias cd..='cd ..'
-alias dl="cd ~/Downloads"
+########################################
+# Functions
+########################################
+extract() {
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2) tar xjf $1;;
+            *.tar.gz) tar xzf $1;;
+            *.bz2) bunzip2 $1;;
+            *.rar) rar x $1;;
+            *.gz) gunzip $1;;
+            *.tar) tar xf $1;;
+            *.tbz2) tar xjf $1;;
+            *.tgz) tar xzf $1;;
+            *.zip) unzip $1;;
+            *.Z) uncompress $1;;
+            *.7z) 7z x $1;;
+            *) echo "'$1' cannot be extracted via extract()";;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
 
-
-alias gcc="gcc -ansi -pedantic -lm"
-alias ping='ping -c 5'
-
-
-##################
-# Start programs
-##################
-alias firefox="firefox &!"
 

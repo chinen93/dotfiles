@@ -1,25 +1,47 @@
-# .bashrc
+########################################
+# ~/.bashrc
+# Bash settings
+#
+# Sections:
+#   -> Start-up
+#   -> General
+#   -> Prompt
+########################################
 
-# Source global definitions
 
+
+########################################
+# => Start-up
+########################################
+# If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-#if [ -f /etc/bashrc ]; then
-#	. /etc/bashrc
-#fi
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
 
+# Source aliases
 if [ -f $HOME/.bash_aliases ]; then
     . $HOME/.bash_aliases
 else
     echo "$HOME/.bash_aliases not found"
 fi
+
+
+export NVM_DIR="/home/pchinen/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+########################################
+# => General
+########################################
 ## Shell varibles
 export OOO_FORCE_DESKTOP=gnome
 export BROWSER='firefox'
 export PAGER=less
 export EDITOR=emacs
 export LESS='-R'
-export HISTCONTROL=ignoredups
+export HISTCONTROL=erasedups
 export HISTSIZE=5000
 export HISTFILESIZE=1000
 export HISTIGNORE="&:ls:ll:la:l.:pwd:exit:clear"
@@ -28,6 +50,9 @@ PATH=$PATH:$HOME/.local/bin
 PATH=$PATH:$HOME/git/dotfiles/bin/shellscript/
 export PATH
 
+########################################
+# => Prompt
+########################################
 RS="\[\033[0m\]"    # reset
 HC="\[\033[1m\]"    # hicolor
 UL="\[\033[4m\]"    # underline
@@ -55,6 +80,3 @@ DIR="$FGRN\w$RS"
 
 PS1="[$USER $FLAG $DIR]\$\n"
 export PS1
-
-export NVM_DIR="/home/pchinen/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
