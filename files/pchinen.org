@@ -435,13 +435,24 @@
    [[https://github.com/capitaomorte/yasnippet][YASnippet]]
    http://capitaomorte.github.io/yasnippet/
 #+begin_src emacs-lisp
-    (use-package yasnippet
-     :ensure t
-     :config
-     (progn
-       (yas-global-mode)
-       (message "Yasnippet - Loaded")))
+  (use-package yasnippet
+   :ensure t
+   :config
+   (progn
+     (yas-global-mode)
+     (message "Yasnippet - Loaded")
+     ;; Change add Directories when looking for snippets
+     (setq yas-snippet-dirs
+           (append yas-snippet-dirs
+                   ;; Personal Collection
+                   '("~/git/dotfiles/snippets")))
+     (define-key yas-minor-mode-map (kbd "<tab>") nil)
+     (define-key yas-minor-mode-map (kbd "TAB") nil)
+     (define-key yas-minor-mode-map (kbd "<f3>") 'yas-expand)
+     ))
 #+end_src
+
+
 ** TODO Re Build
    [[https://masteringemacs.org/article/re-builder-interactive-regexp-builder][re-builder]]
 * Funções
