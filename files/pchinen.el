@@ -182,7 +182,16 @@
  :config
  (progn
    (yas-global-mode)
-   (message "Yasnippet - Loaded")))
+   (message "Yasnippet - Loaded")
+   ;; Change add Directories when looking for snippets
+   (setq yas-snippet-dirs
+         (append yas-snippet-dirs
+                 ;; Personal Collection
+                 '("~/git/dotfiles/snippets")))
+   (define-key yas-minor-mode-map (kbd "<tab>") nil)
+   (define-key yas-minor-mode-map (kbd "TAB") nil)
+   (define-key yas-minor-mode-map (kbd "<f3>") 'yas-expand)
+   ))
 
 (defun my/bcompile-pchinen.el ()
   (interactive)
