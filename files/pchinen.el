@@ -83,7 +83,8 @@
    ("C-c r" . org-capture)))
 
 (setq org-structure-template-alist
-      '(("l" "#+begin_src emacs-lisp\n?\n#+end_src" "<src lang=\"emacs-lisp\">\n?\n</src>")))
+      '(("l" "#+begin_src emacs-lisp\n?\n#+end_src" "<src lang=\"emacs-lisp\">\n?\n</src>")
+        ("t" "#+begin_src text\n?\n#+end_src" "<src lang=\"text\">\n?\n</src>")))
 
 (setq org-directory "~/git/org")
 (setq org-default-notes-file "~/git/org/organizer.org")
