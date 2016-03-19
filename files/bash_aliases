@@ -34,6 +34,7 @@ alias resource='source ~/.bashrc'
 # Editors
 ########################################
 alias em='emacsclient -c --no-wait'
+alias emnw='emacs --no-window-system'
 alias realias='em ~/.bash_aliases'
 
 ########################################

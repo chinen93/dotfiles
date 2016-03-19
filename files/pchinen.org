@@ -1,4 +1,4 @@
-#+begin_src emacs-lisp
+1#+begin_src emacs-lisp
   (message " ===============================================  Inicialização das Configurações  ================================================")
 #+end_src
 
@@ -148,6 +148,8 @@
   ;; Open something when emacs starts
   (if (file-exists-p "~/git/org/help.org")
       (progn(find-file "~/git/org/help.org")))
+
+  (find-file "~/.pchinen.org")
 #+end_src
 ** Layout
 *** Deixar a tela do emacs minimalista
@@ -582,6 +584,12 @@ f1		help-command
 #+end_src
 
 * Configurações Linguagens
+** Programming languages
+   #+begin_src emacs-lisp
+     (add-hook 'prog-mode-hook
+               (progn (setq-default indent-tabs-mode nil)))
+
+   #+end_src
 ** C
 #+begin_src emacs-lisp
   (setq c-default-style "linux"

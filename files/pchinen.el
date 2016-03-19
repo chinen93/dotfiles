@@ -34,6 +34,8 @@
 (if (file-exists-p "~/git/org/help.org")
     (progn(find-file "~/git/org/help.org")))
 
+(find-file "~/.pchinen.org")
+
 ;;====================================================================
 ;;    Layout
 ;;====================================================================
@@ -234,6 +236,9 @@
 (global-set-key [(f1)] 'other-window)
 
 
+
+(add-hook 'prog-mode-hook
+          (progn (setq-default indent-tabs-mode nil)))
 
 (setq c-default-style "linux"
       c-basic-offset 4)
