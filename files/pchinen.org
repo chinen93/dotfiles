@@ -580,6 +580,20 @@ f1		help-command
 
 * File Modes
 #+begin_src emacs-lisp
+  (setq auto-mode-alist
+        (append
+         ;; File name (within directory) starts with a dot.
+         '((".bashrc" . shell-script-mode)
+           (".bash_aliases" . shell-script-mode)
+           (".bash_profile" . shell-script-mode)
+
+           
+           (".scss" . css-mode)
+           ;; File name has no dot.
+           ("/[^\\./]*\\'" . fundamental-mode)
+           ;; File name ends in ‘.C’.
+           ("\\.C\\'" . c++-mode))
+         auto-mode-alist))
 
 #+end_src
 

@@ -1,6 +1,4 @@
 
-(message " ===============================================  Inicialização das Configurações  ================================================")
-
 
 
 (setq savehist-file "~/.emacs.d/savehist")
@@ -235,7 +233,20 @@
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key [(f1)] 'other-window)
 
+(setq auto-mode-alist
+      (append
+       ;; File name (within directory) starts with a dot.
+       '((".bashrc" . shell-script-mode)
+         (".bash_aliases" . shell-script-mode)
+         (".bash_profile" . shell-script-mode)
 
+         
+         (".scss" . css-mode)
+         ;; File name has no dot.
+         ("/[^\\./]*\\'" . fundamental-mode)
+         ;; File name ends in ‘.C’.
+         ("\\.C\\'" . c++-mode))
+       auto-mode-alist))
 
 (add-hook 'prog-mode-hook
           (progn (setq-default indent-tabs-mode nil)))
