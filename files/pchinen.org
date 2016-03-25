@@ -1,601 +1,360 @@
-1#+begin_src emacs-lisp
-  (message " ===============================================  Inicialização das Configurações  ================================================")
-#+end_src
 
-* Referencias
-  [[file:emacs][.emacs]]
-  [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua - .Emacs in org]]
-  [[https://en.wikipedia.org/wiki/Literate_programming][Literate programming]]
-  [[https://en.wikipedia.org/wiki/Read%25E2%2580%2593eval%25E2%2580%2593print_loop][Read Eval Print Loop REPL]]
+* Header
+  #+begin_src emacs-lisp
+    (message " ===============================================  Inicialização das Configurações  ================================================")
+  #+end_src
   
-** TODO Pessoas Importantes
-*** Steve Purcell
-    | twitter | [[https://twitter.com/sanityinc][@sanityinc]]    |
-    | github  | [[https://github.com/purcell][/purcell]]      |
-    | blog    | [[http://www.sanityinc.com/][sanityinc.com]] |
-
-*** Sebastian Wiesner
-    | github | [[https://github.com/lunaryorn][/lunaryorn]]    |
-    | blog   | [[http://www.lunaryorn.com/][lunaryorn.com]] |
-
-***  Bozhidar Batsov
-    | github  | [[https://github.com/bbatsov/prelude][/bbatsov]]   |
-    | twitter | [[https://twitter.com/bbatsov][@bbtsov]]    |
-    | blog    | [[http://batsov.com/][batsov.com]] |
-
-*** Carsten Dominik
-    | twitter | [[https://twitter.com/carstendominik][@carstendominik]] |
-
-*** Bastien Guerry
-    | github | [[https://github.com/bzg][/bzg]] |
-
-*** Christopher Wellons
-    | github | [[https://github.com/skeeto][/skeeto]]         |
-    | blog   | [[http://nullprogram.com/][nullprogram.com]] |
-
-*** Harry R Schwartz
-    | github | [[http://harryrschwartz.com/][/hrs]]              |
-    | blog   | [[http://harryrschwartz.com/][harryschwartz.com]] |
-
-** TODO Sites Importantes
-   [[http://wikemacs.org/wiki/Main_Page][WikEmacs]].org
-   [[http://www.emacswiki.org/emacs?interface%3Den][emacswiki.org]]
-   [[https://twitter.com/emacs_knight][@emacs_knight]]
-   [[http://planet.emacsen.org/][Planet Emacsen]]
-   [[http://emacslife.com/][emacslife.com]]
-   [[http://emacsrocks.com/][EmacsRocks]]
-   [[http://ergoemacs.org][ergoemacs.org]]
-   [[http://www.50ply.com/][50ply.com]]
-   [[https://duckduckgo.com/?q%3DEMACSNYC&t%3Dffab][emacsync.org]]
-   [[http://www.emacswiki.org/emacs/EmacsScreencasts][Screencast Emacs]]
-   [[https://www.masteringemacs.org/][Mastering Emacs]]
-   [[http://bling.github.io/blog/2013/10/27/emacs-as-my-leader-vim-survival-guide/][Blog <emacs as my leader vim survival guide>]]
-
-** Packages Installed
-#+begin_src sh 
-  cat ~/git/dotfiles/files/pchinen.org | grep -B 1 "ensure t" | grep -v "pchinen"
-#+end_src
-
-#+RESULTS:
-| #+begin_src  | sh            |
-| --           |               |
-| (use-package | monokai-theme |
-| :ensure      | t             |
-| --           |               |
-| (use-package | org           |
-| :ensure      | t             |
-| --           |               |
-| (use-package | helm          |
-| :ensure      | t             |
-| --           |               |
-| (use-package | helm-swoop    |
-| :ensure      | t             |
-| --           |               |
-| (use-package | magit         |
-| :ensure      | t             |
-| --           |               |
-| (use-package | guide-key     |
-| :ensure      | t             |
-| --           |               |
-| (use-package | nyan-mode     |
-| :ensure      | t             |
-| --           |               |
-| (use-package | expand-region |
-| :ensure      | t             |
-| --           |               |
-| (use-package | company       |
-| :ensure      | t             |
-| --           |               |
-| (use-package | ace-jump-mode |
-| :ensure      | t)            |
-| --           |               |
-| (use-package | yasnippet     |
-| :ensure      | t             |
-| --           |               |
-| (use-package |               |
-| :ensure      | t)            |
-| --           |               |
-| (use-package | projectile    |
-| :ensure      | t)            |
-
-** TODO Elisp
-   [[https://en.wikipedia.org/wiki/S-expression][s-expression]]
-   [[https://www.gnu.org/software/emacs/manual/html_mono/elisp.html][elisp]]
-   [[https://www.gnu.org/software/emacs/manual/html_node/eintr/edebug.html][edebug]]
-** TODO CEDET
-  [[http://cedet.sourceforge.net/eieio.shtml][Collection of Emacs Development Environment Tools]]
-  [[https://en.wikipedia.org/wiki/Common_Lisp_Object_System][Common Lisp Object System]]
-* Configurações Básicas
-** Informações Pessoais
-*** Backup
-#+begin_src emacs-lisp
-
-#+end_src
-*** Histórico
-#+begin_src emacs-lisp
-  (setq savehist-file "~/.emacs.d/savehist")
-  (savehist-mode 1)
-  (setq history-length t)
-  (setq history-delete-duplicates t)
-  (setq savehist-save-minibuffer-history 1)
-  (setq savehist-additional-variables
-        '(kill-ring
-          search-ring
-          regexp-search-ring))
-#+end_src
-*** Detalhes para deixar a experiencia com o EMACS mais agradavel
-#+begin_src emacs-lisp
-  ;; Show matching parenthesis. 
-  (show-paren-mode t)
-
-  ;; Current line & column of cursor in the mode line (bar at the bottom)
-  (line-number-mode 1)
-  (setq column-number-mode t)
-
-  ;; Change "yes or no" to "y or n"
-  (fset 'yes-or-no-p 'y-or-n-p)
-
-  (setq initial-scratch-message "
-  ;; ***********************************************
-  ;; ******************* SCRATCH *******************
-  ;; ***********************************************
-  ;;
-  ")
-
-#+end_src
-*** Abrir arquivo na inicializao
-#+begin_src emacs-lisp
-  ;; Open something when emacs starts
-  (if (file-exists-p "~/git/org/help.org")
-      (progn(find-file "~/git/org/help.org")))
-
-  (find-file "~/.pchinen.org")
-#+end_src
-** Layout
-*** Deixar a tela do emacs minimalista
-#+begin_src emacs-lisp
-  ;;====================================================================
-  ;;    Layout
-  ;;====================================================================
-  ;; Turn off mouse interface early in startup to avoid momentary display
-  ;;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-  (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-  (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-
-  ;; No splash screen please ... jeez
-  (setq inhibit-startup-message t)
-#+end_src
-*** TODO Fonte
-*** TODO Tema
-#+begin_src emacs-lisp
-  ;; Load theme
-  (use-package monokai-theme
-    :ensure t
-    :config
-    (progn
-      (message "Monokai Theme - Loaded")
-      (load-theme 'monokai t)
-      (set-background-color "#121212")))
-#+end_src
-** Gerenciamento dos Buffers/Frames
-** Emacs server
+* Basic Configuration
+  - Show matching parenthesis. 
+  - Current line & column of cursor in the mode line (bar at the bottom)
+  - Change "yes or no" to "y or n"
+  - Set initial scratch lines
+  - Always follow syslink files
+  - Remove tool-bar and scroll-bar
+  - Don't show start-up-message
+  
    #+begin_src emacs-lisp
-     (server-start)
+     (show-paren-mode t)
+
+     (line-number-mode 1)
+     (setq column-number-mode t)
+
+     (fset 'yes-or-no-p 'y-or-n-p)
+
+     (setq initial-scratch-message "
+     ;; ***********************************************
+     ;; ******************* SCRATCH *******************
+     ;; ***********************************************
+     ;;
+     ")
+
+     (setq vc-follow-symlinks t)
+
+     (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+     (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+     (setq inhibit-startup-message t)
    #+end_src
-* Pacotes
-** Use Package
-** Dired
-   [[http://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html][Dired - Manual]]
+** Backup
+   Create an directory to store all the backup files that normally would stay with the original file
 
-** Org mode
-   [[http://orgmode.org/manual/index.html][Org Mode Manual]]
-   [[http://orgmode.org/worg/org-tutorials/index.html][worg]]
-   [[http://sachachua.com/blog/2008/01/outlining-your-notes-with-org/][Sasha Chua - orgmode]]
-   [[http://members.optusnet.com.au/~charles57/GTD/orgmode.html][Using Emacs org-mode for GTD]]
-
-*** Document Structure
-    [[http://orgmode.org/manual/Document-structure.html#Document-structure][Document Structure - Org Manual]]
-    Ao Colocar * na frente de uma frase ela se torna um Tópico.
-    Tópicos são importantes pois com eles o arquivo se torna mais claro
-
-*** Tabelas
-    [[http://orgmode.org/manual/Tables.html#Tables][Tables - Org Manual]]
-
-*** Hyperlinks
-    [[http://orgmode.org/manual/Hyperlinks.html#Hyperlinks][Hyperlinks - Org Manual]]
-
-*** Work-flow
-    [[http://orgmode.org/manual/TODO-items.html#TODO-items][TODO items - Org Manual]]
-    TODO - DONE, Em que passo a atividade esta
-
-**** Prioridades
-     [[http://orgmode.org/manual/Priorities.html#Priorities][Priorities - Org Manual]]
-     Prioridade que deve ser dada a cada headline
-     [#B] <- prioridade B
-
-*** TAG
-    [[http://orgmode.org/manual/Tags.html#Tags][Tags - Org Manual]]
-    Palavras reservadas que identificam uma headline
-    ficam entre ::
-    
-*** Timestamp
-    [[http://orgmode.org/manual/Dates-and-times.html#Dates-and-times][Dates and Times - Org Manual]]
-    DEADLINE - SCHEDULED <ano-mes-dia dia_semana modificador>
-
-    | Atalho  | Comando      | Descricao                        |
-    |---------+--------------+----------------------------------|
-    | C-c C-d | org-deadline | Insere uma deadline na atividade |
-    | C-c C-s | org-schedule | Insere uma schedule na atividade |
-    
-    DEADLINE  eh o dia que deveria terminar a atividade
-    SCHEDULED eh o dia que deveria começar a atividade
-    
-**** Exemplos
-     Uma data
-     <2007-05-16 Wed 12:30 (modificador) >
-     
-     Modificadores de Data podem ser utilizados para quer um determinado acontecimento ocorra em intervalos repetidos de tempo
-     | Modificados | Descricao                                  |
-     |-------------+--------------------------------------------|
-     | +(numero)d  | Ocorre no dia e depois de (numero) dias    |
-     | +(numero)w  | Ocorre no dia e depois de (numero) semanas |
-     | +(numero)m  | Ocorre no dia e depois de (numero) meses   |
-     | +(numero)y  | Ocorre no dia e depois de (numero) anos    |
-
-
-     Se colocado um -- entre as datas
-     <2007-05-16 Wed 12:30 (modificador) >--<2007-05-18 Wed 12:30 (modificador) >
-     A data será um acontecimento entre o primeiro dia, até o ultimo dia especificado
-
-*** Capture - Refile - Archive
-    [[http://orgmode.org/manual/Capture-_002d-Refile-_002d-Archive.html#Capture-_002d-Refile-_002d-Archive][Capture Refile Archive - Org Manual]]
-
-*** Agenda
-    [[http://orgmode.org/manual/Agenda-views.html#Agenda-views][Agenda View - Org Manual]]
-    Ao colocar essa configuracao no .emacs
-    (global-set-key "\C-ca" 'org-agenda)
-
-    | Atalho | Comando    | Descricao                            |
-    |--------+------------+--------------------------------------|
-    | C-c a  | org-agenda | Abre o menu para a criacao da AGENDA |
-    |        |            |                                      |
-
-    Os dias da semana terao o DEADLINE ou o SCHEDULED no dia que foi
-    designado o TODO
-    
-*** Insert Struct Template
-    <l [TAB] insere
-    #+begin_src emacs-lisp
-
-    #+end_src
-
-
-#+begin_src emacs-lisp
-  (use-package org
-    :ensure t
-    :init
-    (progn
-      (setq org-return-follows-link t)
-      (org-babel-do-load-languages
-       'org-babel-load-languages
-       '(
-         (sh . t)
-         (python . t)
-         (R . t)
-         (ruby . t)
-         (ditaa . t)
-         (dot . t)
-         (octave . t)
-         (sqlite . t)
-         (perl . t)
-         (latex . t)
-         )))
-    :bind
-    (("C-c l" . org-store-link)
-     ("C-c a" . org-agenda)
-     ("C-c r" . org-capture)))      
-#+end_src
-*** Templates
-**** Sorce code emacs lisp BEGIN-END
-#+begin_src emacs-lisp
-  (setq org-structure-template-alist
-        '(("l" "#+begin_src emacs-lisp\n?\n#+end_src" "<src lang=\"emacs-lisp\">\n?\n</src>")
-          ("t" "#+begin_src text\n?\n#+end_src" "<src lang=\"text\">\n?\n</src>")))
-#+end_src
-*** Capture Directory
-#+begin_src emacs-lisp
-  (setq org-directory "~/git/org")
-  (setq org-default-notes-file "~/git/org/organizer.org")
-#+end_src    
-** TODO Helm 
-   [[https://tuhdo.github.io/helm-intro.html][helm]]
-
-#+begin_src emacs-lisp
-  (use-package helm
-    :ensure t
-    :diminish helm-mode
-    :init
-    (progn
-      (require 'helm-config)
-      (message "Helm - Loaded")
-      (setq helm-candidate-number-limit 100)
-      ;; From https://gist.github.com/antifuchs/9238468
-      (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
-            helm-input-idle-delay 0.01  ; this actually updates things
-                                          ; reeeelatively quickly.
-            helm-yas-display-key-on-candidate t
-            helm-quick-update t
-            helm-M-x-requires-pattern nil
-            helm-ff-skip-boring-files t)
-      (helm-mode))
-    :bind (("C-c h" . helm-mini)
-           ("C-h a" . helm-apropos)
-           ("C-x C-b" . helm-buffers-list)
-           ("C-x b" . helm-buffers-list)
-           ("C-x C-f" . helm-find-files)
-           ("M-y" . helm-show-kill-ring)
-           ("M-x" . helm-M-x)
-           ("C-x c o" . helm-occur)
-           ("C-1" . helm-swoop)
-           ("C-x c SPC" . helm-all-mark-rings)))
-  (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
-#+end_src
-*** Helm-Swoop
-#+begin_src emacs-lisp
-  (use-package helm-swoop
-    :ensure t
-    :init
-    (progn
-      (message "Helm Swoop - Loaded"))
-    :bind ("C-1" . helm-swoop))
-#+end_src
-** TODO Magit
-   https://github.com/magit/magit
-   https://www.youtube.com/watch?v=vQO7F2Q9DwA
-   
-#+begin_src emacs-lisp
-  (use-package magit
-    :ensure t
-    :init
-    (progn
-      (message "Magit - Loaded")))
-#+end_src
-** Guide Key
-#+begin_src emacs-lisp
-  (use-package guide-key
-    :ensure t
-    :config                    
-    (progn
-      (message "Guide Key - Loaded")
-      (setq guide-key/guide-key-sequence nil)
-      (defun enable-guide-key ()
-        (interactive)
-        (guide-key-mode 1)
-        (setq guide-key/guide-key-sequence t)
-        (message "Guide Key enabled"))
-      (defun disable-guide-key ()
-        (interactive)
-        (guide-key-mode -1)
-        (setq guide-key/guide-key-sequence nil)
-        (message "Guide Key disabled"))
-      (global-set-key (kbd "C-c =") 'enable-guide-key)
-      (global-set-key (kbd "C-c -") 'disable-guide-key)))
-#+end_src
-
-** Nyan Cat
    #+begin_src emacs-lisp
-     ;; Nyan Mode
-     (use-package nyan-mode
+     (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+     (setq auto-save-file-name-transforms
+           '((".*" "~/.emacs.d/auto-save-list/" t)))
+
+   #+end_src
+** History
+   Save minibuffer history
+
+   #+begin_src emacs-lisp
+     (setq savehist-file "~/.emacs.d/savehist")
+     (savehist-mode 1)
+     (setq history-length t)
+     (setq history-delete-duplicates t)
+     (setq savehist-save-minibuffer-history 1)
+     (setq savehist-additional-variables
+           '(kill-ring
+             search-ring
+             regexp-search-ring))
+   #+end_src
+** First initialization?
+   If is the first time openning emacs. Start server, open some files
+   
+   #+begin_src emacs-lisp
+     (if (boundp 'start-up-emacs)
+         (progn
+           ;; True Body
+           (message "Emacs is already up"))
+       (progn
+         ;; False body
+         (if (file-exists-p "~/git/org/help.org")
+             (find-file "~/git/org/help.org"))
+         
+         (if (file-exists-p "~/.pchinen.org")
+             (find-file "~/.pchinen.org"))
+         
+         (server-start)
+           
+         (setq start-up-emacs t)
+         (message "Emacs is NOT up, so i started it")))
+
+   #+end_src
+** TODO Theme
+   The theme being used is Monokai
+   #+begin_src emacs-lisp
+     ;; Load theme
+     (use-package monokai-theme
        :ensure t
        :config
        (progn
-         (message "Nyan Mode - Loaded")
-         (nyan-mode 1)))
+         (message "Monokai Theme - Loaded")
+         (load-theme 'monokai t)
+         (set-background-color "#121212")))
    #+end_src
-** Expand Region
-#+begin_src emacs-lisp
-  ;; Expand Region
-  (use-package expand-region
-    :ensure t
-    :bind
-    ("C-=" . er/expand-region)
-    :config
-    (progn
-      (message "Expand Region - Loaded")))
-#+end_src
-** TODO Multiple Cursor
-** TODO Company
+* Dired
+  [[http://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html][Dired - Manual]]
+  
+* Org mode
+  Basic Configuration for Org mode with some keybindings and stuff
+  #+begin_src emacs-lisp  
+    (use-package org
+      :ensure t
+      :init
+      (progn
+        (setq org-return-follows-link t)
+        (org-babel-do-load-languages
+         'org-babel-load-languages
+         '(
+           (sh . t)
+           (python . t)
+           (R . t)
+           (ruby . t)
+           (ditaa . t)
+           (dot . t)
+           (octave . t)
+           (sqlite . t)
+           (perl . t)
+           (latex . t)
+           )))
+      :bind
+      (("C-c l" . org-store-link)
+       ("C-c a" . org-agenda)
+       ("C-c r" . org-capture)))      
+  #+end_src
+** Sorce code emacs lisp BEGIN-END
+   When is typed '<l' and pressed '[TAB]' a block of code is created
+   #+begin_src emacs-lisp
+     (setq org-structure-template-alist
+           '(("l"
+              "#+begin_src emacs-lisp\n?\n#+end_src"
+              "<src lang=\"emacs-lisp\">             \n?\n</src>")
+             ("t"
+              "#+begin_src text\n?\n#+end_src"
+              "<src lang=\"text\">\n?\n</src>")))
+   #+end_src
+** Capture Directory
+   #+begin_src emacs-lisp
+     (setq org-directory "~/git/org")
+     (setq org-default-notes-file "~/git/org/organizer.org")
+   #+end_src    
+** Hooks
+   #+begin_src emacs-lisp
+     (add-hook 'org-mode-hook
+               (progn
+                 (visual-line-mode)
+                 ))
+   #+end_src
+* Helm 
+  #+begin_src emacs-lisp
+    (use-package helm
+      :ensure t
+      :diminish helm-mode
+      :init
+      (progn
+        (require 'helm-config)
+        (message "Helm - Loaded")
+        (setq helm-candidate-number-limit 100)
+        ;; From https://gist.github.com/antifuchs/9238468
+        (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
+              helm-input-idle-delay 0.01  ; this actually updates things
+                                            ; reeeelatively quickly.
+              helm-yas-display-key-on-candidate t
+              helm-quick-update t
+              helm-M-x-requires-pattern nil
+              helm-split-window-in-side-p t
+              helm-ff-skip-boring-files t)
+        (helm-mode))
+      :bind (("C-c h" . helm-mini)
+             ("C-h a" . helm-apropos)
+             ("C-x C-b" . helm-buffers-list)
+             ("C-x b" . helm-buffers-list)
+             ("C-x C-f" . helm-find-files)
+             ("M-y" . helm-show-kill-ring)
+             ("M-x" . helm-M-x)
+             ("C-x c o" . helm-occur)
+             ("C-x c SPC" . helm-all-mark-rings)))
+    (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
+  #+end_src
+** Helm-Swoop
+   #+begin_src emacs-lisp
+     (use-package helm-swoop
+       :ensure t
+       :init
+       (progn
+         (message "Helm Swoop - Loaded"))
+       :bind ("C-1" . helm-swoop))
+   #+end_src
+* TODO Magit
+   https://github.com/magit/magit
+   https://www.youtube.com/watch?v=vQO7F2Q9DwA
+   
+  #+begin_src emacs-lisp
+    (use-package magit
+      :ensure t
+      :init
+      (progn
+        (message "Magit - Loaded")))
+  #+end_src
+* Nyan Cat
+  Nyan Cat is used like an scroll bar. But horizontally
+
+  #+begin_src emacs-lisp
+    ;; Nyan Mode
+    (use-package nyan-mode
+      :ensure t
+      :config
+      (progn
+        (message "Nyan Mode - Loaded")
+        (nyan-mode 1)))
+  #+end_src
+* Expand Region
+  Expand Region "teste1-teste2-teste3"
+  first use : 'teste1'
+  second use: 'teste1-teste2-teste3'
+  third use : '"teste1-teste2-teste3"'
+  and so on...
+  #+begin_src emacs-lisp
+    (use-package expand-region
+      :ensure t
+      :bind
+      ("C-=" . er/expand-region)
+      :config
+      (progn
+        (message "Expand Region - Loaded")))
+  #+end_src
+* TODO Multiple Cursor
+* TODO Company
    [[%20%20%20http://company-mode.github.io/][company-mode]]
-#+begin_src emacs-lisp
-  (use-package company
-    :ensure t
-    :config
-    (progn
-      (message "Company - Loaded")
-      (add-hook 'after-init-hook 'global-company-mode)))
-#+end_src
-** TODO Ace Jump
-   [[https://github.com/winterTTr/ace-jump-mode][ace-jump-mode]]
-
-
-#+begin_src emacs-lisp
-  (use-package ace-jump-mode
-    :ensure t)
-#+end_src
-** TODO Projectile
-   [[https://github.com/bbatsov/projectile][projectile]]
-** TODO Flycheck
-   [[https://github.com/flycheck/flycheck][flycheck]]
-** TODO Smartparents
-   [[https://github.com/Fuco1/smartparens/wiki][smartparents]]
-** TODO Cider
-   [[https://github.com/clojure-emacs/cider][Cider]]
-** TODO Prelude
-   [[https://github.com/bbatsov/prelude][Prelude]]
-** TODO Calculator
-   [[https://www.gnu.org/software/emacs/manual/html_mono/calc.html][calc-mode]]
-** TODO Gnus
-   [[http://www.emacswiki.org/emacs/GnusTutorial][Gnus]]
-** TODO TRAMP
-   [[https://www.gnu.org/software/tramp/][TRAMP]]
-** TODO Eshell
-   [[https://www.gnu.org/software/emacs/manual/html_mono/eshell.html][eshell]]
-** TODO Emacs Web Server
-   [[https://github.com/skeeto/emacs-web-server][emacs web server]]
-** TODO Emacs as an Database client
-   [[https://truongtx.me/2014/08/23/setup-emacs-as-an-sql-database-client/][emacs database connect]]
-** TODO Elfeed
-   [[https://github.com/skeeto/elfeed][elfeed]]
-   [[http://nullprogram.com/blog/2013/09/04/][Introducing Elfeed]]
-** TODO Markdown mode
-** TODO Diminish
-   [[http://whattheemacsd.com/init.el-04.html][diminish mode]]
-   [[http://www.emacswiki.org/emacs/DiminishedModes][Diminish-mode]]
-** TODO YASnippet
-   [[https://en.wikipedia.org/wiki/Snippet_%2528programming%2529][Snippet]]
-   [[https://github.com/capitaomorte/yasnippet][YASnippet]]
-   http://capitaomorte.github.io/yasnippet/
-   #+begin_src emacs-lisp
-     (use-package yasnippet
+  #+begin_src emacs-lisp
+    (use-package company
       :ensure t
       :config
       (progn
-        (yas-global-mode)
-        (message "Yasnippet - Loaded")
-        ;; Change add Directories when looking for snippets
-        (setq yas-snippet-dirs
-              (append yas-snippet-dirs
-                      ;; Personal Collection
-                      '("~/git/dotfiles/snippets")))
-        (define-key yas-minor-mode-map (kbd "<tab>") nil)
-        (define-key yas-minor-mode-map (kbd "TAB") nil)
-        (define-key yas-minor-mode-map (kbd "<f3>") 'yas-expand)
-        ))
-   #+end_src
+        (setq company-idle-delay 0
+              company-echo-delay 0
+              company-dabbrev-downcase nil
+              company-minimum-prefix-length 2
+              company-selection-wrap-around t
+              company-transformers '(company-sort-by-occurrence
+                                     company-sort-by-backend-importance))
+        (message "Company - Loaded")
+        (add-hook 'after-init-hook 'global-company-mode)))
+  #+end_src
+* TODO Calculator2
+  [[https://www.gnu.org/software/emacs/manual/html_mono/calc.html][calc-mode]]
+* TODO YASnippet
+  [[https://en.wikipedia.org/wiki/Snippet_%2528programming%2529][Snippet]]
+  [[https://github.com/capitaomorte/yasnippet][YASnippet]]
+  http://capitaomorte.github.io/yasnippet/
+  #+begin_src emacs-lisp
+    (use-package yasnippet
+     :ensure t
+     :config
+     (progn
+       (yas-global-mode)
+       (message "Yasnippet - Loaded")
+       ;; Change add Directories when looking for snippets
+       (setq yas-snippet-dirs
+             (append yas-snippet-dirs
+                     ;; Personal Collection
+                     '("~/.snippets")))
+       (define-key yas-minor-mode-map (kbd "<tab>") nil)
+       (define-key yas-minor-mode-map (kbd "TAB") nil)
+       (define-key yas-minor-mode-map (kbd "<f3>") 'yas-expand)
+       ))
+  #+end_src
+* Re Build
+  [[https://masteringemacs.org/article/re-builder-interactive-regexp-builder][re-builder]]
+  #+begin_src emacs-lisp
+    (use-package re-builder
+     :ensure t
+     :config
+     (progn
+       (message "Rebuilder - Loaded")
+       (setq reb-re-synstax 'string)))
 
-** TODO Re Build
-   [[https://masteringemacs.org/article/re-builder-interactive-regexp-builder][re-builder]]
-** TODO Keyfreq
-   #+begin_src emacs-lisp
-     (use-package keyfreq
-      :ensure t
-      :config
-      (progn
-        (message "Keyfreq - Loaded")
-        (setq keyfreq-excluded-commands
-           '(self-insert-command
-             abort-recursive-edit
-             forward-char
-             backward-char
-             previous-line
-             next-line))
-        (keyfreq-mode 1)
-        (keyfreq-autosave-mode 1)))
+ #+end_src
+* TODO Keyfreq
+  #+begin_src emacs-lisp
+    (use-package keyfreq
+     :ensure t
+     :config
+     (progn
+       (message "Keyfreq - Loaded")
+       (setq keyfreq-excluded-commands
+          '(self-insert-command
+            abort-recursive-edit
+            forward-char
+            backward-char
+            previous-line
+            next-line))
+       (keyfreq-mode 1)
+       (keyfreq-autosave-mode 1)))
 
-   #+end_src
-* Funções
+  #+end_src
+* Custom Functions
 ** Emacs
-#+begin_src emacs-lisp
-  (defun my/bcompile-pchinen.el ()
-    (interactive)
-    (byte-compile-file "/home/pchinen/git/dotfiles/files/pchinen.el"))
-#+end_src
+  #+begin_src emacs-lisp
+    (defun my/bcompile-pchinen.el ()
+      (interactive)
+      (byte-compile-file "/home/pchinen/git/dotfiles/files/pchinen.el"))
+  #+end_src
 ** Programação
-*** C
-#+begin_src emacs-lisp
-  (defun c-comment-line ()
-    (interactive)
-    (beginning-of-line)
-    (insert "/*")
-    (end-of-line)
-    (insert " */"))
+*** C 
+  #+begin_src emacs-lisp
+    (defun c-comment-line ()
+      (interactive)
+      (beginning-of-line)
+      (insert "/*")
+      (end-of-line)
+      (insert " */"))
 
-  (defun c-uncomment-line ()
-    (interactive)
-    (beginning-of-line)
-    (delete-char 2)
-    (end-of-line)
-    (backward-char 3)
-    (delete-char 3))
-#+end_src
-* Atalhos
-** Destruidos
-f1 C-a	about-emacs
-f1 C-c	describe-copying
-f1 C-d	view-emacs-debugging
-f1 C-e	view-external-packages
-f1 C-f	view-emacs-FAQ
-f1 C-h	help-for-help
-f1 RET	view-order-manuals
-f1 C-n	view-emacs-news
-f1 C-o	describe-distribution
-f1 C-p	view-emacs-problems
-f1 C-t	view-emacs-todo
-f1 C-w	describe-no-warranty
-f1 C-\	describe-input-method
-f1 .		display-local-help
-f1 4		Prefix Command
-f1 ?		help-for-help
-f1 C		describe-coding-system
-f1 F		Info-goto-emacs-command-node
-f1 I		describe-input-method
-f1 K		Info-goto-emacs-key-command-node
-f1 L		describe-language-environment
-f1 P		describe-package
-f1 S		info-lookup-symbol
-f1 a		helm-apropos
-f1 b		describe-bindings
-f1 c		describe-key-briefly
-f1 d		apropos-documentation
-f1 e		view-echo-area-messages
-f1 f		describe-function
-f1 g		describe-gnu-project
-f1 h		view-hello-file
-f1 i		info
-f1 k		describe-key
-f1 l		view-lossage
-f1 m		describe-mode
-f1 n		view-emacs-news
-f1 p		finder-by-keyword
-f1 q		help-quit
-f1 r		info-emacs-manual
-f1 s		describe-syntax
-f1 t		help-with-tutorial
-f1 v		describe-variable
-f1 w		where-is
-f1 f1	help-for-help
-f1  help	help-for-help
-f1 4 i	info-other-window
-f1		help-command
+    (defun c-uncomment-line ()
+      (interactive)
+      (beginning-of-line)
+      (delete-char 2)
+      (end-of-line)
+      (backward-char 3)
+      (delete-char 3))
+  #+end_src
+* Key Binding
+  #+begin_src emacs-lisp
+    (global-set-key (kbd "C-s") 'isearch-forward-regexp) 
+    (global-set-key (kbd "C-r") 'isearch-backward-regexp)
+    (global-set-key (kbd "s-q") 'other-window)
+    (global-set-key (kbd "s-w") 'delete-window)
 
-#+begin_src emacs-lisp
-#+end_src
 
-** Criados
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-s") 'isearch-forward-regexp) 
-  (global-set-key (kbd "C-r") 'isearch-backward-regexp)
-  (global-set-key [(f1)] 'other-window)
-#+end_src
+    (global-set-key (kbd "<f2>") nil)
+    (global-set-key (kbd "<f3>") nil)
+    (global-set-key (kbd "<f4>") nil)
+    (global-set-key (kbd "<f5>") nil)
+    (global-set-key (kbd "<f6>") nil)
+    (global-set-key (kbd "<f7>") nil)
+    (global-set-key (kbd "<f8>") nil)
+    (global-set-key (kbd "<f9>") nil)
 
+  #+end_src
+  
 * File Modes
-#+begin_src emacs-lisp
-  (setq auto-mode-alist
-        (append
-         ;; File name (within directory) starts with a dot.
-         '((".bashrc" . shell-script-mode)
-           (".bash_aliases" . shell-script-mode)
-           (".bash_profile" . shell-script-mode)
+  #+begin_src emacs-lisp
+    (setq auto-mode-alist
+          (append
+           ;; File name (within directory) starts with a dot.
+           '((".bashrc" . shell-script-mode)
+             (".bash_aliases" . shell-script-mode)
+             (".bash_profile" . shell-script-mode)
 
-           
-           (".scss" . css-mode)
-           ;; File name has no dot.
-           ("/[^\\./]*\\'" . fundamental-mode)
-           ;; File name ends in ‘.C’.
-           ("\\.C\\'" . c++-mode))
-         auto-mode-alist))
+             
+             (".scss" . css-mode)
+             ;; File name has no dot.
+             ("/[^\\./]*\\'" . fundamental-mode)
+             ;; File name ends in ‘.C’.
+             ("\\.C\\'" . c++-mode))
+           auto-mode-alist))
 
-#+end_src
+  #+end_src
 
 * Configurações Linguagens
 ** Programming languages
@@ -605,24 +364,17 @@ f1		help-command
 
    #+end_src
 ** C
-#+begin_src emacs-lisp
-  (setq c-default-style "linux"
-        c-basic-offset 4)
+   #+begin_src emacs-lisp
+     (setq c-default-style "linux"
+           c-basic-offset 4)
 
-#+end_src
+   #+end_src
 ** Python
-#+begin_src emacs-lisp
-  ;; use the python 3.1
-  (setq py-python-command "/usr/bin/python3.1")
-#+end_src
+   #+begin_src emacs-lisp
+     ;; use the python 3.1
+     (setq py-python-command "/usr/bin/python3.1")
+   #+end_src
    
-* TODO Testes
-  (use-package 
-    :ensure t)
-#+begin_src emacs-lisp
-  (use-package projectile  
-    :ensure t)
-#+end_src
 * Footnotes
 
 #+begin_src emacs-lisp

@@ -1,5 +1,30 @@
 
+(message " ===============================================  Inicialização das Configurações  ================================================")
 
+(show-paren-mode t)
+
+(line-number-mode 1)
+(setq column-number-mode t)
+
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(setq initial-scratch-message "
+;; ***********************************************
+;; ******************* SCRATCH *******************
+;; ***********************************************
+;;
+")
+
+(setq vc-follow-symlinks t)
+
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+(setq inhibit-startup-message t)
+
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+(setq auto-save-file-name-transforms
+      '((".*" "~/.emacs.d/auto-save-list/" t)))
 
 (setq savehist-file "~/.emacs.d/savehist")
 (savehist-mode 1)
@@ -11,39 +36,22 @@
         search-ring
         regexp-search-ring))
 
-;; Show matching parenthesis. 
-(show-paren-mode t)
-
-;; Current line & column of cursor in the mode line (bar at the bottom)
-(line-number-mode 1)
-(setq column-number-mode t)
-
-;; Change "yes or no" to "y or n"
-(fset 'yes-or-no-p 'y-or-n-p)
-
-(setq initial-scratch-message "
-;; ***********************************************
-;; ******************* SCRATCH *******************
-;; ***********************************************
-;;
-")
-
-;; Open something when emacs starts
-(if (file-exists-p "~/git/org/help.org")
-    (progn(find-file "~/git/org/help.org")))
-
-(find-file "~/.pchinen.org")
-
-;;====================================================================
-;;    Layout
-;;====================================================================
-;; Turn off mouse interface early in startup to avoid momentary display
-;;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-
-;; No splash screen please ... jeez
-(setq inhibit-startup-message t)
+(if (boundp 'start-up-emacs)
+    (progn
+      ;; True Body
+      (message "Emacs is already up"))
+  (progn
+    ;; False body
+    (if (file-exists-p "~/git/org/help.org")
+        (find-file "~/git/org/help.org"))
+    
+    (if (file-exists-p "~/.pchinen.org")
+        (find-file "~/.pchinen.org"))
+    
+    (server-start)
+      
+    (setq start-up-emacs t)
+    (message "Emacs is NOT up, so i started it")))
 
 ;; Load theme
 (use-package monokai-theme
@@ -53,10 +61,6 @@
     (message "Monokai Theme - Loaded")
     (load-theme 'monokai t)
     (set-background-color "#121212")))
-
-(server-start)
-
-
 
 (use-package org
   :ensure t
@@ -83,11 +87,20 @@
    ("C-c r" . org-capture)))
 
 (setq org-structure-template-alist
-      '(("l" "#+begin_src emacs-lisp\n?\n#+end_src" "<src lang=\"emacs-lisp\">\n?\n</src>")
-        ("t" "#+begin_src text\n?\n#+end_src" "<src lang=\"text\">\n?\n</src>")))
+      '(("l"
+         "#+begin_src emacs-lisp\n?\n#+end_src"
+         "<src lang=\"emacs-lisp\">             \n?\n</src>")
+        ("t"
+         "#+begin_src text\n?\n#+end_src"
+         "<src lang=\"text\">\n?\n</src>")))
 
 (setq org-directory "~/git/org")
 (setq org-default-notes-file "~/git/org/organizer.org")
+
+(add-hook 'org-mode-hook
+          (progn
+            (visual-line-mode)
+            ))
 
 (use-package helm
   :ensure t
@@ -104,6 +117,7 @@
           helm-yas-display-key-on-candidate t
           helm-quick-update t
           helm-M-x-requires-pattern nil
+          helm-split-window-in-side-p t
           helm-ff-skip-boring-files t)
     (helm-mode))
   :bind (("C-c h" . helm-mini)
@@ -114,7 +128,6 @@
          ("M-y" . helm-show-kill-ring)
          ("M-x" . helm-M-x)
          ("C-x c o" . helm-occur)
-         ("C-1" . helm-swoop)
          ("C-x c SPC" . helm-all-mark-rings)))
 (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
 
@@ -131,25 +144,6 @@
   (progn
     (message "Magit - Loaded")))
 
-(use-package guide-key
-  :ensure t
-  :config                    
-  (progn
-    (message "Guide Key - Loaded")
-    (setq guide-key/guide-key-sequence nil)
-    (defun enable-guide-key ()
-      (interactive)
-      (guide-key-mode 1)
-      (setq guide-key/guide-key-sequence t)
-      (message "Guide Key enabled"))
-    (defun disable-guide-key ()
-      (interactive)
-      (guide-key-mode -1)
-      (setq guide-key/guide-key-sequence nil)
-      (message "Guide Key disabled"))
-    (global-set-key (kbd "C-c =") 'enable-guide-key)
-    (global-set-key (kbd "C-c -") 'disable-guide-key)))
-
 ;; Nyan Mode
 (use-package nyan-mode
   :ensure t
@@ -158,7 +152,6 @@
     (message "Nyan Mode - Loaded")
     (nyan-mode 1)))
 
-;; Expand Region
 (use-package expand-region
   :ensure t
   :bind
@@ -171,11 +164,15 @@
   :ensure t
   :config
   (progn
+    (setq company-idle-delay 0
+          company-echo-delay 0
+          company-dabbrev-downcase nil
+          company-minimum-prefix-length 2
+          company-selection-wrap-around t
+          company-transformers '(company-sort-by-occurrence
+                                 company-sort-by-backend-importance))
     (message "Company - Loaded")
     (add-hook 'after-init-hook 'global-company-mode)))
-
-(use-package ace-jump-mode
-  :ensure t)
 
 (use-package yasnippet
  :ensure t
@@ -187,11 +184,18 @@
    (setq yas-snippet-dirs
          (append yas-snippet-dirs
                  ;; Personal Collection
-                 '("~/git/dotfiles/snippets")))
+                 '("~/.snippets")))
    (define-key yas-minor-mode-map (kbd "<tab>") nil)
    (define-key yas-minor-mode-map (kbd "TAB") nil)
    (define-key yas-minor-mode-map (kbd "<f3>") 'yas-expand)
    ))
+
+(use-package re-builder
+ :ensure t
+ :config
+ (progn
+   (message "Rebuilder - Loaded")
+   (setq reb-re-synstax 'string)))
 
 (use-package keyfreq
  :ensure t
@@ -227,11 +231,20 @@
   (backward-char 3)
   (delete-char 3))
 
-
-
 (global-set-key (kbd "C-s") 'isearch-forward-regexp) 
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
-(global-set-key [(f1)] 'other-window)
+(global-set-key (kbd "s-q") 'other-window)
+(global-set-key (kbd "s-w") 'delete-window)
+
+
+(global-set-key (kbd "<f2>") nil)
+(global-set-key (kbd "<f3>") nil)
+(global-set-key (kbd "<f4>") nil)
+(global-set-key (kbd "<f5>") nil)
+(global-set-key (kbd "<f6>") nil)
+(global-set-key (kbd "<f7>") nil)
+(global-set-key (kbd "<f8>") nil)
+(global-set-key (kbd "<f9>") nil)
 
 (setq auto-mode-alist
       (append
@@ -256,8 +269,5 @@
 
 ;; use the python 3.1
 (setq py-python-command "/usr/bin/python3.1")
-
-(use-package projectile  
-  :ensure t)
 
 (message " ===============================================  Fim das Configurações  ================================================")
