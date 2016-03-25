@@ -79,12 +79,10 @@
        (octave . t)
        (sqlite . t)
        (perl . t)
-       (latex . t)
-       )))
-  :bind
-  (("C-c l" . org-store-link)
-   ("C-c a" . org-agenda)
-   ("C-c r" . org-capture)))
+       (latex . t)))
+    (global-set-key (kbd "C-c l") 'org-store-link)
+    (global-set-key (kbd "C-c a") 'org-agenda)
+    (global-set-key (kbd "C-c r") 'org-capture)))
 
 (setq org-structure-template-alist
       '(("l"
@@ -119,16 +117,14 @@
           helm-M-x-requires-pattern nil
           helm-split-window-in-side-p t
           helm-ff-skip-boring-files t)
-    (helm-mode))
-  :bind (("C-c h" . helm-mini)
-         ("C-h a" . helm-apropos)
-         ("C-x C-b" . helm-buffers-list)
-         ("C-x b" . helm-buffers-list)
-         ("C-x C-f" . helm-find-files)
-         ("M-y" . helm-show-kill-ring)
-         ("M-x" . helm-M-x)
-         ("C-x c o" . helm-occur)
-         ("C-x c SPC" . helm-all-mark-rings)))
+    (helm-mode)
+    (global-set-key (kbd "C-c h") 'helm-mini)
+    (global-set-key (kbd "C-h a") 'helm-apropos)
+    (global-set-key (kbd "C-x b") 'helm-buffers-list)
+    (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+    (global-set-key (kbd "C-x C-f") 'helm-find-files)
+    (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+    (global-set-key (kbd "M-x") 'helm-M-x)))
 (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
 
 (use-package helm-swoop
