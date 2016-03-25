@@ -2,7 +2,7 @@
         name = Pedro Chinen
         email = chinen93@gmail.com
 [core]
-        editor = emacs
+        editor = emacs --no-init-file --no-splash
 [color]
         ui = auto
 [color "branch"]
