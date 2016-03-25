@@ -42,11 +42,11 @@ alias realias='em ~/.bash_aliases'
 ########################################
 alias ga='git add'
 alias gd='git diff'
-alias gc='git commit -m'
+alias gc='git commit'
 alias gpsh='git push'
 alias gpll='git pull'
 alias gst='git status'
-alias gco='git checkout'
+alias gcheck='git checkout'
 alias glog='git log --oneline --decorate --color --graph'
 
 ########################################

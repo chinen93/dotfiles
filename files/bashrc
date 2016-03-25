@@ -78,5 +78,5 @@ FLAG="$BGRN$FYEL<$FBLE o $FYEL>$RS"
 USER="$FMAG\u$RS"
 DIR="$FGRN\w$RS"
 
-PS1="[$USER $FLAG $DIR]\$\n"
+PS1="[$USER $DIR]\$\n"
 export PS1
