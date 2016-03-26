@@ -131,8 +131,8 @@
   :ensure t
   :init
   (progn
-    (message "Helm Swoop - Loaded"))
-  :bind ("C-1" . helm-swoop))
+    (message "Helm Swoop - Loaded")
+    (global-set-key (kbd "C-1") 'helm-swoop)))
 
 (use-package magit
   :ensure t
@@ -154,7 +154,9 @@
   ("C-=" . er/expand-region)
   :config
   (progn
-    (message "Expand Region - Loaded")))
+    (message "Expand Region - Loaded")
+    ;; Bind
+    (global-set-key (kbd "C-=") 'er/expand-region)))
 
 (use-package company
   :ensure t
