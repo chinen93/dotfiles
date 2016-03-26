@@ -28,10 +28,6 @@ else
     echo "$HOME/.bash_aliases not found"
 fi
 
-
-export NVM_DIR="/home/pchinen/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
 ########################################
 # => General
 ########################################
@@ -74,9 +70,9 @@ BMAG="\[\033[45m\]" # background magenta
 BCYN="\[\033[46m\]" # background cyan
 BWHT="\[\033[47m\]" # background white
 
-FLAG="$BGRN$FYEL<$FBLE o $FYEL>$RS"
-USER="$FMAG\u$RS"
-DIR="$FGRN\w$RS"
+FLAGP="$BGRN$FYEL<$FBLE o $FYEL>$RS"
+USERP="$FMAG\u$RS"
+DIRP="$FGRN\w$RS"
 
-PS1="[$USER $DIR]\$\n"
+PS1="[$USERP $DIRP]\$\n"
 export PS1
