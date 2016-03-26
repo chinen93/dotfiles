@@ -1,0 +1,14 @@
+# Filename: $HOME/.screenrc
+# Purpose:  Setup file for program "(GNU) screen"
+# https://www.gnu.org/software/screen/manual/screen.html
+
+startup_message off
+
+# Key binding to emulates emacs
+bind -c ctrlX b windowlist -b
+bind -c ctrlX "^B" windowlist -b
+bind -c ctrlX t title 
+bind -c ctrlX f screen
+bind -c ctrlX "^F" screen
+bind -c ctrlX "^C" quit
+bindkey "^X" command -c ctrlX
