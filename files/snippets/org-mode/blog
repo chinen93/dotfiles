@@ -1,10 +1,10 @@
-# -*- mode: snippet -*-
+# -*- mode: snippet -*'-
 # name: blog
 # key: blog
 # --
 
 #+QUESTION: ${1:What is Something?}
 #+AUTHOR  : ${2:Pedro Chinen}
-#+DATE    : $4
+#+DATE    : `(format-time-string "%Y-%m-%d")`
 
 $0

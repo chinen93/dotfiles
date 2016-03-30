@@ -6,6 +6,6 @@
 #+TITLE:  ${1:Something Notes}
 #+AUTHOR: ${2:Pedro Chinen}
 #+EMAIL:  ${3:ph.u.chinen@gmail.com}
-#+DATE:   $4
+#+DATE    : `(format-time-string "%Y-%m-%d")`
 
 $0
