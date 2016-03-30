@@ -210,6 +210,14 @@
    (keyfreq-mode 1)
    (keyfreq-autosave-mode 1)))
 
+(use-package flycheck
+ :ensure t
+ :config
+ (progn
+   (message "Flycheck - Loaded")
+   (global-flycheck-mode)
+   ))
+
 (defun my/bcompile-pchinen.el ()
   (interactive)
   (byte-compile-file "/home/pchinen/git/dotfiles/files/pchinen.el"))
@@ -267,5 +275,6 @@
 
 ;; use the python 3.1
 (setq py-python-command "/usr/bin/python3.1")
+(when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
 
 (message " ===============================================  Fim das Configurações  ================================================")

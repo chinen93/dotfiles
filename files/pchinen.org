@@ -291,6 +291,18 @@
        (keyfreq-autosave-mode 1)))
 
   #+end_src
+* TODO Flycheck
+  http://www.flycheck.org/en/latest/
+  #+begin_src emacs-lisp
+    (use-package flycheck
+     :ensure t
+     :config
+     (progn
+       (message "Flycheck - Loaded")
+       (global-flycheck-mode)
+       ))
+
+  #+end_src
 * Custom Functions
 ** Emacs
   #+begin_src emacs-lisp
@@ -371,6 +383,7 @@
    #+begin_src emacs-lisp
      ;; use the python 3.1
      (setq py-python-command "/usr/bin/python3.1")
+     (when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
    #+end_src
    
 * Footnotes
