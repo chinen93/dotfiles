@@ -50,6 +50,13 @@
      (setq auto-save-file-name-transforms
            '((".*" "~/.emacs.d/auto-save-list/" t)))
    #+end_src
+** Ensure environment variables inside Emacs look the same as in the user's shell.
+   #+begin_src emacs-lisp
+     (use-package exec-path-from-shell
+       :ensure t
+       :config (progn
+                 (exec-path-from-shell-initialize)))
+   #+end_src
 ** History
    <2016-04-03 Sun> : First Timestamp
    Save minibuffer history
@@ -93,9 +100,146 @@
          (load-theme 'monokai t)
          (set-background-color "#121212")))
    #+end_src
+* TODO Company
+  <2016-04-03 Sun> : First Timestamp
+   [[%20%20%20http://company-mode.github.io/][company-mode]]
+  #+begin_src emacs-lisp
+    (use-package company
+      :ensure t
+      :config
+      (progn
+       (setq company-idle-delay 0
+              company-echo-delay 0
+             company-dabbrev-downcase nil
+              company-minimum-prefix-length 2
+              company-selection-wrap-around t
+              company-transformers '(company-sort-by-occurrence
+                                     company-sort-by-backend-importance))
+        (message "Company - Loaded")
+        (add-hook 'after-init-hook 'global-company-mode)))
+  #+end_src
+* TODO Calculator2
+  [[https://www.gnu.org/software/emacs/manual/html_mono/calc.html][calc-mode]]
+
 * Dired
   [[http://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html][Dired - Manual]]
   
+* Expand Region
+  <2016-04-03 Sun> : First Timestamp
+  Expand Region "teste1-teste2-teste3"
+  first use : 'teste1'
+  second use: 'teste1-teste2-teste3'
+  third use : '"teste1-teste2-teste3"'
+  and so on...
+  #+begin_src emacs-lisp
+    (use-package expand-region
+    :ensure t
+      :bind
+      ("C-=" . er/expand-region)
+      :config
+      (progn
+        (message "Expand Region - Loaded")
+        ;; Bind
+        (global-set-key (kbd "C-=") 'er/expand-region)))
+  #+end_src
+* TODO Flycheck
+  <2016-04-03 Sun> : First Timestamp
+  http://www.flycheck.org/en/latest/
+  #+begin_src emacs-lisp
+    (use-package flycheck
+     :ensure t
+     :config
+     (progn
+       (message "Flycheck - Loaded")
+       (global-flycheck-mode)
+       ))
+
+  #+end_src
+* Helm 
+  <2016-04-03 Sun> : First Timestamp
+  #+begin_src emacs-lisp
+    (use-package helm
+      :ensure t
+      :diminish helm-mode
+      :init
+      (progn
+        (require 'helm-config)
+        (message "Helm - Loaded")
+        (setq helm-candidate-number-limit 100)
+       ;; From https://gist.github.com/antifuchs/9238468
+        (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
+              helm-input-idle-delay 0.01  ; this actually updates things
+                                            ; reeeelatively quickly.
+              helm-yas-display-key-on-candidate t
+              helm-quick-update t
+              helm-M-x-requires-pattern nil
+              helm-split-window-in-side-p t
+              helm-ff-skip-boring-files t)
+        (helm-mode)
+        (global-set-key (kbd "C-c h") 'helm-mini)
+        (global-set-key (kbd "C-h a") 'helm-apropos)
+        (global-set-key (kbd "C-x b") 'helm-buffers-list)
+        (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+        (global-set-key (kbd "C-x C-f") 'helm-find-files)
+        (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+        (global-set-key (kbd "M-x") 'helm-M-x)))
+    (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
+  #+end_src
+** Helm-Swoop
+   <2016-04-03 Sun> : First Timestamp
+   #+begin_src emacs-lisp
+     (use-package helm-swoop
+       :ensure t
+       :init
+       (progn
+         (message "Helm Swoop - Loaded")
+         (global-set-key (kbd "C-1") 'helm-swoop)))
+   #+end_src
+* TODO Keyfreq
+  <2016-04-03 Sun> : First Timestamp
+  #+begin_src emacs-lisp
+    (use-package keyfreq
+      :ensure t
+      :config
+      (progn
+        (message "Keyfreq - Loaded")
+        (setq keyfreq-excluded-commands
+              '(self-insert-command
+                abort-recursive-edit
+                forward-char
+                backward-char
+                previous-line
+                next-line))
+        (keyfreq-mode 1)
+        (keyfreq-autosave-mode 1)))
+
+  #+end_src
+* TODO Magit
+  <2016-04-03 Sun> : First Timestamp
+   https://github.com/magit/magit
+   https://www.youtube.com/watch?v=vQO7F2Q9DwA
+   
+  #+begin_src emacs-lisp
+    (use-package magit
+      :ensure t
+      :init
+      (progn
+        (message "Magit - Loaded")))
+  #+end_src
+* TODO Multiple Cursor
+* Nyan Cat
+  <2016-04-03 Sun> : First Timestamp
+  Nyan Cat is used like an scroll bar. But horizontally
+
+  #+begin_src emacs-lisp
+    ;; Nyan Mode
+    (use-package nyan-mode
+      :ensure t
+      :config
+      (progn
+        (message "Nyan Mode - Loaded")
+        (nyan-mode 1)))
+  #+end_src
 * Org mode
   <2016-04-03 Sun> : First Timestamp
   Basic Configuration for Org mode with some keybindings and stuff
@@ -148,110 +292,17 @@
                  (visual-line-mode)
                  ))
    #+end_src
-* Helm 
+* Re Build
   <2016-04-03 Sun> : First Timestamp
+  [[https://masteringemacs.org/article/re-builder-interactive-regexp-builder][re-builder]]
   #+begin_src emacs-lisp
-    (use-package helm
-      :ensure t
-      :diminish helm-mode
-      :init
-      (progn
-        (require 'helm-config)
-        (message "Helm - Loaded")
-        (setq helm-candidate-number-limit 100)
-       ;; From https://gist.github.com/antifuchs/9238468
-        (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
-              helm-input-idle-delay 0.01  ; this actually updates things
-                                            ; reeeelatively quickly.
-              helm-yas-display-key-on-candidate t
-              helm-quick-update t
-              helm-M-x-requires-pattern nil
-              helm-split-window-in-side-p t
-              helm-ff-skip-boring-files t)
-        (helm-mode)
-        (global-set-key (kbd "C-c h") 'helm-mini)
-        (global-set-key (kbd "C-h a") 'helm-apropos)
-        (global-set-key (kbd "C-x b") 'helm-buffers-list)
-        (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-        (global-set-key (kbd "C-x C-f") 'helm-find-files)
-        (global-set-key (kbd "M-y") 'helm-show-kill-ring)
-        (global-set-key (kbd "M-x") 'helm-M-x)))
-    (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
-  #+end_src
-** Helm-Swoop
-   <2016-04-03 Sun> : First Timestamp
-   #+begin_src emacs-lisp
-     (use-package helm-swoop
-       :ensure t
-       :init
-       (progn
-         (message "Helm Swoop - Loaded")
-         (global-set-key (kbd "C-1") 'helm-swoop)))
-   #+end_src
-* TODO Magit
-  <2016-04-03 Sun> : First Timestamp
-   https://github.com/magit/magit
-   https://www.youtube.com/watch?v=vQO7F2Q9DwA
-   
-  #+begin_src emacs-lisp
-    (use-package magit
-      :ensure t
-      :init
-      (progn
-        (message "Magit - Loaded")))
-  #+end_src
-* Nyan Cat
-  <2016-04-03 Sun> : First Timestamp
-  Nyan Cat is used like an scroll bar. But horizontally
-
-  #+begin_src emacs-lisp
-    ;; Nyan Mode
-    (use-package nyan-mode
-      :ensure t
-      :config
-      (progn
-        (message "Nyan Mode - Loaded")
-        (nyan-mode 1)))
-  #+end_src
-* Expand Region
-  <2016-04-03 Sun> : First Timestamp
-  Expand Region "teste1-teste2-teste3"
-  first use : 'teste1'
-  second use: 'teste1-teste2-teste3'
-  third use : '"teste1-teste2-teste3"'
-  and so on...
-  #+begin_src emacs-lisp
-    (use-package expand-region
-    :ensure t
-      :bind
-      ("C-=" . er/expand-region)
-      :config
-      (progn
-        (message "Expand Region - Loaded")
-        ;; Bind
-        (global-set-key (kbd "C-=") 'er/expand-region)))
-  #+end_src
-* TODO Multiple Cursor
-* TODO Company
-  <2016-04-03 Sun> : First Timestamp
-   [[%20%20%20http://company-mode.github.io/][company-mode]]
-  #+begin_src emacs-lisp
-    (use-package company
-      :ensure t
-      :config
-      (progn
-       (setq company-idle-delay 0
-              company-echo-delay 0
-             company-dabbrev-downcase nil
-              company-minimum-prefix-length 2
-              company-selection-wrap-around t
-              company-transformers '(company-sort-by-occurrence
-                                     company-sort-by-backend-importance))
-        (message "Company - Loaded")
-        (add-hook 'after-init-hook 'global-company-mode)))
-  #+end_src
-* TODO Calculator2
-  [[https://www.gnu.org/software/emacs/manual/html_mono/calc.html][calc-mode]]
+    (use-package re-builder
+     :ensure t
+     :config
+     (progn
+       (message "Rebuilder - Loaded")
+       (setq reb-re-synstax 'string)))
+ #+end_src
 * TODO YASnippet
   <2016-04-03 Sun> : First Timestamp
   [[https://en.wikipedia.org/wiki/Snippet_%2528programming%2529][Snippet]]
@@ -265,57 +316,13 @@
        (message "Yasnippet - Loaded")
        ;; Change add Directories when looking for snippets
        (setq yas-snippet-dirs
-             (append yas-snippet-dirs
-                     ;; Personal Collection
-                     '("~/.snippets")))
+             ;; Personal Collection
+             '("~/.snippets"))
        (define-key yas-minor-mode-map (kbd "<tab>") nil)
        (define-key yas-minor-mode-map (kbd "TAB") nil)
-       (define-key yas-minor-mode-map (kbd "<f3>") 'yas-expand)
+       (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-expand)
        (yas-global-mode)
        ))
-  #+end_src
-* Re Build
-  <2016-04-03 Sun> : First Timestamp
-  [[https://masteringemacs.org/article/re-builder-interactive-regexp-builder][re-builder]]
-  #+begin_src emacs-lisp
-    (use-package re-builder
-     :ensure t
-     :config
-     (progn
-       (message "Rebuilder - Loaded")
-       (setq reb-re-synstax 'string)))
- #+end_src
-* TODO Keyfreq
-  <2016-04-03 Sun> : First Timestamp
-  #+begin_src emacs-lisp
-    (use-package keyfreq
-      :ensure t
-      :config
-      (progn
-        (message "Keyfreq - Loaded")
-        (setq keyfreq-excluded-commands
-              '(self-insert-command
-                abort-recursive-edit
-                forward-char
-                backward-char
-                previous-line
-                next-line))
-        (keyfreq-mode 1)
-        (keyfreq-autosave-mode 1)))
-
-  #+end_src
-* TODO Flycheck
-  <2016-04-03 Sun> : First Timestamp
-  http://www.flycheck.org/en/latest/
-  #+begin_src emacs-lisp
-    (use-package flycheck
-     :ensure t
-     :config
-     (progn
-       (message "Flycheck - Loaded")
-       (global-flycheck-mode)
-       ))
-
   #+end_src
 * Custom Functions
 ** Emacs
@@ -404,9 +411,18 @@
      ;; use the python 3.1
      (setq py-python-command "/usr/bin/python3.1")
      (when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
+
+     (use-package company-jedi
+       :ensure t
+       :config (progn 
+                 (add-to-list 'company-backends 'company-jedi)))
    #+end_src
 * Footnotes
   <2016-04-03 Sun> : First Timestamp
 #+begin_src emacs-lisp
   (message " ===============================================  Fim das Configurações  ================================================")
 #+end_src
+
+* How to?
+** Kill multiple buffers
+** Insert timestamp

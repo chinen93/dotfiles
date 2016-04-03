@@ -26,6 +26,11 @@
 (setq auto-save-file-name-transforms
       '((".*" "~/.emacs.d/auto-save-list/" t)))
 
+(use-package exec-path-from-shell
+  :ensure t
+  :config (progn
+            (exec-path-from-shell-initialize)))
+
 (setq savehist-file "~/.emacs.d/savehist")
 (savehist-mode 1)
 (setq history-length t)
@@ -172,12 +177,11 @@
    (message "Yasnippet - Loaded")
    ;; Change add Directories when looking for snippets
    (setq yas-snippet-dirs
-         (append yas-snippet-dirs
-                 ;; Personal Collection
-                 '("~/.snippets")))
+         ;; Personal Collection
+         '("~/.snippets"))
    (define-key yas-minor-mode-map (kbd "<tab>") nil)
    (define-key yas-minor-mode-map (kbd "TAB") nil)
-   (define-key yas-minor-mode-map (kbd "<f3>") 'yas-expand)
+   (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-expand)
    (yas-global-mode)
    ))
 
@@ -271,5 +275,10 @@
 ;; use the python 3.1
 (setq py-python-command "/usr/bin/python3.1")
 (when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
+
+(use-package company-jedi
+  :ensure t
+  :config (progn 
+            (add-to-list 'company-backends 'company-jedi)))
 
 (message " ===============================================  Fim das Configurações  ================================================")
