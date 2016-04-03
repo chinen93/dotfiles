@@ -9,10 +9,10 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (setq initial-scratch-message "
-;; ***********************************************
-;; ******************* SCRATCH *******************
-;; ***********************************************
-;;
+***********************************************
+******************* SCRATCH *******************
+***********************************************
+   
 ")
 
 (setq vc-follow-symlinks t)
@@ -41,15 +41,8 @@
       ;; True Body
       (message "Emacs is already up"))
   (progn
-    ;; False body
-    (if (file-exists-p "~/git/org/help.org")
-        (find-file "~/git/org/help.org"))
-    
-    (if (file-exists-p "~/.pchinen.org")
-        (find-file "~/.pchinen.org"))
-    
-    (server-start)
-      
+    ;;(server-start)
+
     (setq start-up-emacs t)
     (message "Emacs is NOT up, so i started it")))
 
@@ -108,7 +101,7 @@
     (require 'helm-config)
     (message "Helm - Loaded")
     (setq helm-candidate-number-limit 100)
-    ;; From https://gist.github.com/antifuchs/9238468
+   ;; From https://gist.github.com/antifuchs/9238468
     (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
           helm-input-idle-delay 0.01  ; this actually updates things
                                         ; reeeelatively quickly.
@@ -149,7 +142,7 @@
     (nyan-mode 1)))
 
 (use-package expand-region
-  :ensure t
+:ensure t
   :bind
   ("C-=" . er/expand-region)
   :config
@@ -162,9 +155,9 @@
   :ensure t
   :config
   (progn
-    (setq company-idle-delay 0
+   (setq company-idle-delay 0
           company-echo-delay 0
-          company-dabbrev-downcase nil
+         company-dabbrev-downcase nil
           company-minimum-prefix-length 2
           company-selection-wrap-around t
           company-transformers '(company-sort-by-occurrence
@@ -196,19 +189,19 @@
    (setq reb-re-synstax 'string)))
 
 (use-package keyfreq
- :ensure t
- :config
- (progn
-   (message "Keyfreq - Loaded")
-   (setq keyfreq-excluded-commands
-      '(self-insert-command
-        abort-recursive-edit
-        forward-char
-        backward-char
-        previous-line
-        next-line))
-   (keyfreq-mode 1)
-   (keyfreq-autosave-mode 1)))
+  :ensure t
+  :config
+  (progn
+    (message "Keyfreq - Loaded")
+    (setq keyfreq-excluded-commands
+          '(self-insert-command
+            abort-recursive-edit
+            forward-char
+            backward-char
+            previous-line
+            next-line))
+    (keyfreq-mode 1)
+    (keyfreq-autosave-mode 1)))
 
 (use-package flycheck
  :ensure t
@@ -221,6 +214,14 @@
 (defun my/bcompile-pchinen.el ()
   (interactive)
   (byte-compile-file "/home/pchinen/git/dotfiles/files/pchinen.el"))
+
+(defun my/open-initial-files ()
+   (interactive)
+   (if (file-exists-p "~/git/org/help.org")
+       (find-file "~/git/org/help.org"))
+  
+   (if (file-exists-p "~/.pchinen.org")
+       (find-file "~/.pchinen.org")))
 
 (defun c-comment-line ()
   (interactive)
@@ -266,12 +267,6 @@
          ;; File name ends in ‘.C’.
          ("\\.C\\'" . c++-mode))
        auto-mode-alist))
-
-(add-hook 'prog-mode-hook
-          (progn (setq-default indent-tabs-mode nil)))
-
-(setq c-default-style "linux"
-      c-basic-offset 4)
 
 ;; use the python 3.1
 (setq py-python-command "/usr/bin/python3.1")

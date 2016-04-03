@@ -1,10 +1,16 @@
+#+TITLE:  Pchinen emacs Org
+#+AUTHOR: Pedro Chinen
+#+EMAIL:  ph.u.chinen@gmail.com
+#+DATE    : 2016-04-03
+
 
 * Header
+  <2016-04-03 Sun> : First Timestamp
   #+begin_src emacs-lisp
     (message " ===============================================  Inicialização das Configurações  ================================================")
   #+end_src
-  
 * Basic Configuration
+  <2016-04-03 Sun> : First Timestamp
   - Show matching parenthesis. 
   - Current line & column of cursor in the mode line (bar at the bottom)
   - Change "yes or no" to "y or n"
@@ -22,10 +28,10 @@
      (fset 'yes-or-no-p 'y-or-n-p)
 
      (setq initial-scratch-message "
-     ;; ***********************************************
-     ;; ******************* SCRATCH *******************
-     ;; ***********************************************
-     ;;
+     ,***********************************************
+     ,******************* SCRATCH *******************
+     ,***********************************************
+        
      ")
 
      (setq vc-follow-symlinks t)
@@ -36,15 +42,16 @@
      (setq inhibit-startup-message t)
    #+end_src
 ** Backup
+   <2016-04-03 Sun> : First Timestamp
    Create an directory to store all the backup files that normally would stay with the original file
 
    #+begin_src emacs-lisp
      (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
      (setq auto-save-file-name-transforms
            '((".*" "~/.emacs.d/auto-save-list/" t)))
-
    #+end_src
 ** History
+   <2016-04-03 Sun> : First Timestamp
    Save minibuffer history
 
    #+begin_src emacs-lisp
@@ -59,6 +66,7 @@
              regexp-search-ring))
    #+end_src
 ** First initialization?
+   <2016-04-03 Sun> : First Timestamp
    If is the first time openning emacs. Start server, open some files
    
    #+begin_src emacs-lisp
@@ -67,20 +75,13 @@
            ;; True Body
            (message "Emacs is already up"))
        (progn
-         ;; False body
-         (if (file-exists-p "~/git/org/help.org")
-             (find-file "~/git/org/help.org"))
-         
-         (if (file-exists-p "~/.pchinen.org")
-             (find-file "~/.pchinen.org"))
-         
-         (server-start)
-           
+         ;;(server-start)
+
          (setq start-up-emacs t)
          (message "Emacs is NOT up, so i started it")))
-
    #+end_src
 ** TODO Theme
+   <2016-04-03 Sun> : First Timestamp
    The theme being used is Monokai
    #+begin_src emacs-lisp
      ;; Load theme
@@ -96,6 +97,7 @@
   [[http://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html][Dired - Manual]]
   
 * Org mode
+  <2016-04-03 Sun> : First Timestamp
   Basic Configuration for Org mode with some keybindings and stuff
   #+begin_src emacs-lisp  
     (use-package org
@@ -121,6 +123,7 @@
         (global-set-key (kbd "C-c r") 'org-capture))) 
   #+end_src
 ** Sorce code emacs lisp BEGIN-END
+   <2016-04-03 Sun> : First Timestamp
    When is typed '<l' and pressed '[TAB]' a block of code is created
    #+begin_src emacs-lisp
      (setq org-structure-template-alist
@@ -132,11 +135,13 @@
               "<src lang=\"text\">\n?\n</src>")))
    #+end_src
 ** Capture Directory
+   <2016-04-03 Sun> : First Timestamp
    #+begin_src emacs-lisp
-     (setq org-directory "~/git/org")
-     (setq org-default-notes-file "~/git/org/organizer.org")
+    (setq org-directory "~/git/org")
+    (setq org-default-notes-file "~/git/org/organizer.org")
    #+end_src    
 ** Hooks
+   <2016-04-03 Sun> : First Timestamp
    #+begin_src emacs-lisp
      (add-hook 'org-mode-hook
                (progn
@@ -144,6 +149,7 @@
                  ))
    #+end_src
 * Helm 
+  <2016-04-03 Sun> : First Timestamp
   #+begin_src emacs-lisp
     (use-package helm
       :ensure t
@@ -153,7 +159,7 @@
         (require 'helm-config)
         (message "Helm - Loaded")
         (setq helm-candidate-number-limit 100)
-        ;; From https://gist.github.com/antifuchs/9238468
+       ;; From https://gist.github.com/antifuchs/9238468
         (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
               helm-input-idle-delay 0.01  ; this actually updates things
                                             ; reeeelatively quickly.
@@ -173,6 +179,7 @@
     (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
   #+end_src
 ** Helm-Swoop
+   <2016-04-03 Sun> : First Timestamp
    #+begin_src emacs-lisp
      (use-package helm-swoop
        :ensure t
@@ -182,6 +189,7 @@
          (global-set-key (kbd "C-1") 'helm-swoop)))
    #+end_src
 * TODO Magit
+  <2016-04-03 Sun> : First Timestamp
    https://github.com/magit/magit
    https://www.youtube.com/watch?v=vQO7F2Q9DwA
    
@@ -193,6 +201,7 @@
         (message "Magit - Loaded")))
   #+end_src
 * Nyan Cat
+  <2016-04-03 Sun> : First Timestamp
   Nyan Cat is used like an scroll bar. But horizontally
 
   #+begin_src emacs-lisp
@@ -205,6 +214,7 @@
         (nyan-mode 1)))
   #+end_src
 * Expand Region
+  <2016-04-03 Sun> : First Timestamp
   Expand Region "teste1-teste2-teste3"
   first use : 'teste1'
   second use: 'teste1-teste2-teste3'
@@ -212,7 +222,7 @@
   and so on...
   #+begin_src emacs-lisp
     (use-package expand-region
-      :ensure t
+    :ensure t
       :bind
       ("C-=" . er/expand-region)
       :config
@@ -223,15 +233,16 @@
   #+end_src
 * TODO Multiple Cursor
 * TODO Company
+  <2016-04-03 Sun> : First Timestamp
    [[%20%20%20http://company-mode.github.io/][company-mode]]
   #+begin_src emacs-lisp
     (use-package company
       :ensure t
       :config
       (progn
-        (setq company-idle-delay 0
+       (setq company-idle-delay 0
               company-echo-delay 0
-              company-dabbrev-downcase nil
+             company-dabbrev-downcase nil
               company-minimum-prefix-length 2
               company-selection-wrap-around t
               company-transformers '(company-sort-by-occurrence
@@ -242,6 +253,7 @@
 * TODO Calculator2
   [[https://www.gnu.org/software/emacs/manual/html_mono/calc.html][calc-mode]]
 * TODO YASnippet
+  <2016-04-03 Sun> : First Timestamp
   [[https://en.wikipedia.org/wiki/Snippet_%2528programming%2529][Snippet]]
   [[https://github.com/capitaomorte/yasnippet][YASnippet]]
   http://capitaomorte.github.io/yasnippet/
@@ -263,6 +275,7 @@
        ))
   #+end_src
 * Re Build
+  <2016-04-03 Sun> : First Timestamp
   [[https://masteringemacs.org/article/re-builder-interactive-regexp-builder][re-builder]]
   #+begin_src emacs-lisp
     (use-package re-builder
@@ -271,27 +284,28 @@
      (progn
        (message "Rebuilder - Loaded")
        (setq reb-re-synstax 'string)))
-
  #+end_src
 * TODO Keyfreq
+  <2016-04-03 Sun> : First Timestamp
   #+begin_src emacs-lisp
     (use-package keyfreq
-     :ensure t
-     :config
-     (progn
-       (message "Keyfreq - Loaded")
-       (setq keyfreq-excluded-commands
-          '(self-insert-command
-            abort-recursive-edit
-            forward-char
-            backward-char
-            previous-line
-            next-line))
-       (keyfreq-mode 1)
-       (keyfreq-autosave-mode 1)))
+      :ensure t
+      :config
+      (progn
+        (message "Keyfreq - Loaded")
+        (setq keyfreq-excluded-commands
+              '(self-insert-command
+                abort-recursive-edit
+                forward-char
+                backward-char
+                previous-line
+                next-line))
+        (keyfreq-mode 1)
+        (keyfreq-autosave-mode 1)))
 
   #+end_src
 * TODO Flycheck
+  <2016-04-03 Sun> : First Timestamp
   http://www.flycheck.org/en/latest/
   #+begin_src emacs-lisp
     (use-package flycheck
@@ -305,30 +319,46 @@
   #+end_src
 * Custom Functions
 ** Emacs
-  #+begin_src emacs-lisp
-    (defun my/bcompile-pchinen.el ()
-      (interactive)
-      (byte-compile-file "/home/pchinen/git/dotfiles/files/pchinen.el"))
-  #+end_src
+*** Compile pchine file
+    <2016-04-03 Sun> : First Timestamp
+    #+begin_src emacs-lisp
+      (defun my/bcompile-pchinen.el ()
+        (interactive)
+        (byte-compile-file "/home/pchinen/git/dotfiles/files/pchinen.el"))
+    #+end_src
+*** Trim line
+*** Open initial files, Differ from System
+    <2016-04-03 Sun> : First Timestamp
+    #+begin_src emacs-lisp
+      (defun my/open-initial-files ()
+         (interactive)
+         (if (file-exists-p "~/git/org/help.org")
+             (find-file "~/git/org/help.org"))
+        
+         (if (file-exists-p "~/.pchinen.org")
+             (find-file "~/.pchinen.org")))
+    #+end_src
 ** Programação
 *** C 
-  #+begin_src emacs-lisp
-    (defun c-comment-line ()
-      (interactive)
-      (beginning-of-line)
-      (insert "/*")
-      (end-of-line)
-      (insert " */"))
+    <2016-04-03 Sun> : First Timestamp
+    #+begin_src emacs-lisp
+      (defun c-comment-line ()
+        (interactive)
+        (beginning-of-line)
+        (insert "/*")
+        (end-of-line)
+        (insert " */"))
 
-    (defun c-uncomment-line ()
-      (interactive)
-      (beginning-of-line)
-      (delete-char 2)
-      (end-of-line)
-      (backward-char 3)
-      (delete-char 3))
-  #+end_src
+      (defun c-uncomment-line ()
+        (interactive)
+        (beginning-of-line)
+        (delete-char 2)
+        (end-of-line)
+        (backward-char 3)
+        (delete-char 3))
+    #+end_src
 * Key Binding
+  <2016-04-03 Sun> : First Timestamp
   #+begin_src emacs-lisp
     (global-set-key (kbd "C-s") 'isearch-forward-regexp) 
     (global-set-key (kbd "C-r") 'isearch-backward-regexp)
@@ -344,10 +374,10 @@
     (global-set-key (kbd "<f7>") nil)
     (global-set-key (kbd "<f8>") nil)
     (global-set-key (kbd "<f9>") nil)
-
   #+end_src
   
 * File Modes
+  <2016-04-03 Sun> : First Timestamp
   #+begin_src emacs-lisp
     (setq auto-mode-alist
           (append
@@ -365,29 +395,18 @@
            auto-mode-alist))
 
   #+end_src
-
-* Configurações Linguagens
-** Programming languages
-   #+begin_src emacs-lisp
-     (add-hook 'prog-mode-hook
-               (progn (setq-default indent-tabs-mode nil)))
-
-   #+end_src
+ 
+* Programming languages
 ** C
-   #+begin_src emacs-lisp
-     (setq c-default-style "linux"
-           c-basic-offset 4)
-
-   #+end_src
 ** Python
+   <2016-04-03 Sun> : First Timestamp
    #+begin_src emacs-lisp
      ;; use the python 3.1
      (setq py-python-command "/usr/bin/python3.1")
      (when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
    #+end_src
-   
 * Footnotes
-
+  <2016-04-03 Sun> : First Timestamp
 #+begin_src emacs-lisp
   (message " ===============================================  Fim das Configurações  ================================================")
 #+end_src
