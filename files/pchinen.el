@@ -46,7 +46,7 @@
       ;; True Body
       (message "Emacs is already up"))
   (progn
-    ;;(server-start)
+    (server-start)
 
     (setq start-up-emacs t)
     (message "Emacs is NOT up, so i started it")))
@@ -60,43 +60,37 @@
     (load-theme 'monokai t)
     (set-background-color "#121212")))
 
-(use-package org
+(use-package company
   :ensure t
-  :init
+  :config
   (progn
-    (setq org-return-follows-link t)
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '(
-       (sh . t)
-       (python . t)
-       (R . t)
-       (ruby . t)
-       (ditaa . t)
-       (dot . t)
-       (octave . t)
-       (sqlite . t)
-       (perl . t)
-       (latex . t)))
-    (global-set-key (kbd "C-c l") 'org-store-link)
-    (global-set-key (kbd "C-c a") 'org-agenda)
-    (global-set-key (kbd "C-c r") 'org-capture)))
+   (setq company-idle-delay 0
+          company-echo-delay 0
+         company-dabbrev-downcase nil
+          company-minimum-prefix-length 2
+          company-selection-wrap-around t
+          company-transformers '(company-sort-by-occurrence
+                                 company-sort-by-backend-importance))
+    (message "Company - Loaded")
+    (add-hook 'after-init-hook 'global-company-mode)))
 
-(setq org-structure-template-alist
-      '(("l"
-         "#+begin_src emacs-lisp\n?\n#+end_src"
-         "<src lang=\"emacs-lisp\">             \n?\n</src>")
-        ("t"
-         "#+begin_src text\n?\n#+end_src"
-         "<src lang=\"text\">\n?\n</src>")))
+(use-package expand-region
+:ensure t
+  :bind
+  ("C-=" . er/expand-region)
+  :config
+  (progn
+    (message "Expand Region - Loaded")
+    ;; Bind
+    (global-set-key (kbd "C-=") 'er/expand-region)))
 
-(setq org-directory "~/git/org")
-(setq org-default-notes-file "~/git/org/organizer.org")
-
-(add-hook 'org-mode-hook
-          (progn
-            (visual-line-mode)
-            ))
+(use-package flycheck
+ :ensure t
+ :config
+ (progn
+   (message "Flycheck - Loaded")
+   (global-flycheck-mode)
+   ))
 
 (use-package helm
   :ensure t
@@ -132,65 +126,11 @@
     (message "Helm Swoop - Loaded")
     (global-set-key (kbd "C-1") 'helm-swoop)))
 
-(use-package magit
+(use-package helm-descbinds
   :ensure t
   :init
   (progn
-    (message "Magit - Loaded")))
-
-;; Nyan Mode
-(use-package nyan-mode
-  :ensure t
-  :config
-  (progn
-    (message "Nyan Mode - Loaded")
-    (nyan-mode 1)))
-
-(use-package expand-region
-:ensure t
-  :bind
-  ("C-=" . er/expand-region)
-  :config
-  (progn
-    (message "Expand Region - Loaded")
-    ;; Bind
-    (global-set-key (kbd "C-=") 'er/expand-region)))
-
-(use-package company
-  :ensure t
-  :config
-  (progn
-   (setq company-idle-delay 0
-          company-echo-delay 0
-         company-dabbrev-downcase nil
-          company-minimum-prefix-length 2
-          company-selection-wrap-around t
-          company-transformers '(company-sort-by-occurrence
-                                 company-sort-by-backend-importance))
-    (message "Company - Loaded")
-    (add-hook 'after-init-hook 'global-company-mode)))
-
-(use-package yasnippet
- :ensure t
- :config
- (progn
-   (message "Yasnippet - Loaded")
-   ;; Change add Directories when looking for snippets
-   (setq yas-snippet-dirs
-         ;; Personal Collection
-         '("~/.snippets"))
-   (define-key yas-minor-mode-map (kbd "<tab>") nil)
-   (define-key yas-minor-mode-map (kbd "TAB") nil)
-   (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-expand)
-   (yas-global-mode)
-   ))
-
-(use-package re-builder
- :ensure t
- :config
- (progn
-   (message "Rebuilder - Loaded")
-   (setq reb-re-synstax 'string)))
+    (message "Helm Describe Bindings - Loaded")))
 
 (use-package keyfreq
   :ensure t
@@ -207,13 +147,102 @@
     (keyfreq-mode 1)
     (keyfreq-autosave-mode 1)))
 
-(use-package flycheck
+(use-package magit
+  :ensure t
+  :init
+  (progn
+    (message "Magit - Loaded")))
+
+;; Nyan Mode
+(use-package nyan-mode
+  :ensure t
+  :config
+  (progn
+    (message "Nyan Mode - Loaded")
+    (nyan-mode 1)))
+
+(use-package org
+  :ensure t
+  :init
+  (progn
+    (setq org-return-follows-link t)
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '(
+       (sh . t)
+       (python . t)
+       (R . t)
+       (ruby . t)
+       (ditaa . t)
+       (dot . t)
+       (octave . t)
+       (sqlite . t)
+       (perl . t)
+       (latex . t)))
+    (global-set-key (kbd "C-c l") 'org-store-link)
+    (global-set-key (kbd "C-c a") 'org-agenda)
+    (global-set-key (kbd "C-c r") 'org-capture)))
+
+(setq org-structure-template-alist
+      '(("l"
+         "#+begin_src emacs-lisp\n?\n#+end_src"
+         "<src lang=\"emacs-lisp\">             \n?\n</src>")
+        ("t"
+         "#+begin_src text\n?\n#+end_src"
+         "<src lang=\"text\">\n?\n</src>")))
+
+(setq org-directory "~/git/org")
+(setq org-default-notes-file "~/git/org/organizer.org")
+
+(add-hook 'org-mode-hook
+          (lambda()
+            (visual-line-mode t)
+            ))
+
+(use-package re-builder
  :ensure t
  :config
  (progn
-   (message "Flycheck - Loaded")
-   (global-flycheck-mode)
+   (message "Rebuilder - Loaded")
+   (setq reb-re-synstax 'string)))
+
+(use-package yasnippet
+ :ensure t
+ :config
+ (progn
+   (message "Yasnippet - Loaded")
+   ;; Change add Directories when looking for snippets
+   (setq yas-snippet-dirs
+         ;; Personal Collection
+         '("~/.snippets"))
+   (define-key yas-minor-mode-map (kbd "<tab>") nil)
+   (define-key yas-minor-mode-map (kbd "TAB") nil)
+   (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-expand)
+   (define-key yas-minor-mode-map (kbd "C-v s") 'yas-insert-snippet)
+   (yas-global-mode)
    ))
+
+(defun shk-yas/helm-prompt (prompt choices &optional display-fn)
+  "Use helm to select a snippet. Put this into `yas-prompt-functions.'"
+  (interactive)
+  (setq display-fn (or display-fn 'identity))
+  (if (require 'helm-config)
+      (let (tmpsource cands result rmap)
+        (setq cands (mapcar (lambda (x) (funcall display-fn x)) choices))
+        (setq rmap (mapcar (lambda (x) (cons (funcall display-fn x) x)) choices))
+        (setq tmpsource
+              (list
+               (cons 'name prompt)
+               (cons 'candidates cands)
+               '(action . (("Expand" . (lambda (selection) selection))))
+               ))
+        (setq result (helm-other-buffer '(tmpsource) "*helm-select-yasnippet"))
+        (if (null result)
+            (signal 'quit "user quit!")
+          (cdr (assoc result rmap))))
+    nil))
+
+(setq yas-prompt-functions '(shk-yas/helm-prompt))
 
 (defun my/bcompile-pchinen.el ()
   (interactive)
@@ -241,6 +270,10 @@
   (end-of-line)
   (backward-char 3)
   (delete-char 3))
+
+(define-prefix-command 'my-prefix-command)
+(global-set-key (kbd "C-v") 'my-prefix-command)
+
 
 (global-set-key (kbd "C-s") 'isearch-forward-regexp) 
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)

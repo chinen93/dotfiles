@@ -82,7 +82,7 @@
            ;; True Body
            (message "Emacs is already up"))
        (progn
-         ;;(server-start)
+         (server-start)
 
          (setq start-up-emacs t)
          (message "Emacs is NOT up, so i started it")))
@@ -195,6 +195,15 @@
          (message "Helm Swoop - Loaded")
          (global-set-key (kbd "C-1") 'helm-swoop)))
    #+end_src
+** Helm-describe key
+   #+begin_src emacs-lisp
+     (use-package helm-descbinds
+       :ensure t
+       :init
+       (progn
+         (message "Helm Describe Bindings - Loaded")))
+   #+end_src
+   
 * TODO Keyfreq
   <2016-04-03 Sun> : First Timestamp
   #+begin_src emacs-lisp
@@ -288,8 +297,8 @@
    <2016-04-03 Sun> : First Timestamp
    #+begin_src emacs-lisp
      (add-hook 'org-mode-hook
-               (progn
-                 (visual-line-mode)
+               (lambda()
+                 (visual-line-mode t)
                  ))
    #+end_src
 * Re Build
@@ -321,9 +330,34 @@
        (define-key yas-minor-mode-map (kbd "<tab>") nil)
        (define-key yas-minor-mode-map (kbd "TAB") nil)
        (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-expand)
+       (define-key yas-minor-mode-map (kbd "C-v s") 'yas-insert-snippet)
        (yas-global-mode)
        ))
   #+end_src
+** Custom YASnippet prompt
+   #+begin_src emacs-lisp
+     (defun shk-yas/helm-prompt (prompt choices &optional display-fn)
+       "Use helm to select a snippet. Put this into `yas-prompt-functions.'"
+       (interactive)
+       (setq display-fn (or display-fn 'identity))
+       (if (require 'helm-config)
+           (let (tmpsource cands result rmap)
+             (setq cands (mapcar (lambda (x) (funcall display-fn x)) choices))
+             (setq rmap (mapcar (lambda (x) (cons (funcall display-fn x) x)) choices))
+             (setq tmpsource
+                   (list
+                    (cons 'name prompt)
+                    (cons 'candidates cands)
+                    '(action . (("Expand" . (lambda (selection) selection))))
+                    ))
+             (setq result (helm-other-buffer '(tmpsource) "*helm-select-yasnippet"))
+             (if (null result)
+                 (signal 'quit "user quit!")
+               (cdr (assoc result rmap))))
+         nil))
+
+     (setq yas-prompt-functions '(shk-yas/helm-prompt))
+   #+end_src
 * Custom Functions
 ** Emacs
 *** Compile pchine file
@@ -367,6 +401,10 @@
 * Key Binding
   <2016-04-03 Sun> : First Timestamp
   #+begin_src emacs-lisp
+    (define-prefix-command 'my-prefix-command)
+    (global-set-key (kbd "C-v") 'my-prefix-command)
+
+
     (global-set-key (kbd "C-s") 'isearch-forward-regexp) 
     (global-set-key (kbd "C-r") 'isearch-backward-regexp)
     (global-set-key (kbd "s-q") 'other-window)
@@ -425,4 +463,9 @@
 
 * How to?
 ** Kill multiple buffers
+   - Open buffer list with (helm-buffers-list) 'C-x b'
+   - Choose the buffers that you want to kill with 'C-spc'. They will change color
+   - Finally press 'M-D' to kill all the buffers selected
 ** Insert timestamp
+   - Press 'C-c .'
+   - A Calendar will be displayed and you can choose the date wanted
