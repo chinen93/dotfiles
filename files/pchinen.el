@@ -254,7 +254,12 @@
        (find-file "~/git/org/help.org"))
   
    (if (file-exists-p "~/.pchinen.org")
-       (find-file "~/.pchinen.org")))
+       (find-file "~/.pchinen.org"))
+
+   ;; Vulcanet User
+   (if (equal (user-login-name) "pedro") 
+       (if (file-exists-p "~/vulcanet.org")
+           (find-file "~/vulcanet.org"))))
 
 (defun c-comment-line ()
   (interactive)
@@ -274,21 +279,23 @@
 (define-prefix-command 'my-prefix-command)
 (global-set-key (kbd "C-v") 'my-prefix-command)
 
-
-(global-set-key (kbd "C-s") 'isearch-forward-regexp) 
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "s-q") 'other-window)
 (global-set-key (kbd "s-w") 'delete-window)
 
+(global-set-key (kbd "C-s") 'isearch-forward-regexp) 
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
 
-(global-set-key (kbd "<f2>") nil)
-(global-set-key (kbd "<f3>") nil)
-(global-set-key (kbd "<f4>") nil)
-(global-set-key (kbd "<f5>") nil)
-(global-set-key (kbd "<f6>") nil)
-(global-set-key (kbd "<f7>") nil)
-(global-set-key (kbd "<f8>") nil)
-(global-set-key (kbd "<f9>") nil)
+(global-unset-key (kbd "<f2>"))
+(global-unset-key (kbd "<f3>"))
+(global-unset-key (kbd "<f4>"))
+(global-unset-key (kbd "<f5>"))
+(global-unset-key (kbd "<f6>"))
+(global-unset-key (kbd "<f7>"))
+(global-unset-key (kbd "<f8>"))
+(global-unset-key (kbd "<f9>"))
+
+
+(global-unset-key (kbd "C-x DEL"))
 
 (setq auto-mode-alist
       (append
