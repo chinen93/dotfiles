@@ -20,29 +20,44 @@
   - Don't show start-up-message
   
    #+begin_src emacs-lisp
+     ;;; Package -- Sumary
+     ;;; Code:
+
+     ;; See the matching pair of parentheses and others characters
      (show-paren-mode t)
 
+     ;; Remove every warning, bell or visual
+     (setq ring-bell-function 'ignore)
+
+     ;; Show number of line and column
      (line-number-mode 1)
      (setq column-number-mode t)
 
+     ;; Change (yes/no) to (y/n)
      (fset 'yes-or-no-p 'y-or-n-p)
 
+     ;; Set initial message for *scratch* buffer
      (setq initial-scratch-message "
-     ,***********************************************
-     ,******************* SCRATCH *******************
-     ,***********************************************
+     ;***********************************************
+     ;******************* SCRATCH *******************
+     ;***********************************************
         
      ")
 
+     ;; Follow version controlled files without ask
      (setq vc-follow-symlinks t)
 
+     ;; Remove tool bar at top and scroll bar at right
      (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
      (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
+
+     ;; Don't show start up message
      (setq inhibit-startup-message t)
+
+     ;;; Commentary:
    #+end_src
 ** Backup
- 
    Create an directory to store all the backup files that normally would stay with the original file
 
    #+begin_src emacs-lisp
@@ -193,7 +208,9 @@
        :init
        (progn
          (message "Helm Swoop - Loaded")
-         (global-set-key (kbd "C-1") 'helm-swoop)))
+         (setq helm-swoop-speed-or-color t)
+         (setq helm-swoop-split-with-multiple-windows t)
+         (global-set-key (kbd "C-f") 'helm-swoop)))
    #+end_src
 ** Helm-describe key
    #+begin_src emacs-lisp

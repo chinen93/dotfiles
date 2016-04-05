@@ -3,6 +3,8 @@
 
 (show-paren-mode t)
 
+(setq ring-bell-function 'ignore)
+
 (line-number-mode 1)
 (setq column-number-mode t)
 
@@ -124,7 +126,9 @@
   :init
   (progn
     (message "Helm Swoop - Loaded")
-    (global-set-key (kbd "C-1") 'helm-swoop)))
+    (setq helm-swoop-speed-or-color t)
+    (setq helm-swoop-split-with-multiple-windows t)
+    (global-set-key (kbd "C-f") 'helm-swoop)))
 
 (use-package helm-descbinds
   :ensure t
