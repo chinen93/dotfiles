@@ -20,9 +20,6 @@
   - Don't show start-up-message
   
    #+begin_src emacs-lisp
-     ;;; Package -- Sumary
-     ;;; Code:
-
      ;; See the matching pair of parentheses and others characters
      (show-paren-mode t)
 
@@ -54,34 +51,40 @@
 
      ;; Don't show start up message
      (setq inhibit-startup-message t)
-
-     ;;; Commentary:
    #+end_src
 ** Backup
    Create an directory to store all the backup files that normally would stay with the original file
-
    #+begin_src emacs-lisp
+     ;; Set directory to hold backup files
      (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
      (setq auto-save-file-name-transforms
            '((".*" "~/.emacs.d/auto-save-list/" t)))
    #+end_src
 ** Ensure environment variables inside Emacs look the same as in the user's shell.
+   https://github.com/purcell/exec-path-from-shell
    #+begin_src emacs-lisp
+     ;; A GNU Emacs library to ensure environment variables inside Emacs look the same as in the user's shell.
      (use-package exec-path-from-shell
        :ensure t
        :config (progn
                  (exec-path-from-shell-initialize)))
    #+end_src
 ** History
- 
    Save minibuffer history
 
    #+begin_src emacs-lisp
+     ;; Set directory to hold history
      (setq savehist-file "~/.emacs.d/savehist")
+
+     ;; Start mode
      (savehist-mode 1)
+
+     ;; Set configuration
      (setq history-length t)
      (setq history-delete-duplicates t)
      (setq savehist-save-minibuffer-history 1)
+
+     ;; Save hist for kill rings, search rings and regex search rings
      (setq savehist-additional-variables
            '(kill-ring
              search-ring
