@@ -5,12 +5,12 @@
 
 
 * Header
-  <2016-04-03 Sun> : First Timestamp
+  
   #+begin_src emacs-lisp
     (message " ===============================================  Inicialização das Configurações  ================================================")
   #+end_src
 * Basic Configuration
-  <2016-04-03 Sun> : First Timestamp
+ 
   - Show matching parenthesis. 
   - Current line & column of cursor in the mode line (bar at the bottom)
   - Change "yes or no" to "y or n"
@@ -42,7 +42,7 @@
      (setq inhibit-startup-message t)
    #+end_src
 ** Backup
-   <2016-04-03 Sun> : First Timestamp
+ 
    Create an directory to store all the backup files that normally would stay with the original file
 
    #+begin_src emacs-lisp
@@ -58,7 +58,7 @@
                  (exec-path-from-shell-initialize)))
    #+end_src
 ** History
-   <2016-04-03 Sun> : First Timestamp
+ 
    Save minibuffer history
 
    #+begin_src emacs-lisp
@@ -73,7 +73,7 @@
              regexp-search-ring))
    #+end_src
 ** First initialization?
-   <2016-04-03 Sun> : First Timestamp
+ 
    If is the first time openning emacs. Start server, open some files
    
    #+begin_src emacs-lisp
@@ -88,7 +88,7 @@
          (message "Emacs is NOT up, so i started it")))
    #+end_src
 ** TODO Theme
-   <2016-04-03 Sun> : First Timestamp
+ 
    The theme being used is Monokai
    #+begin_src emacs-lisp
      ;; Load theme
@@ -101,7 +101,7 @@
          (set-background-color "#121212")))
    #+end_src
 * TODO Company
-  <2016-04-03 Sun> : First Timestamp
+
    [[%20%20%20http://company-mode.github.io/][company-mode]]
   #+begin_src emacs-lisp
     (use-package company
@@ -125,7 +125,7 @@
   [[http://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html][Dired - Manual]]
   
 * Expand Region
-  <2016-04-03 Sun> : First Timestamp
+
   Expand Region "teste1-teste2-teste3"
   first use : 'teste1'
   second use: 'teste1-teste2-teste3'
@@ -143,7 +143,7 @@
         (global-set-key (kbd "C-=") 'er/expand-region)))
   #+end_src
 * TODO Flycheck
-  <2016-04-03 Sun> : First Timestamp
+ 
   http://www.flycheck.org/en/latest/
   #+begin_src emacs-lisp
     (use-package flycheck
@@ -156,7 +156,7 @@
 
   #+end_src
 * Helm 
-  <2016-04-03 Sun> : First Timestamp
+ 
   #+begin_src emacs-lisp
     (use-package helm
       :ensure t
@@ -186,7 +186,7 @@
     (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
   #+end_src
 ** Helm-Swoop
-   <2016-04-03 Sun> : First Timestamp
+ 
    #+begin_src emacs-lisp
      (use-package helm-swoop
        :ensure t
@@ -205,7 +205,7 @@
    #+end_src
    
 * TODO Keyfreq
-  <2016-04-03 Sun> : First Timestamp
+ 
   #+begin_src emacs-lisp
     (use-package keyfreq
       :ensure t
@@ -224,7 +224,7 @@
 
   #+end_src
 * TODO Magit
-  <2016-04-03 Sun> : First Timestamp
+
    https://github.com/magit/magit
    https://www.youtube.com/watch?v=vQO7F2Q9DwA
    
@@ -237,7 +237,7 @@
   #+end_src
 * TODO Multiple Cursor
 * Nyan Cat
-  <2016-04-03 Sun> : First Timestamp
+
   Nyan Cat is used like an scroll bar. But horizontally
 
   #+begin_src emacs-lisp
@@ -250,7 +250,7 @@
         (nyan-mode 1)))
   #+end_src
 * Org mode
-  <2016-04-03 Sun> : First Timestamp
+
   Basic Configuration for Org mode with some keybindings and stuff
   #+begin_src emacs-lisp  
     (use-package org
@@ -276,7 +276,7 @@
         (global-set-key (kbd "C-c r") 'org-capture))) 
   #+end_src
 ** Sorce code emacs lisp BEGIN-END
-   <2016-04-03 Sun> : First Timestamp
+
    When is typed '<l' and pressed '[TAB]' a block of code is created
    #+begin_src emacs-lisp
      (setq org-structure-template-alist
@@ -288,13 +288,13 @@
               "<src lang=\"text\">\n?\n</src>")))
    #+end_src
 ** Capture Directory
-   <2016-04-03 Sun> : First Timestamp
+
    #+begin_src emacs-lisp
     (setq org-directory "~/git/org")
     (setq org-default-notes-file "~/git/org/organizer.org")
    #+end_src    
 ** Hooks
-   <2016-04-03 Sun> : First Timestamp
+
    #+begin_src emacs-lisp
      (add-hook 'org-mode-hook
                (lambda()
@@ -302,7 +302,7 @@
                  ))
    #+end_src
 * Re Build
-  <2016-04-03 Sun> : First Timestamp
+
   [[https://masteringemacs.org/article/re-builder-interactive-regexp-builder][re-builder]]
   #+begin_src emacs-lisp
     (use-package re-builder
@@ -313,7 +313,7 @@
        (setq reb-re-synstax 'string)))
  #+end_src
 * TODO YASnippet
-  <2016-04-03 Sun> : First Timestamp
+
   [[https://en.wikipedia.org/wiki/Snippet_%2528programming%2529][Snippet]]
   [[https://github.com/capitaomorte/yasnippet][YASnippet]]
   http://capitaomorte.github.io/yasnippet/
@@ -361,7 +361,7 @@
 * Custom Functions
 ** Emacs
 *** Compile pchine file
-    <2016-04-03 Sun> : First Timestamp
+
     #+begin_src emacs-lisp
       (defun my/bcompile-pchinen.el ()
         (interactive)
@@ -369,7 +369,7 @@
     #+end_src
 *** Trim line
 *** Open initial files, Differ from System
-    <2016-04-03 Sun> : First Timestamp
+
     #+begin_src emacs-lisp
       (defun my/open-initial-files ()
          (interactive)
@@ -386,7 +386,7 @@
     #+end_src
 ** Programação
 *** Coment line in C
-    <2016-04-03 Sun> : First Timestamp
+
     #+begin_src emacs-lisp
       (defun c-comment-line ()
         (interactive)
@@ -404,9 +404,7 @@
         (delete-char 3))
     #+end_src
 * Key Binding
-  <2016-04-03 Sun> : First Timestamp
 ** Create new prefix command
-   <2016-04-05 Ter> : Create Prefix Command
    #+begin_src emacs-lisp
      (define-prefix-command 'my-prefix-command)
      (global-set-key (kbd "C-v") 'my-prefix-command)
@@ -438,7 +436,7 @@
   #+end_src
   
 * File Modes
-  <2016-04-03 Sun> : First Timestamp
+
   #+begin_src emacs-lisp
     (setq auto-mode-alist
           (append
@@ -460,7 +458,7 @@
 * Programming languages
 ** C
 ** Python
-   <2016-04-03 Sun> : First Timestamp
+
    For Jedi to work is necessary to install jedi first with 'pip install jedi'
    and upgrade its code in '.emacs.d/elpa/jedi-code-....' with 'pip install --upgrade directory'
    this two commands must be executed as system root
@@ -475,7 +473,7 @@
                  (add-to-list 'company-backends 'company-jedi)))
    #+end_src
 * Footnotes
-  <2016-04-03 Sun> : First Timestamp
+
 #+begin_src emacs-lisp
   (message " ===============================================  Fim das Configurações  ================================================")
 #+end_src
