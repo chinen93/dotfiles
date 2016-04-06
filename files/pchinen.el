@@ -1,9 +1,6 @@
 
 (message " ===============================================  Inicialização das Configurações  ================================================")
 
-;;; Package -- Sumary
-;;; Code:
-
 ;; See the matching pair of parentheses and others characters
 (show-paren-mode t)
 
@@ -36,26 +33,29 @@
 ;; Don't show start up message
 (setq inhibit-startup-message t)
 
-;;; Commentary:
-
-;;; Package -- Sumary
-;;; Code:
 ;; Set directory to hold backup files
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 (setq auto-save-file-name-transforms
       '((".*" "~/.emacs.d/auto-save-list/" t)))
-;;; Commentary:
 
+;; A GNU Emacs library to ensure environment variables inside Emacs look the same as in the user's shell.
 (use-package exec-path-from-shell
   :ensure t
   :config (progn
             (exec-path-from-shell-initialize)))
 
+;; Set directory to hold history
 (setq savehist-file "~/.emacs.d/savehist")
+
+;; Start mode
 (savehist-mode 1)
+
+;; Set configuration
 (setq history-length t)
 (setq history-delete-duplicates t)
 (setq savehist-save-minibuffer-history 1)
+
+;; Save hist for kill rings, search rings and regex search rings
 (setq savehist-additional-variables
       '(kill-ring
         search-ring
@@ -297,6 +297,15 @@
   (end-of-line)
   (backward-char 3)
   (delete-char 3))
+
+(defun my/find-function ()
+  (interactive)
+  ;; Python
+  (setq python-function-syntax "\\(#\\|def\\)")
+  (helm-swoop :$query python-function-syntax)
+  )
+
+(my/find-function)
 
 (define-prefix-command 'my-prefix-command)
 (global-set-key (kbd "C-v") 'my-prefix-command)
