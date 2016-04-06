@@ -121,8 +121,10 @@
  (progn
    (message "Flycheck - Loaded")
 
-   ;; Start global mode 
-   (global-flycheck-mode)
+   ;; Flycheck gets to be a bit much when warning about checkdoc issues.
+   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+
+   (add-hook 'prog-mode-hook 'flycheck-mode)
    ))
 
 (use-package helm
@@ -214,7 +216,9 @@
   :ensure t
   :init
   (progn
-    (message "Magit - Loaded")))
+    (message "Magit - Loaded")
+    
+    ))
 
 (use-package multiple-cursors
   :ensure t
@@ -366,6 +370,21 @@
   (end-of-line)
   (backward-char 3)
   (delete-char 3))
+
+(defun my/find-function ()
+  ;;
+  ;; Find every function in actual file with helm-swoop
+  ;;
+
+  (interactive)
+  ;; Python
+  (setq-local python-function-syntax "\\(#\\|def\\)")
+
+  ;; Concatenate every function syntax
+  (setq-local function-syntax (concat python-function-syntax))
+
+  (helm-swoop :$query function-syntax)
+  )
 
 ;; Define new prefix command
 (define-prefix-command 'my-prefix-command)
