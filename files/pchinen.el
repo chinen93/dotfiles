@@ -109,9 +109,11 @@
  :config
  (progn
    (message "Flycheck - Loaded")
+
    ;; Flycheck gets to be a bit much when warning about checkdoc issues.
    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
-   (add-hook 'prog-mode-hook 'flycheck-mode))
+
+   (add-hook 'prog-mode-hook 'flycheck-mode)
    ))
 
 (use-package helm
@@ -309,12 +311,11 @@
 
   (interactive)
   ;; Python
-  (setq python-function-syntax "\\(#\\|def\\)")
+  (setq-local python-function-syntax "\\(#\\|def\\)")
 
   ;; Concatenate every function syntax
-  (setq function-syntax (concat python-function-syntax))
+  (setq-local function-syntax (concat python-function-syntax))
 
-  ;; Remove local variables
   (helm-swoop :$query function-syntax)
   )
 
