@@ -109,7 +109,9 @@
  :config
  (progn
    (message "Flycheck - Loaded")
-   (global-flycheck-mode)
+   ;; Flycheck gets to be a bit much when warning about checkdoc issues.
+   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+   (add-hook 'prog-mode-hook 'flycheck-mode))
    ))
 
 (use-package helm
