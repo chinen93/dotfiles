@@ -173,7 +173,9 @@
   :ensure t
   :init
   (progn
-    (message "Magit - Loaded")))
+    (message "Magit - Loaded")
+    
+    ))
 
 ;; Nyan Mode
 (use-package nyan-mode
@@ -299,13 +301,20 @@
   (delete-char 3))
 
 (defun my/find-function ()
+  ;;
+  ;; Find every function in actual file with helm-swoop
+  ;;
+
   (interactive)
   ;; Python
   (setq python-function-syntax "\\(#\\|def\\)")
-  (helm-swoop :$query python-function-syntax)
-  )
 
-(my/find-function)
+  ;; Concatenate every function syntax
+  (setq function-syntax (concat python-function-syntax))
+
+  ;; Remove local variables
+  (helm-swoop :$query function-syntax)
+  )
 
 (define-prefix-command 'my-prefix-command)
 (global-set-key (kbd "C-v") 'my-prefix-command)
