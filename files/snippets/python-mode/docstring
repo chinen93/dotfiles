@@ -2,6 +2,5 @@
 # name: docstring
 # key: doc
 # --
-
 """ I ${1:Do something} """
 $0

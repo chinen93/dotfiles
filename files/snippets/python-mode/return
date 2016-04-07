@@ -2,6 +2,6 @@
 # name: Param return
 # key: pret
 # --
-:return : ${1: nothing}
-:rtype : ${2: None}
+:returns: ${1:nothing}
+:rtype: ${2:None}
 $0
