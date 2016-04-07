@@ -111,9 +111,12 @@
          (message "Emacs is NOT up, so i started it")))
    #+end_src
 ** TODO Themes
+*** My Theme
+*** Downloaded Themes
    The theme being used is Monokai
    #+begin_src emacs-lisp
      ;; Load theme
+     (use-package zenburn-theme :ensure t)
      (use-package monokai-theme
        :ensure t
        :config
@@ -121,6 +124,15 @@
          (message "Monokai Theme - Loaded")
          (load-theme 'monokai t)
          (set-background-color "#121212")))
+
+     (defun my/change-theme()
+       (interactive)
+       (message "Theme Changed")
+       )
+
+     (when window-system 
+       (my/change-theme)
+       )
    #+end_src
 * TODO Company
   [[%20%20%20http://company-mode.github.io/][company-mode]]
