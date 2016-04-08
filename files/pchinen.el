@@ -429,6 +429,7 @@
        '((".bashrc" . shell-script-mode)
          (".bash_aliases" . shell-script-mode)
          (".bash_profile" . shell-script-mode)
+         (".screenrc" . shell-script-mode)
 
          ;; css mode
          (".scss" . css-mode)

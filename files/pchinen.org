@@ -3,7 +3,6 @@
 #+EMAIL:  ph.u.chinen@gmail.com
 #+DATE    : 2016-04-03
 
-
 * Header
   #+begin_src emacs-lisp
     (message " ===============================================  Inicialização das Configurações  ================================================")
@@ -560,6 +559,7 @@
            '((".bashrc" . shell-script-mode)
              (".bash_aliases" . shell-script-mode)
              (".bash_profile" . shell-script-mode)
+             (".screenrc" . shell-script-mode)
 
              ;; css mode
              (".scss" . css-mode)
