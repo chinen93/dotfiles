@@ -21,7 +21,8 @@ alias df='df -h'
 
 alias mkdir='mkdir -v'
 alias mv='mv -v'
-alias rm='rm -v'
+alias rm='rm -vi'
+alias remove='rm -v'
 
 alias cd..='cd ..'
 
