@@ -51,7 +51,8 @@
     (message "Re-initialized!"))
 
 (add-to-list 'auto-mode-alist '(".emacs" . lisp-mode))
-
+(setq load-path (cons (expand-file-name "~/.emacsConfig")
+		      load-path))
 (org-babel-load-file "~/git/dotfiles/files/pchinen.org")
 
 
