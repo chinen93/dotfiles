@@ -34,7 +34,7 @@
      (require 'init-history)
    #+end_src
 ** First initialization
-   If is the first time openning emacs. Start server, open some files
+   If is the first time openning emacs. Start server
    [[file:emacsConfig/init-firstInit.el]]
    #+begin_src emacs-lisp
      (require 'init-firstInit)
