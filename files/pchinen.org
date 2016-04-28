@@ -45,6 +45,11 @@
    #+begin_src emacs-lisp
      (require 'init-themes)
    #+end_src
+* Key Binding
+  [[file:emacsConfig/init-keyBinding.el]]
+  #+begin_src emacs-lisp
+    (require 'init-keyBinding)
+  #+end_src
 * TODO Company
   [[%20%20%20http://company-mode.github.io/][company-mode]]
   [[file:emacsConfig/init-company.el]]
@@ -152,11 +157,6 @@
   [[file:emacsConfig/init-customFunctions.el]]
   #+begin_src emacs-lisp
     (require 'init-customFunctions)
-  #+end_src
-* Key Binding
-  [[file:emacsConfig/init-keyBinding.el]]
-  #+begin_src emacs-lisp
-    (require 'init-keyBinding)
   #+end_src
 * File Modes
   [[file:emacsConfig/init-filesMode.el]]
