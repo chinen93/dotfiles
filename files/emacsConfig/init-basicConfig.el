@@ -39,4 +39,10 @@
   :config (progn
 	    (exec-path-from-shell-initialize)))
 
+
+;; Define new prefix command
+(define-prefix-command 'my-prefix-command)
+(global-set-key (kbd "C-v") 'my-prefix-command)
+(global-set-key (kbd "M-v") 'my-prefix-command)
+
 (provide 'init-basicConfig)
