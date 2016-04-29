@@ -89,7 +89,7 @@
 ;; (global-unset-key (kbd "C-v")) ;; prefix-command
 (global-unset-key (kbd "C-b"))
 (global-unset-key (kbd "C-n"))
-(global-unset-key (kbd "C-m"))
+;; (global-unset-key (kbd "C-m")) ;; in emacs C-m is the same as RET
 
 (global-unset-key (kbd "M-q"))
 ;; (global-unset-key (kbd "M-w")) ;; kill-ring-save
