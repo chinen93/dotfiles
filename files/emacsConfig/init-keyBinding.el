@@ -21,7 +21,6 @@
 ;; Search key binding
 (global-set-key (kbd "C-s") 'isearch-forward-regexp) 
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
->>>>>>> 06801fb... Rewrite dafault configration to use my-prefix-command
 
 ;; Unset Key binding F(num)
 (global-unset-key (kbd "<f2>"))
