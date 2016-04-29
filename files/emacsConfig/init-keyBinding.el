@@ -70,7 +70,7 @@
 (global-unset-key (kbd "C-r"))
 (global-unset-key (kbd "C-t"))
 ;; (global-unset-key (kbd "C-u")) ;; digit-argument
-(global-unset-key (kbd "C-i"))
+;; (global-unset-key (kbd "C-i")) ;; In emacs C-i is the sama as TAB
 (global-unset-key (kbd "C-o"))
 (global-unset-key (kbd "C-p"))
 (global-unset-key (kbd "C-a"))
