@@ -11,6 +11,8 @@
 
 (require 'init-themes)
 
+(require 'init-keyBinding)
+
 (require 'init-company)
 
 (require 'init-calcmode)
@@ -42,8 +44,6 @@
 (require 'init-yasnippet)
 
 (require 'init-customFunctions)
-
-(require 'init-keyBinding)
 
 (require 'init-filesMode)
 

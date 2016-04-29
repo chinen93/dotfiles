@@ -39,9 +39,10 @@
     (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
     (global-set-key (kbd "C-x C-f") 'helm-find-files)
     (global-set-key (kbd "M-y") 'helm-show-kill-ring)
-    (global-set-key (kbd "M-x") 'helm-M-x)))
-
-;; Turn off ido mode in case I enabled it accidentally
-(ido-mode -1)
+    (global-set-key (kbd "M-x") 'helm-M-x)
+    
+    ;; uses my key prefix
+    (global-set-key (kbd "M-v M-f") 'helm-find-files)
+    ))
 
 (provide 'init-helm)
