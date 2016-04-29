@@ -1,9 +1,15 @@
 
 (message " ===============================================  Inicialização das Configurações  ================================================")
 
+(require 'init-customFunctions)
+
+(require 'init-keyBinding)
+
 (require 'init-basicConfig)
 
 (require 'init-backup)
+
+(require 'init-bookmark)
 
 (require 'init-history)
 
@@ -11,7 +17,9 @@
 
 (require 'init-themes)
 
-(require 'init-keyBinding)
+(require 'init-filesMode)
+
+(require 'init-hooks)
 
 (require 'init-company)
 
@@ -42,11 +50,5 @@
 (require 'init-regex)
 
 (require 'init-yasnippet)
-
-(require 'init-customFunctions)
-
-(require 'init-filesMode)
-
-(require 'init-hooks)
 
 (message " ===============================================  Fim das Configurações  ================================================")

@@ -7,6 +7,16 @@
   #+begin_src emacs-lisp
     (message " ===============================================  Inicialização das Configurações  ================================================")
   #+end_src
+* Custom Functions
+  [[file:emacsConfig/init-customFunctions.el]]
+  #+begin_src emacs-lisp
+    (require 'init-customFunctions)
+  #+end_src
+* Key Binding
+  [[file:emacsConfig/init-keyBinding.el]]
+  #+begin_src emacs-lisp
+    (require 'init-keyBinding)
+  #+end_src
 * Basic Configuration
   - Show matching parenthesis. 
   - Current line & column of cursor in the mode line (bar at the bottom)
@@ -27,6 +37,12 @@
    #+begin_src emacs-lisp
      (require 'init-backup)
    #+end_src
+** Bookmark
+   Save bookmark in files so it is easier to go back to them later
+   file:emacsConfig/init-bookmark.el
+   #+begin_src emacs-lisp
+     (require 'init-bookmark)
+   #+end_src
 ** History
    Save minibuffer history
    [[file:emacsConfig/init-history.el]]
@@ -45,16 +61,6 @@
    #+begin_src emacs-lisp
      (require 'init-themes)
    #+end_src
-* Custom Functions
-  [[file:emacsConfig/init-customFunctions.el]]
-  #+begin_src emacs-lisp
-    (require 'init-customFunctions)
-  #+end_src
-* Key Binding
-  [[file:emacsConfig/init-keyBinding.el]]
-  #+begin_src emacs-lisp
-    (require 'init-keyBinding)
-  #+end_src
 * File Modes
   [[file:emacsConfig/init-filesMode.el]]
   #+begin_src emacs-lisp

@@ -43,6 +43,7 @@
     
     ;; uses my key prefix
     (global-set-key (kbd "M-v M-f") 'helm-find-files)
+    (global-set-key (kbd "M-v M-p") 'helm-bookmarks)
     ))
 
 (provide 'init-helm)
