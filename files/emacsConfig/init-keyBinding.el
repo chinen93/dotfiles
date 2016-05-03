@@ -118,6 +118,30 @@
 (global-unset-key (kbd "M-n"))
 (global-unset-key (kbd "M-m"))
 
+;; set Control/Meta plus number
+;; (global-set-key (kbd "C-1"))
+;; (global-set-key (kbd "C-2"))
+;; (global-set-key (kbd "C-3"))
+;; (global-set-key (kbd "C-4"))
+;; (global-set-key (kbd "C-5"))
+;; (global-set-key (kbd "C-6"))
+;; (global-set-key (kbd "C-7"))
+;; (global-set-key (kbd "C-8"))
+;; (global-set-key (kbd "C-9"))
+;; (global-set-key (kbd "C-0"))
+;; (global-set-key (kbd "C--"))
+(global-set-key (kbd "M-1") 'kill-region)
+;; (global-set-key (kbd "M-2"))
+(global-set-key (kbd "M-3") 'yank)
+;; (global-set-key (kbd "M-4"))
+;; (global-set-key (kbd "M-5"))
+;; (global-set-key (kbd "M-6"))
+;; (global-set-key (kbd "M-7"))
+;; (global-set-key (kbd "M-8"))
+;; (global-set-key (kbd "M-9"))
+;; (global-set-key (kbd "M-0"))
+;; (global-set-key (kbd "M--"))
+
 ;; Rebind default binding
 (global-set-key (kbd "M-v M-s") 'save-buffer)
 
