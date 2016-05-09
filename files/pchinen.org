@@ -45,11 +45,34 @@
    #+begin_src emacs-lisp
      (require 'init-themes)
    #+end_src
+* Custom Functions
+  [[file:emacsConfig/init-customFunctions.el]]
+  #+begin_src emacs-lisp
+    (require 'init-customFunctions)
+  #+end_src
 * Key Binding
   [[file:emacsConfig/init-keyBinding.el]]
   #+begin_src emacs-lisp
     (require 'init-keyBinding)
   #+end_src
+* File Modes
+  [[file:emacsConfig/init-filesMode.el]]
+  #+begin_src emacs-lisp
+    (require 'init-filesMode)
+  #+end_src
+  
+* Hooks for specific modes
+  [[file:emacsConfig/init-hooks.el]]
+  #+begin_src emacs-lisp
+    (require 'init-hooks)
+  #+end_src
+** Python
+*** Jedi
+    https://pypi.python.org/pypi/jedi
+    For Jedi to work is necessary to install jedi first with 'pip install jedi'
+    and upgrade its code in '.emacs.d/elpa/jedi-code-....' with 'pip install --upgrade directory'
+    this two commands must be executed as system root
+
 * TODO Company
   [[%20%20%20http://company-mode.github.io/][company-mode]]
   [[file:emacsConfig/init-company.el]]
@@ -153,28 +176,6 @@
   #+begin_src emacs-lisp
    (require 'init-yasnippet)
   #+end_src
-* Custom Functions
-  [[file:emacsConfig/init-customFunctions.el]]
-  #+begin_src emacs-lisp
-    (require 'init-customFunctions)
-  #+end_src
-* File Modes
-  [[file:emacsConfig/init-filesMode.el]]
-  #+begin_src emacs-lisp
-    (require 'init-filesMode)
-  #+end_src
-  
-* Hooks for specific modes
-  [[file:emacsConfig/init-hooks.el]]
-  #+begin_src emacs-lisp
-    (require 'init-hooks)
-  #+end_src
-** Python
-*** Jedi
-    https://pypi.python.org/pypi/jedi
-    For Jedi to work is necessary to install jedi first with 'pip install jedi'
-    and upgrade its code in '.emacs.d/elpa/jedi-code-....' with 'pip install --upgrade directory'
-    this two commands must be executed as system root
 * Footnotes
 #+begin_src emacs-lisp
   (message " ===============================================  Fim das Configurações  ================================================")

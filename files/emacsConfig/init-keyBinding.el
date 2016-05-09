@@ -2,27 +2,7 @@
 ;; Key Binding
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Define new prefix command
-(define-prefix-command 'my-prefix-command)
-(global-set-key (kbd "C-v") 'my-prefix-command)
-(global-set-key (kbd "M-v") 'my-prefix-command)
-
-;; Rebind default binding
-(global-set-key (kbd "M-v M-s") 'save-buffer)
-(global-set-key (kbd "M-v M-f") 'find-file)
-(global-set-key (kbd "M-v TAB") 'list-buffers)
-
-;; Go to other window
-(global-set-key (kbd "s-q") 'other-window)
-
-;; Delete window in which the cursor is in
-(global-set-key (kbd "s-w") 'delete-window)
-
-;; Search key binding
-(global-set-key (kbd "C-s") 'isearch-forward-regexp) 
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
-
-;; Unset Key binding F(num)
+;;;; Unset Key binding F(num)
 (global-unset-key (kbd "<f2>"))
 (global-unset-key (kbd "<f3>"))
 (global-unset-key (kbd "<f4>"))
@@ -35,7 +15,7 @@
 (global-unset-key (kbd "<f11>"))
 (global-unset-key (kbd "<f12>"))
 
-;; Unset digit-arguments
+;;;; Unset digit-arguments
 (global-unset-key (kbd "C-1"))
 (global-unset-key (kbd "C-2"))
 (global-unset-key (kbd "C-3"))
@@ -59,11 +39,7 @@
 (global-unset-key (kbd "M-0"))
 (global-unset-key (kbd "M--"))
 
-;; Unset key for frequent mistyped press
-(global-unset-key (kbd "C-x DEL"))
-(global-unset-key (kbd "C-x f"))
-
-;; Unset every single key chord
+;;;; Unset every single key chord: start with C-
 (global-unset-key (kbd "C-q"))
 (global-unset-key (kbd "C-w"))
 (global-unset-key (kbd "C-e"))
@@ -91,6 +67,7 @@
 (global-unset-key (kbd "C-n"))
 ;; (global-unset-key (kbd "C-m")) ;; in emacs C-m is the same as RET
 
+;;;; Unset every single key chord: start with M-
 (global-unset-key (kbd "M-q"))
 ;; (global-unset-key (kbd "M-w")) ;; kill-ring-save
 (global-unset-key (kbd "M-e"))
@@ -118,7 +95,7 @@
 (global-unset-key (kbd "M-n"))
 (global-unset-key (kbd "M-m"))
 
-;; set Control/Meta plus number
+;;;; set Control/Meta plus number
 ;; (global-set-key (kbd "C-1"))
 ;; (global-set-key (kbd "C-2"))
 ;; (global-set-key (kbd "C-3"))
@@ -130,7 +107,7 @@
 ;; (global-set-key (kbd "C-9"))
 ;; (global-set-key (kbd "C-0"))
 ;; (global-set-key (kbd "C--"))
-(global-set-key (kbd "M-1") 'kill-region)
+(global-set-key (kbd "M-1") 'xah-cut-line-or-region)
 ;; (global-set-key (kbd "M-2"))
 (global-set-key (kbd "M-3") 'yank)
 ;; (global-set-key (kbd "M-4"))
@@ -142,21 +119,82 @@
 ;; (global-set-key (kbd "M-0"))
 ;; (global-set-key (kbd "M--"))
 
-;; Rebind default binding
+;;;; Unset key for frequent mistyped press
+(global-unset-key (kbd "C-x DEL"))
+(global-unset-key (kbd "C-x f"))
+
+;;;; Define new prefix command
+(define-prefix-command 'my-prefix-command)
+(global-set-key (kbd "C-v") 'my-prefix-command)
+(global-set-key (kbd "M-v") 'my-prefix-command)
+
+;;;; Key binding using my prefix command
 (global-set-key (kbd "M-v M-s") 'save-buffer)
+(global-set-key (kbd "M-v M-f") 'find-file)
+(global-set-key (kbd "M-v TAB") 'list-buffers)
 
-;; Go to other window
+;;;; Key binding using super
 (global-set-key (kbd "s-q") 'other-window)
-
-;; Delete window in which the cursor is in
 (global-set-key (kbd "s-w") 'delete-window)
 
-;; Search key binding
-(global-set-key (kbd "C-s") 'isearch-forward-regexp) 
+;;;; Key binding special keys
+(global-set-key (kbd "<prior>") 'xah-backward-block)
+(global-set-key (kbd "<next>") 'xah-forward-block)
+
+;;;; Set every single key chord: start with C-
+;; (global-set-key (kbd "C-q"))
+;; (global-set-key (kbd "C-w"))
+;; (global-set-key (kbd "C-e"))
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
+;; (global-set-key (kbd "C-t"))
+;; (global-set-key (kbd "C-u")) ;; digit-argument
+;; (global-set-key (kbd "C-i")) ;; In emacs C-i is the sama as TAB
+;; (global-set-key (kbd "C-o"))
+(global-set-key (kbd "C-p") 'my-trim-right)
+;; (global-set-key (kbd "C-a"))
+(global-set-key (kbd "C-s") 'isearch-forward-regexp) 
+;; (global-set-key (kbd "C-d"))
+;; (global-set-key (kbd "C-f"))
+;; (global-set-key (kbd "C-g")) ;; keyboard-quit
+;; (global-set-key (kbd "C-h"))
+;; (global-set-key (kbd "C-j"))
+;; (global-set-key (kbd "C-k"))
+;; (global-set-key (kbd "C-l")) ;; recenter-top-botton
+;; (global-set-key (kbd "C-ç"))
+;; (global-set-key (kbd "C-z"))
+;; (global-set-key (kbd "C-x")) ;; prefix-command
+;; (global-set-key (kbd "C-c"))
+;; (global-set-key (kbd "C-v")) ;; prefix-command
+;; (global-set-key (kbd "C-b"))
+(global-set-key (kbd "C-n") 'xah-new-empty-buffer)
+;; (global-set-key (kbd "C-m")) ;; in emacs C-m is the same as RET
+
+;;;; Set every single key chord: start with M-
+;; (global-set-key (kbd "M-q"))
+;; (global-set-key (kbd "M-w")) ;; kill-ring-save
+;; (global-set-key (kbd "M-e"))
+;; (global-set-key (kbd "M-r"))
+;; (global-set-key (kbd "M-t"))
+;; (global-set-key (kbd "M-y"))
+;; (global-set-key (kbd "M-u"))
+;; (global-set-key (kbd "M-i"))
+;; (global-set-key (kbd "M-o"))
+;; (global-set-key (kbd "M-p"))
+;; (global-set-key (kbd "M-a"))
+;; (global-set-key (kbd "M-s"))
+;; (global-set-key (kbd "M-d"))
+;; (global-set-key (kbd "M-f"))
+;; (global-set-key (kbd "M-g"))
+;; (global-set-key (kbd "M-h"))
+;; (global-set-key (kbd "M-j"))
+;; (global-set-key (kbd "M-k"))
+;; (global-set-key (kbd "M-l"))
+;; (global-set-key (kbd "M-z"))
+;; (global-set-key (kbd "M-x")) ;; execute-extended-command
+;; (global-set-key (kbd "M-c"))
+;; (global-set-key (kbd "M-v")) ;; prefix-command
+;; (global-set-key (kbd "M-b"))
+;; (global-set-key (kbd "M-n"))
+;; (global-set-key (kbd "M-m"))
 
 (provide 'init-keyBinding)
-
-
-
-
