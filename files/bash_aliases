@@ -59,7 +59,7 @@ alias fgrep='fgrep --color=auto'
 
 alias ff='firefox 2>/dev/null &'
 
-alias pytest='pypy -m unittest discover -p "t_*.py" tests/unit/ -v'
+alias pytest='pypy -m unittest discover -p "t_*.py" tests/unit/ -v; flake8 .'
 ########################################
 # Functions
 ########################################
