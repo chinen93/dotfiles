@@ -1,7 +1,0 @@
-# -*- mode: snippet -*'-
-# name: Param return
-# key: pret
-# --
-:returns: ${1:nothing}
-:rtype: ${2:None}
-$0
