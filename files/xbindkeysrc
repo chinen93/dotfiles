@@ -59,10 +59,23 @@
 # End of xbindkeys configuration #
 ##################################
 
-# make F8 to launch or switch to Firefox
-"firefox"
-F8
+# TouchPad
+"touchpad_toggle.sh"
+XF86TouchpadToggle
 
-# make F9 to launch or switch to Gnome Terminal
-"gnome-terminal"
-F9
+# https://wiki.archlinux.org/index.php/Spotify
+# Play/Pause
+"dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
+XF86AudioPlay
+
+# Next
+"dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
+XF86AudioNext
+
+# Previous
+"dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
+XF86AudioPrev
+
+# Stop
+"dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
+XF86AudioStop
