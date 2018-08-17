@@ -57,6 +57,11 @@ export GUROBI_HOME="/opt/gurobi800/linux64"
 export PATH="${PATH}:${GUROBI_HOME}/bin"
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
 
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
 PATH=$PATH:$HOME/.local/bin
 PATH=$PATH:$HOME/git/dotfiles/bin/shellscript/
 PATH=$PATH:$HOME/git/dotfiles-emacs/bin/
