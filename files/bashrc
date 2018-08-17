@@ -28,6 +28,13 @@ else
     echo "$HOME/.bash_aliases not found"
 fi
 
+# Source ledgerrc
+if [ -f $HOME/.ledgerrc ]; then
+    source $HOME/.ledgerrc
+else
+    echo "$HOME/.ledgerrc not found"
+fi
+
 # Source autocomplete
 source /etc/bash_completion
 
