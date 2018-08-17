@@ -11,6 +11,7 @@ Is where the configurations is stored.
 Things like:
 - Bash
 - Git
+- Ledger CLI
 
 ## /dotfiles/bin/
 

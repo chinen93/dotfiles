@@ -1,0 +1,25 @@
+########################################
+# ~/.ledgerrc
+# Ledger Settings
+#
+# Sections:
+#   -> General
+#   -> Alias
+########################################
+
+
+########################################
+# => General
+########################################
+
+export LEDGER_FILE=$HOME'/Dropbox/Ledger.ledger'
+
+########################################
+# => Alias
+########################################
+
+alias ledBank='ledger -f $LEDGER_FILE balance Assets:Bank'
+alias ledExpenses='ledger -f $LEDGER_FILE balance --period "this month" Expenses'
+alias ledBal='ledger -f $LEDGER_FILE balance --period "this month"'
+alias ledReg='ledger -f $LEDGER_FILE register --period "this month"'
+
