@@ -1,0 +1,14 @@
+[flake8]
+# Website to look for more codes
+# https://pycodestyle.readthedocs.io/en/latest/intro.html#error-codes
+
+# E111: indentation is not a multiple of four
+# E114: indentation is not a multiple of four (comment)
+ignore = E111, E114
+
+# Exclude these files when checking.
+exclude = tests/*
+
+# Full Listing of Options and Their Descriptions
+# http://flake8.pycqa.org/en/latest/user/options.html#full-listing-of-options-and-their-descriptions
+max-line-length = 90
